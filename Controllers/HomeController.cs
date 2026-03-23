@@ -18,12 +18,22 @@ namespace ArtZada.Controllers
             return View();
         }
 
-
+        public ActionResult Product()
+        {
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Product(int id)
+        {
+            // Pass the product ID to the view
+            ViewBag.ProductId = id;
+            return View(); // This will load Views/Home/Product.cshtml
         }
     }
 }

@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Product";
+    Layout = null;
+    var productId = ViewBag.ProductId;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Product</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+</head>
+<body>
+    <!-- NAVBAR -->
+    @{
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    }
+    <div class="navbar-container">
+        <div class="nav-arrows">
+            <button class="nav-btn">&#9664;</button>
+            <button class="nav-btn">&#9654;</button>
+        </div>
+
+        <div class="navbar">
+            <a href="/Home/Index"
+               class="@(currentAction == "Index" ? "active" : "")">Home</a>
+            <a href="/Home/Index"
+               class="@(currentAction == "Shop" ? "active" : "")">Shop</a>
+            <a href="/Home/Message"
+               class="@(currentAction == "Message" ? "active" : "")">Message</a>
+            <a href="/Home/Cart"
+               class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
+            <a href="/Home/Account"
+               class="@(currentAction == "Account" ? "active" : "")">Account</a>
+        </div>
+    </div>
+
+    <!-- PRODUCT SECTION -->
+    <div style="
+        margin: 40px;
+        padding: 20px;
+        background: #276470;
+        border: 5px solid black;
+        border-radius: 20px;
+        display: flex;
+        gap: 40px;
+        align-items: center;
+      ">
+        <!-- IMAGE -->
+        <div style="background: #ccc; padding: 20px; border-radius: 10px">
+            <img src="~/Content/images/artzada_logo.png" style="width: 300px" />
+        </div>
+
+        <!-- DETAILS -->
+        <div style="color: white; flex: 1">
+            <h1 style="font-family: 'RushonGround'; font-size: 40px;">
+                Product ID: @productId
+            </h1>
+
+            <h2 style="color: red; font-size: 40px">₱100.00</h2>
+
+            <p><strong>Stocks:</strong> 10 pieces</p>
+
+            <p>
+                <strong>Artist:</strong>
+                <span style="background: #7ea4a8; padding: 5px 10px; border-radius: 20px">
+                    KWEKKWEKSASTIX
+                </span>
+            </p>
+
+            <p><strong>Dimensions:</strong> 763 x 763 cm</p>
+            <p><strong>Medium:</strong> Digital Art</p>
+
+            <!-- QUANTITY -->
+            <div style="display: flex; align-items: center; gap: 10px; margin: 20px 0">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+            </div>
+
+            <!-- BUTTONS -->
+            <div style="display: flex; gap: 20px">
+                <button class="cart-btn">Add to Cart</button>
+                <button class="buy-btn">BUY NOW!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/site.js"></script>
+</body>
+</html>

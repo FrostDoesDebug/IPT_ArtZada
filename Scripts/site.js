@@ -128,3 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+function openProduct(id) {
+    // Navigate to HomeController Product action
+    window.location.href = '/Home/Product/' + id;
+}
+
+function addToCart(id) {
+    alert('Added product ' + id + ' to cart!');
+}
+
+function buyNow(id) {
+    alert('Buying product ' + id + ' now!');
+}
