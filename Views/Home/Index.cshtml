@@ -144,15 +144,20 @@
         </div>
     </div>
 
-    <!-- FEATURED -->
     <h2 class="section-title">FEATURED ARTISTS</h2>
     <div class="carousel">
         <div class="carousel-track" id="carouselTrack">
             @for (int i = 0; i < 5; i++)
             {
                 <div class="carousel-item">
-                    <h1>KwekKwekSaStix</h1>
-                    <p>Digital Artist - Illustrator - Concept Artist</p>
+                    <!-- Artist Image -->
+                    <img src="~/Content/images/KwekKweksaStix (1).png" alt="Artist @i" class="artist-img" />
+
+                    <!-- Artist Info Container -->
+                    <div class="artist-info">
+                        <h1>KwekKwekSaStix</h1>
+                        <p>Digital Artist - Illustrator - Concept Artist</p>
+                    </div>
                 </div>
             }
         </div>
@@ -163,22 +168,17 @@
     <div class="grid">
         @for (int i = 0; i < 7; i++)
         {
-            <a href="@Url.Action("Product", "Home", new { id = i })" class="card-link">
-                <div class="card">
-                    @if (i == 0)
-                    {
-                        <img src="https://via.placeholder.com/100" />
-                        <h2 class="product-name">CHUBB</h2>
-                        <p>Digital Print</p>
-                        <span class="price">₱100.00</span>
+            <div class="card clickable-card" data-url="@Url.Action("Product", "Home", new { id = i })">
+                <img src="~/Content/images/artzada_logo.png" />
+                <h2 class="product-name">CHUBB @i</h2>
+                <p>Digital Print</p>
+                <span class="price">₱100.00</span>
 
-                        <div class="buttons">
-                            <button class="cart-btn">Add to cart</button>
-                            <button class="buy-btn">Buy now</button>
-                        </div>
-                    }
+                <div class="buttons">
+                    <button class="cart-btn">Add to cart</button>
+                    <button class="buy-btn">Buy now</button>
                 </div>
-            </a>
+            </div>
         }
     </div>
 
@@ -187,7 +187,10 @@
     <div class="grid">
         @for (int i = 0; i < 3; i++)
         {
-            <div class="card large"></div>
+            <div class="card large clickable-card" data-url="@Url.Action("Product", "Home", new { id = i + 10 })">
+                <h2>Product @i</h2>
+                <p>Flash Sale Item</p>
+            </div>
         }
     </div>
 
@@ -196,7 +199,10 @@
     <div class="grid">
         @for (int i = 0; i < 3; i++)
         {
-            <div class="card large"></div>
+            <div class="card large clickable-card" data-url="@Url.Action("Product", "Home", new { id = i + 20 })">
+                <h2>Service @i</h2>
+                <p>Our Service</p>
+            </div>
         }
     </div>
 
@@ -218,6 +224,19 @@
     </div>
 
     <!-- Javascript -->
-    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/site.js">
+    </script>
+
+    <script>
+        // Make the entire card clickable
+        document.querySelectorAll('.clickable-card').forEach(card => {
+            card.addEventListener('click', function (e) {
+                // Prevent navigation if clicking a button inside
+                if (e.target.tagName.toLowerCase() === 'button') return;
+                const url = card.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+    </script>
 </body>
 </html>

@@ -139,16 +139,41 @@ body {
     border-radius: 10px;
 }
 
+/* Each carousel item */
 .carousel-item {
-    min-width: 90vw;
-    height: 220px;
+    min-width: 90vw; /* full width per item */
+    padding: 20px;
     background: #333;
     color: white;
     display: flex;
+    flex-direction: column; /* stack image + text */
     align-items: center;
-    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    height: auto; /* let content define height */
 }
 
+    /* Artist image */
+    .carousel-item .artist-img {
+        width: 150px; /* adjust size */
+        height: 150px;
+        border-radius: 12px; /* optional rounded corners */
+        object-fit: contain; /* fit inside box without cropping */
+        margin-bottom: 15px;
+    }
+
+    /* Artist info container */
+    .carousel-item .artist-info h1 {
+        font-size: 20px;
+        margin: 5px 0;
+        color: white;
+    }
+
+    .carousel-item .artist-info p {
+        font-size: 14px;
+        margin: 0;
+        color: white;
+    }
 /* ========================= */
 /* GRID & CARDS */
 /* ========================= */
@@ -348,3 +373,7 @@ html {
         padding: 20px;
         text-align: center;
     }
+
+.clickable-card {
+    cursor: pointer; /* shows hand cursor on hover */
+}
