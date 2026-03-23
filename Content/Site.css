@@ -194,12 +194,11 @@ body {
     flex-direction: column;
     justify-content: space-between;
 
-    /* 🔥 HOVER BASE */
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* 🔥 CARD HOVER */
+
 .card:hover {
     transform: translateY(-10px) scale(1.03);
     box-shadow: 0 15px 30px rgba(0,0,0,0.25);
@@ -212,25 +211,22 @@ body {
     margin: 0 auto;
     transition: transform 0.3s ease;
 }
-
-/* 🔥 IMAGE ZOOM */
 .card:hover img {
     transform: scale(1.1);
 }
 
-/* TITLE */
+
 .card h3 {
     font-family: 'RushonGround', sans-serif;
     font-size: 18px;
     transition: color 0.2s ease;
 }
 
-/* 🔥 TITLE HOVER */
+
 .card:hover h3 {
     color: #ffe082;
 }
 
-/* BUTTONS */
 .buttons {
     display: flex;
     gap: 8px;
