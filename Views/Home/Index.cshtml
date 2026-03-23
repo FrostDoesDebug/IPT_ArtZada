@@ -34,8 +34,10 @@
                 <div class="filter">
                     <button class="dropdown-header">Filter</button>
 
+                    <!-- Overlay + Panel -->
                     <div class="dropdown-overlay">
                         <div class="dropdown-panel">
+                            <!-- Prices Section -->
                             <div class="dropdown-section">
                                 <h4 class="section-title">Prices</h4>
                                 <label class="custom-checkbox">
@@ -50,6 +52,7 @@
                                 </label>
                             </div>
 
+                            <!-- Medium Section -->
                             <div class="dropdown-section">
                                 <h4 class="section-title">Medium</h4>
                                 <label class="custom-checkbox">
@@ -132,86 +135,78 @@
             </div>
         </div>
     </div>
+        <!-- FEATURED -->
+        <h2 class="section-title">FEATURED ARTISTS</h2>
+        <div class="carousel">
+            <div class="carousel-track" id="carouselTrack">
+                @for (int i = 0; i < 5; i++)
+                {
+                    <div class="carousel-item">
+                        <h1>KwekKwekSaStix</h1>
+                        <p>Digital Artist - Illustrator - Concept Artist</p>
+                    </div>
+                }
+            </div>
+        </div>
 
-    <!-- FEATURED -->
-    <h2 class="section-title">FEATURED ARTISTS</h2>
-    <div class="carousel">
-        <div class="carousel-track" id="carouselTrack">
-            @for (int i = 0; i < 5; i++)
+        <!-- HOT SALES -->
+        <h2 class="section-title" id="hotSales">HOT SALES</h2>
+        <div class="grid">
+            @for (int i = 0; i < 7; i++)
             {
-                <div class="carousel-item">
-                    <h1>KwekKwekSaStix</h1>
-                    <p>Digital Artist - Illustrator - Concept Artist</p>
+                <div class="card">
+                    @if (i == 0)
+                    {
+                        <img src="https://via.placeholder.com/100" />
+                        <h2 class="product-name">CHUBB</h2>
+                        <p>Digital Print</p>
+                        <span class="price">₱100.00</span>
+
+                        <div class="buttons">
+                            <button class="cart-btn">Add to cart</button>
+                            <button class="buy-btn">Buy now</button>
+                        </div>
+                    }
                 </div>
             }
         </div>
-    </div>
 
-    <!-- HOT SALES -->
-    <h2 class="section-title" id="hotSales">HOT SALES</h2>
-    <div class="grid">
-        @for (int i = 0; i < 7; i++)
-        {
-            <div class="card" onclick="openProduct(@i)">
-                <img src="https://via.placeholder.com/100" />
-                <h2 class="product-name">Product @i</h2>
-                <p>Digital Print</p>
-                <span class="price">₱100.00</span>
-
-                <div class="buttons">
-                    <button class="cart-btn" onclick="event.stopPropagation(); addToCart(@i)">Add to cart</button>
-                    <button class="buy-btn" onclick="event.stopPropagation(); buyNow(@i)">Buy now</button>
-                </div>
-            </div>
-        }
-    </div>
-
-    <!-- FLASH SALES -->
-    <h2 class="section-title">FLASH SALES</h2>
-    <div class="grid">
-        @for (int i = 0; i < 3; i++)
-        {
-            <div class="card large" onclick="openProduct(1000 + @i)">
-                <img src="https://via.placeholder.com/200x150" />
-                <h2 class="product-name">Flash Product @i</h2>
-                <p>Limited time offer!</p>
-                <span class="price">₱200.00</span>
-            </div>
-        }
-    </div>
-
-    <!-- SERVICES -->
-    <h2 class="section-title">SERVICES</h2>
-    <div class="grid">
-        @for (int i = 0; i < 3; i++)
-        {
-            <div class="card large" onclick="openProduct(2000 + @i)">
-                <img src="https://via.placeholder.com/200x150" />
-                <h2 class="product-name">Service @i</h2>
-                <p>Professional Service Description</p>
-                <span class="price">₱500.00</span>
-            </div>
-        }
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <div class="footer-left">
-            <img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" class="footer-logo" />
+        <!-- FLASH SALES -->
+        <h2 class="section-title">FLASH SALES</h2>
+        <div class="grid">
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="card large"></div>
+            }
         </div>
 
-        <div class="footer-right">
-            <h3>ABOUT US</h3>
-            <p>
-                Artzada was founded with a simple idea: give artists a space where their creativity can be valued and discovered.
-                Today, Artzada bridges imagination and opportunity.
-            </p>
-
-            <h3>CONTACT US: 0983-2134-23112</h3>
+        <!-- SERVICES -->
+        <h2 class="section-title">SERVICES</h2>
+        <div class="grid">
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="card large"></div>
+            }
         </div>
-    </div>
 
-    <!-- Javascript -->
-    <script src="~/Scripts/site.js"></script>
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="footer-left">
+                <img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" class="footer-logo" />
+            </div>
+
+            <div class="footer-right">
+                <h3>ABOUT US</h3>
+                <p>
+                    Artzada was founded with a simple idea: give artists a space where their creativity can be valued and discovered.
+                    Today, Artzada bridges imagination and opportunity.
+                </p>
+
+                <h3>CONTACT US: 0983-2134-231</h3>
+            </div>
+        </div>
+
+        <!-- Javascript -->
+        <script src="~/Scripts/site.js"></script>
 </body>
 </html>
