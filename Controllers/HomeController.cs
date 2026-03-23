@@ -28,6 +28,9 @@ namespace ArtZada.Controllers
 
             return View();
         }
-
+        public ActionResult SellerProf()
+        {
+            return View();
+        }
     }
 }

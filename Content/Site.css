@@ -4,99 +4,14 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background: url('images/paperbg.png') no-repeat center center fixed;
+    background: url(images/paperbg.png) no-repeat center center fixed;
     background-size: cover;
 }
 
+/* FONT */
 @font-face {
     font-family: 'RushonGround';
-    src: url('Font/Rushon Ground.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.top-bar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* ========================= */
-/* HEADER */
-/* ========================= */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #7ea4a8;
-    padding: 10px 20px;
-    height: 70px;
-}
-
-.logo img {
-    height: 120px;
-    object-fit: contain;
-}
-
-.search-panel {
-    display: flex;
-    gap: 10px;
-    margin: 15px 20px;
-}
-
-.search-container {
-    display: flex;
-    align-items: center;
-    border: 3px solid black;
-    border-radius: 8px;
-    background: #fff;
-}
-
-.search-container input {
-    border: none;
-    padding: 8px 10px;
-    outline: none;
-    width: 200px;
-    font-weight: 600;
-}
-
-.search-btn {
-    border: none;
-    background: #d98c2b;
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-.filter {
-    position: relative;
-    padding: 8px 10px;
-    border: 3px solid black;
-    border-radius: 8px;
-    background: #fff;
-    cursor: pointer;
-}
-
-/* ========================= */
-/* ICONS */
-/* ========================= */
-.icons {
-    display: flex;
-    gap: 15px;
-}
-
-.icon img {
-    height: 50px;
-}
-
-.badge {
-    position: absolute;
-    top: -5px;
-    right: -8px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 50%;
+    src: url('/Font/Rushon Ground.ttf') format('truetype');
 }
 
 /* ========================= */
@@ -105,271 +20,201 @@ body {
 .navbar-container {
     display: flex;
     justify-content: center;
-    background: #BF4646;
-    height: 50px;
-}
-
-.navbar a {
-    color: black;
-    font-weight: 800;
-    margin: 0 15px;
-    text-decoration: none;
-}
-
-.navbar a:hover,
-.navbar a.active {
-    color: white;
-}
-
-/* ========================= */
-/* SECTIONS */
-/* ========================= */
-.section-title {
-    margin: 20px;
-    font-weight: 800;
-}
-
-/* ========================= */
-/* CAROUSEL */
-/* ========================= */
-.carousel {
-    overflow: hidden;
-    margin: 20px;
-    border: 5px solid black;
-    border-radius: 10px;
-}
-
-/* Each carousel item */
-.carousel-item {
-    min-width: 90vw; /* full width per item */
-    padding: 20px;
-    background: #333;
-    color: white;
-    display: flex;
-    flex-direction: column; /* stack image + text */
     align-items: center;
-    text-align: center;
-    border-radius: 12px;
-    height: auto; /* let content define height */
+    background: #BF4646;
+    height: 60px;
+    position: relative;
 }
 
-    /* Artist image */
-    .carousel-item .artist-img {
-        width: 150px; /* adjust size */
-        height: 150px;
-        border-radius: 12px; /* optional rounded corners */
-        object-fit: contain; /* fit inside box without cropping */
-        margin-bottom: 15px;
+/* arrows */
+.nav-arrows {
+    position: absolute;
+    left: 15px;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* nav links */
+.navbar {
+    display: flex;
+    gap: 60px;
+}
+
+    .navbar a {
+        color: black;
+        font-weight: 800;
+        text-decoration: none;
     }
 
-    /* Artist info container */
-    .carousel-item .artist-info h1 {
-        font-size: 20px;
-        margin: 5px 0;
-        color: white;
+        .navbar a:hover,
+        .navbar a.active {
+            color: white;
+        }
+
+/* ========================= */
+/* PROFILE HEADER */
+/* ========================= */
+.profile-header {
+    display: flex;
+    align-items: center;
+    background: #2f6f73;
+    margin: 50px;
+    padding: 25px 50px;
+    border-radius: 60px;
+    position: relative;
+}
+
+/* PROFILE IMAGE */
+.profile-pic {
+    position: absolute;
+    left: -60px;
+}
+
+    .profile-pic img {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        border: 5px solid black;
+        object-fit: cover;
     }
 
-    .carousel-item .artist-info p {
-        font-size: 14px;
+/* PROFILE INFO */
+.profile-info {
+    margin-left: 120px;
+    color: white;
+}
+
+    .profile-info h1 {
+        font-family: 'RushonGround';
+        font-size: 36px;
         margin: 0;
-        color: white;
     }
-/* ========================= */
-/* GRID & CARDS */
-/* ========================= */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 20px;
-    margin: 20px;
+
+/* BUTTON */
+.message-btn {
+    margin-top: 12px;
+    padding: 12px 30px;
+    border-radius: 20px;
+    border: 3px solid black;
+    background: #2f6f73;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
+    .message-btn:hover {
+        background: #25585c;
+        transform: scale(1.05);
+    }
+
+/* ========================= */
+/* ARTWORK SECTION */
+/* ========================= */
+.artworks-section {
+    padding: 30px 50px;
+}
+
+    .artworks-section h2 {
+        font-family: 'RushonGround';
+        font-size: 30px;
+    }
+
+/* GRID */
+.art-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+/* CARD */
+.art-card {
+    background: #7ea4a8;
+    border-radius: 25px;
+    padding: 20px;
+    text-align: center;
+    border: 5px solid black;
+    transition: 0.3s ease;
+}
+
+    .art-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    }
+
+    /* IMAGE */
+    .art-card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    /* TEXT */
+    .art-card h3 {
+        font-family: 'RushonGround';
+        margin: 10px 0 5px;
+    }
+
+    .art-card p {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    /* PRICE */
+    .art-card .price {
+        display: block;
+        margin-top: 10px;
+        font-size: 22px;
+        color: red;
+        font-weight: 800;
+    }
+
+    /* EMPTY */
+    .art-card.empty {
+        height: 260px;
+    }
+
+
+/* Instead use ONLY this if needed */
 .card {
     background: #7ea4a8;
     border-radius: 15px;
     padding: 10px;
     text-align: center;
     border: 5px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-
-.card:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-}
-
-/* IMAGE */
-.card img {
-    width: 100%;
-    max-width: 100px;
-    margin: 0 auto;
-    transition: transform 0.3s ease;
-}
-.card:hover img {
-    transform: scale(1.1);
-}
-
-
-.card h3 {
-    font-family: 'RushonGround', sans-serif;
-    font-size: 18px;
-    transition: color 0.2s ease;
-}
-
-
-.card:hover h3 {
-    color: #ffe082;
-}
-
-.buttons {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.cart-btn,
-.buy-btn {
-    flex: 1;
-    padding: 10px 0;
-    font-weight: 700;
-    border: 3px solid black;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.cart-btn {
-    background: orange;
-    color: white;
-}
-
-.buy-btn {
-    background: red;
-    color: white;
-}
-
-/* 🔥 BUTTON HOVER */
-.cart-btn:hover {
-    background: #e69500;
-    transform: scale(1.05);
-}
-
-.buy-btn:hover {
-    background: #cc0000;
-    transform: scale(1.05);
-}
-
-.price {
-    color: red;
-    font-weight: 800;
 }
 
 /* ========================= */
-/* FOOTER */
+/* RESPONSIVE */
 /* ========================= */
-.footer {
-    background: #e0d3c0;
-    padding: 20px;
-    margin-top: 40px;
-    border-top: 5px solid black;
+@media (max-width: 1024px) {
+    .art-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.footer-logo {
-    height: 200px;
-}
-
-/* ========================= */
-/* FILTER MODAL */
-/* ========================= */
-.dropdown-overlay {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-}
-
-.filter.show .dropdown-overlay {
-    display: flex;
-}
-
-/* ========================= */
-/* MESSAGE PAGE */
-/* ========================= */
-.message-layout {
-    display: flex;
-    gap: 20px;
-    margin: 20px;
-}
-
-.chat-panel {
-    flex: 1;
-    background: #7ea4a8;
-    border: 5px solid black;
-    border-radius: 15px;
-    padding: 20px;
-}
-
-/* ========================= */
-/* EXTRA (SMOOTH UI) */
-/* ========================= */
-
-/* Smooth scrolling feel */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Card link wrapper */
-.card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-/* Standard card */
-.card, .carousel-item {
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-}
-
-    /* Hover effect */
-    .card:hover, .carousel-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+@media (max-width: 600px) {
+    .art-grid {
+        grid-template-columns: 1fr;
     }
 
-    /* Optional: image zoom effect on hover */
-    .card img, .carousel-item img {
-        transition: transform 0.3s;
-    }
-
-    .card:hover img, .carousel-item:hover img {
-        transform: scale(1.05);
-    }
-
-    /* Buttons inside card */
-    .card .cart-btn:hover,
-    .card .buy-btn:hover {
-        background-color: #ff6f61;
-        color: #fff;
-    }
-
-    /* Large cards for FLASH SALES and SERVICES */
-    .card.large {
-        padding: 20px;
+    .profile-header {
+        flex-direction: column;
         text-align: center;
     }
 
-.clickable-card {
-    cursor: pointer; /* shows hand cursor on hover */
+    .profile-pic {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    .profile-info {
+        margin-left: 0;
+    }
 }
