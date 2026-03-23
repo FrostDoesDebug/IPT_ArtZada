@@ -11,6 +11,14 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        /* Make the card clickable without breaking layout */
+        .card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 
 <body>
@@ -135,25 +143,27 @@
             </div>
         </div>
     </div>
-        <!-- FEATURED -->
-        <h2 class="section-title">FEATURED ARTISTS</h2>
-        <div class="carousel">
-            <div class="carousel-track" id="carouselTrack">
-                @for (int i = 0; i < 5; i++)
-                {
-                    <div class="carousel-item">
-                        <h1>KwekKwekSaStix</h1>
-                        <p>Digital Artist - Illustrator - Concept Artist</p>
-                    </div>
-                }
-            </div>
-        </div>
 
-        <!-- HOT SALES -->
-        <h2 class="section-title" id="hotSales">HOT SALES</h2>
-        <div class="grid">
-            @for (int i = 0; i < 7; i++)
+    <!-- FEATURED -->
+    <h2 class="section-title">FEATURED ARTISTS</h2>
+    <div class="carousel">
+        <div class="carousel-track" id="carouselTrack">
+            @for (int i = 0; i < 5; i++)
             {
+                <div class="carousel-item">
+                    <h1>KwekKwekSaStix</h1>
+                    <p>Digital Artist - Illustrator - Concept Artist</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- HOT SALES -->
+    <h2 class="section-title" id="hotSales">HOT SALES</h2>
+    <div class="grid">
+        @for (int i = 0; i < 7; i++)
+        {
+            <a href="@Url.Action("Product", "Home", new { id = i })" class="card-link">
                 <div class="card">
                     @if (i == 0)
                     {
@@ -168,45 +178,46 @@
                         </div>
                     }
                 </div>
-            }
+            </a>
+        }
+    </div>
+
+    <!-- FLASH SALES -->
+    <h2 class="section-title">FLASH SALES</h2>
+    <div class="grid">
+        @for (int i = 0; i < 3; i++)
+        {
+            <div class="card large"></div>
+        }
+    </div>
+
+    <!-- SERVICES -->
+    <h2 class="section-title">SERVICES</h2>
+    <div class="grid">
+        @for (int i = 0; i < 3; i++)
+        {
+            <div class="card large"></div>
+        }
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-left">
+            <img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" class="footer-logo" />
         </div>
 
-        <!-- FLASH SALES -->
-        <h2 class="section-title">FLASH SALES</h2>
-        <div class="grid">
-            @for (int i = 0; i < 3; i++)
-            {
-                <div class="card large"></div>
-            }
+        <div class="footer-right">
+            <h3>ABOUT US</h3>
+            <p>
+                Artzada was founded with a simple idea: give artists a space where their creativity can be valued and discovered.
+                Today, Artzada bridges imagination and opportunity.
+            </p>
+
+            <h3>CONTACT US: 0983-2134-231</h3>
         </div>
+    </div>
 
-        <!-- SERVICES -->
-        <h2 class="section-title">SERVICES</h2>
-        <div class="grid">
-            @for (int i = 0; i < 3; i++)
-            {
-                <div class="card large"></div>
-            }
-        </div>
-
-        <!-- FOOTER -->
-        <div class="footer">
-            <div class="footer-left">
-                <img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" class="footer-logo" />
-            </div>
-
-            <div class="footer-right">
-                <h3>ABOUT US</h3>
-                <p>
-                    Artzada was founded with a simple idea: give artists a space where their creativity can be valued and discovered.
-                    Today, Artzada bridges imagination and opportunity.
-                </p>
-
-                <h3>CONTACT US: 0983-2134-231</h3>
-            </div>
-        </div>
-
-        <!-- Javascript -->
-        <script src="~/Scripts/site.js"></script>
+    <!-- Javascript -->
+    <script src="~/Scripts/site.js"></script>
 </body>
 </html>
