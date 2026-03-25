@@ -1,0 +1,64 @@
+﻿
+@{ ViewBag.Title = "Cart"; Layout = null; }
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Cart</title>
+    <link rel="stylesheet" href="~/Content/Site.css" />
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar-container">
+        <div class="nav-arrows">
+            <button class="nav-btn">◀</button>
+            <button class="nav-btn">▶</button>
+        </div>
+
+        <div class="navbar">
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">Message</a>
+            <a href="#" class="active">Cart</a>
+            <a href="#">Account</a>
+        </div>
+    </div>
+
+    <!-- CART CONTENT -->
+    <div class="cart-wrapper">
+        <h1 class="cart-title">ART BY KWEKKWEKSASTIX</h1>
+
+        <!-- ITEM -->
+        <div class="cart-item">
+            <input type="checkbox" class="cart-checkbox" />
+
+            <img src="~/images/sample-art.png" class="cart-img" />
+
+            <div class="cart-info">
+                <h2 class="cart-name">CHUBB</h2>
+                <p class="cart-type">Digital Print</p>
+            </div>
+
+            <div class="cart-right">
+                <h2 class="cart-price">₱100.00</h2>
+
+                <div class="cart-qty">
+                    <span>Quantity</span>
+                    <button class="qty-btn">−</button>
+                    <span class="qty-number">1</span>
+                    <button class="qty-btn">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT BAR -->
+    <div class="checkout-bar">
+        <div class="checkout-inner">
+            <h2>Total <span>₱100.00</span></h2>
+            <button class="checkout-btn">Check out</button>
+        </div>
+    </div>
+</body>
+</html>
