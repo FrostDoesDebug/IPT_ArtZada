@@ -5,6 +5,17 @@
 
 <link rel="stylesheet" href="~/Content/Site.css" />
 
+<style>
+    /* Override navbar top only for this page */
+    .navbar-container {
+        top: 0; /* navbar starts at the very top */
+    }
+
+    body {
+        padding-top: 50px; /* height of navbar so content doesn't go under it */
+    }
+</style>
+
 <div class="page-container">
 
     @{
@@ -38,15 +49,13 @@
     <!-- PROFILE HEADER -->
     <div class="profile-header">
         <div class="profile-pic">
-            <img src="@Url.Content("~/images/profile.jpg")" alt="profile" />
+            <img src="~/images/profile.jpg" alt="profile" />
         </div>
 
         <div class="profile-info">
             <h1>KWEKKWEKSASTIX</h1>
 
-            <button class="message-btn">
-                ✉ Send Message!
-            </button>
+            <button class="message-btn">✉ Send Message!</button>
         </div>
     </div>
 
@@ -55,9 +64,10 @@
         <h2>ARTWORKS</h2>
 
         <div class="art-grid">
-
+            <!-- CARD -->
             <div class="art-card">
-                <img src="@Url.Content("~/images/dog.jpg")" alt="art" />
+                <img src="~/images/dog.jpg" alt="art" />
+
                 <h3>CHUBB</h3>
                 <p>Digital Print</p>
                 <span class="price">₱100.00</span>
@@ -66,8 +76,6 @@
             <div class="art-card empty"></div>
             <div class="art-card empty"></div>
             <div class="art-card empty"></div>
-
         </div>
     </div>
-
 </div>

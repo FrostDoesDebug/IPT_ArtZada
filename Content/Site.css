@@ -26,6 +26,11 @@ body {
 .top-bar {
     background: #7EACB5;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* Make sure it stays on top */
 }
 
 .header {
@@ -171,8 +176,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
-    position: relative;
+    height: 50px; 
+    position: fixed;
+    top: 90px; /* adjust this depending on top-bar height */
+    left: 0;
+    width: 100%;
+    z-index: 9998;
 }
 
 .nav-arrows {
