@@ -9,7 +9,6 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* Added a fallback background color in case the image path fails */
     background: #f4f4f4 url('images/paperbg.png') no-repeat center center fixed;
     background-size: cover;
     color: #333;
@@ -30,21 +29,19 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 9999; /* Make sure it stays on top */
+    z-index: 9999;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px; /* Prevents infinite stretching on large monitors */
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 15px 20px;
 }
 
 .logo img {
-    height: 50px;
-    width: auto;
+    height: 100px;
 }
 
 /* SEARCH & FILTER */
@@ -82,8 +79,8 @@ body {
 }
 
     .search-btn img {
-        height: 18px;
-        opacity: 0.6;
+        height: 25px;
+        opacity:1;
     }
 
 /* FILTER DROPDOWN */
@@ -101,23 +98,41 @@ body {
     font-weight: 600;
 }
 
+/* UPDATED: Full-page overlay for dropdown */
 .dropdown-overlay {
     display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    z-index: 1000;
-    padding: 15px;
-    border-radius: 8px;
-    min-width: 220px;
-    margin-top: 10px;
-    border: 1px solid #eee;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 9999;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 120px; /* space for header */
 }
 
-.filter:hover .dropdown-overlay {
-    display: block;
+    .dropdown-overlay.active {
+        display: flex;
+    }
+
+.dropdown-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 250px;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+    float: right;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 .dropdown-section {
@@ -141,7 +156,7 @@ body {
 /* ICONS */
 .icons {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
 }
 
@@ -153,7 +168,8 @@ body {
 }
 
     .icon img {
-        height: 24px;
+        height: 50px;
+        width: auto;
     }
 
 .badge {
@@ -176,9 +192,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px; 
+    height: 50px;
     position: fixed;
-    top: 90px; /* adjust this depending on top-bar height */
+    top: 90px;
     left: 0;
     width: 100%;
     z-index: 9998;
@@ -285,7 +301,6 @@ h2.section-title {
 /* ========================= */
 .grid {
     display: grid;
-    /* auto-fill ensures cards don't stretch indefinitely on large screens */
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 25px;
     max-width: 1200px;
@@ -311,8 +326,8 @@ h2.section-title {
 
     .card img {
         width: 100%;
-        height: 220px; /* Fixed height stops the squished look */
-        object-fit: cover; /* or use 'contain' if you don't want images cropped */
+        height: 220px;
+        object-fit: cover;
         border-radius: 6px;
         background: #fff;
         margin-bottom: 15px;
@@ -342,7 +357,7 @@ h2.section-title {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: auto; /* Pushes buttons to the bottom of the card */
+    margin-top: auto;
 }
 
 .cart-btn,
@@ -383,13 +398,13 @@ h2.section-title {
     padding: 40px 10%;
     background: #2f6f73;
     color: white;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    flex-wrap: wrap;
     gap: 30px;
 }
 
 .footer-logo {
     width: 140px;
-    filter: brightness(0) invert(1); /* Turns a dark logo white for better contrast */
+    filter: brightness(0) invert(1);
 }
 
 .footer-right {
