@@ -10,25 +10,29 @@
     <title>Artzada</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link rel="stylesheet" href="~/Content/site.css" />
     <style>
         /* Make the card clickable without breaking layout */
-        .card-link {
+        .clickable-card {
+            cursor: pointer;
             display: block;
             text-decoration: none;
             color: inherit;
+            transition: transform 0.2s ease;
         }
+
+            .clickable-card:hover {
+                transform: translateY(-5px);
+            }
     </style>
 </head>
 
 <body>
+    <!-- TOP BAR -->
     <div class="top-bar">
-        <!-- HEADER -->
         <div class="header">
             <div class="logo">
-                <a href="/">
-                    <img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" />
-                </a>
+                <a href="/"><img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" /></a>
             </div>
 
             <div class="search-panel">
@@ -41,63 +45,23 @@
 
                 <div class="filter">
                     <button class="dropdown-header">Filter</button>
-
-                    <!-- Overlay + Panel -->
                     <div class="dropdown-overlay">
                         <div class="dropdown-panel">
-                            <!-- Prices Section -->
                             <div class="dropdown-section">
                                 <h4 class="section-title">Prices</h4>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Below 100
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Above 100
-                                </label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Below 100</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Above 100</label>
                             </div>
 
-                            <!-- Medium Section -->
                             <div class="dropdown-section">
                                 <h4 class="section-title">Medium</h4>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Digital Art
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Charcoal
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Colored Pencil
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Graphite
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Pastel
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Ink
-                                </label>
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                    Others
-                                </label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Digital Art</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Charcoal</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Colored Pencil</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Graphite</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Pastel</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Ink</label>
+                                <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Others</label>
                             </div>
                         </div>
                     </div>
@@ -127,33 +91,23 @@
             </div>
 
             <div class="navbar">
-                <a href="/Home/Index" id="navHome"
-                   class="@(currentAction == "Index" ? "active" : "")">Home</a>
-
-                <a href="#hotSales" id="navShop">Shop</a>
-
-                <a href="/Home/Message"
-                   class="@(currentAction == "Message" ? "active" : "")">Message</a>
-
-                <a href="/Home/Cart"
-                   class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
-
-                <a href="/Home/Account"
-                   class="@(currentAction == "Account" ? "active" : "")">Account</a>
+                <a href="/Home/Index" class="@(currentAction == "Index" ? "active" : "")">Home</a>
+                <a href="#hotSales">Shop</a>
+                <a href="/Home/Message" class="@(currentAction == "Message" ? "active" : "")">Message</a>
+                <a href="/Home/Cart" class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
+                <a href="/Home/Account" class="@(currentAction == "Account" ? "active" : "")">Account</a>
             </div>
         </div>
     </div>
 
+    <!-- FEATURED ARTISTS -->
     <h2 class="section-title">FEATURED ARTISTS</h2>
     <div class="carousel">
         <div class="carousel-track" id="carouselTrack">
             @for (int i = 0; i < 5; i++)
             {
                 <div class="carousel-item">
-                    <!-- Artist Image -->
                     <img src="~/Content/images/KwekKweksaStix (1).png" alt="Artist @i" class="artist-img" />
-
-                    <!-- Artist Info Container -->
                     <div class="artist-info">
                         <h1>KwekKwekSaStix</h1>
                         <p>Digital Artist - Illustrator - Concept Artist</p>
@@ -173,7 +127,6 @@
                 <h2 class="product-name">CHUBB @i</h2>
                 <p>Digital Print</p>
                 <span class="price">₱100.00</span>
-
                 <div class="buttons">
                     <button class="cart-btn">Add to cart</button>
                     <button class="buy-btn">Buy now</button>
@@ -224,14 +177,11 @@
     </div>
 
     <!-- Javascript -->
-    <script src="~/Scripts/site.js">
-    </script>
-
+    <script src="~/Scripts/site.js"></script>
     <script>
         // Make the entire card clickable
         document.querySelectorAll('.clickable-card').forEach(card => {
             card.addEventListener('click', function (e) {
-                // Prevent navigation if clicking a button inside
                 if (e.target.tagName.toLowerCase() === 'button') return;
                 const url = card.getAttribute('data-url');
                 if (url) window.location.href = url;
