@@ -10,7 +10,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     /* Added a fallback background color in case the image path fails */
-    background: #f4f4f4 url('../images/paperbg.png') no-repeat center center fixed;
+    background: #f4f4f4 url('images/paperbg.png') no-repeat center center fixed;
     background-size: cover;
     color: #333;
 }
@@ -24,7 +24,7 @@ body {
 /* HEADER & TOP BAR          */
 /* ========================= */
 .top-bar {
-    background: #ffffff;
+    background: #7EACB5;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
@@ -70,7 +70,7 @@ body {
     }
 
 .search-btn {
-    background: transparent;
+    background: #D88628;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
