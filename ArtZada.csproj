@@ -164,6 +164,7 @@
     <Content Include="Content\images\to_receive.png" />
     <Content Include="Content\images\to_ship.png" />
     <Content Include="Content\images\warning.png" />
+    <Content Include="Content\SellerProf.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
