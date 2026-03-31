@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewBag.PageClass = "landing-page";
+}
+
+
+<div class="landing-wrapper">
+    <img class="landing-logo" src="@Url.Content("~/Content/images/artzada_logo.png")" alt="ArtZada" />
+    <a class="landing-cta" href="@Url.Action("Login", "Admin")">Shop now!</a>
+</div>
+
