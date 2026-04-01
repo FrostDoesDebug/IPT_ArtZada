@@ -1,0 +1,213 @@
+/* Auth + Landing screens (no navbar) */
+
+.auth-body {
+    min-height: 100vh;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.admin-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #444;
+    z-index: 2;
+}
+
+.admin-login-page {
+    overflow: hidden;
+}
+
+.admin-login-bg-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.admin-login-bg {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1100px, 120vw);
+    height: auto;
+    opacity: 0.2;
+    filter: grayscale(100%);
+}
+
+.admin-login-bg-admin {
+    top: 8vh;
+}
+
+.admin-login-bg-access {
+    bottom: 6vh;
+}
+
+.admin-login-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Landing */
+.landing-page {
+    /* override base auth flex (row) and avoid 100vh + padding causing scroll */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0;
+    overflow: hidden;
+}
+
+.landing-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    text-align: center;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    transform: translateY(clamp(-120px, -10vh, -48px));
+}
+
+.landing-logo {
+    width: min(983px, 88vw);
+    height: auto;
+    display: block;
+    margin: 0;
+    object-fit: contain;
+    object-position: center;
+}
+/*  shop now buton */
+.landing-cta {
+    display: inline-block;
+    margin-top: clamp(-260px, -18vw, -130px);
+    padding: 10px 26px;
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    text-decoration: none;
+    border: 4px solid #000;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #3657ff 0%, #7b3cff 35%, #ffb400 100%);
+    box-shadow: 0 6px 0 rgba(0,0,0,0.35);
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.landing-cta:hover {
+    filter: brightness(1.05);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .landing-wrapper {
+        transform: translateY(clamp(-90px, -9vh, -30px));
+    }
+
+    .landing-logo {
+        width: min(94vw, 820px);
+    }
+
+    .landing-cta {
+        margin-top: clamp(-170px, -22vw, -90px);
+    }
+}
+
+/* Login / Signup */
+.auth-card {
+    width: min(460px, 92vw);
+    background: #7EACB5;
+    border: 4px solid #111;
+    border-radius: 25px;
+    padding: 28px 34px 26px;
+}
+
+.auth-title {
+    font-family: 'RushonGround', sans-serif;
+    text-align: center;
+    font-size: 54px;
+    margin-bottom: 15px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.auth-form-group {
+    margin-bottom: 10px;
+}
+
+.auth-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.auth-input {
+    width: 100%;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    padding: 8px 10px;
+    outline: none;
+}
+
+.auth-validation {
+    margin: 0 0 12px;
+}
+
+.auth-btn {
+    display: block;
+    width: 100%;
+    border: 3px solid #000;
+    border-radius: 4px;
+    font-weight: 900;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.auth-btn-primary {
+    background: #69d84d;
+    color: #000;
+}
+
+.auth-btn-secondary {
+    background: #d94b4b;
+    color: #000;
+}
+
+.auth-actions {
+    margin-top: 14px;
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+}
+
+.auth-footer {
+    margin-top: 12px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.auth-footer a {
+    color: #1b2fbf;
+    text-decoration: underline;
+}

@@ -120,13 +120,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LandingController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Auth.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -143,8 +147,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\images\ACCESS.png" />
     <Content Include="Content\images\add_item.png" />
     <Content Include="Content\images\add_quantity.png" />
+    <Content Include="Content\images\ADMIN.png" />
     <Content Include="Content\images\artzada_logo.png" />
     <Content Include="Content\images\attach.png" />
     <Content Include="Content\images\basket.png" />
@@ -206,6 +212,17 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\SellerProf.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Landing\Landing.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\_AuthLayout.cshtml" />
+    <Content Include="Views\Login\Signup.cshtml" />
+    <Content Include="Views\Admin\Landing.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\UserOverview.cshtml" />
+    <Content Include="Views\Admin\Pending.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\BannedListed.cshtml" />
+    <Content Include="Views\Admin\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
