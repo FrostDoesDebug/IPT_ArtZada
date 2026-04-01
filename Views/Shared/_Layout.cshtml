@@ -1,39 +1,444 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <style>
+        @@font-face {
+            font-family: 'Rushon Ground';
+            src: url('/Content/Font/Rushon Ground.ttf') format('truetype');
+        }
+
+        :root {
+            --red: #BF4646;
+            --cream: #EDDCC6;
+            --panel: #7EACB5;
+            --green: #5DDB44;
+            --orange: #D88628;
+            --teal: #276470;
+            --brown: #8C571C;
+            --lime: #DDFA36;
+            --white: #FFFFFF;
+            --dark: #000000;
+            --bw: 5px;
+            --border: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+
+        body {
+            background: #EDDCC6 url('/Content/images/paperbg.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        /* ══ NAVBAR ══ */
+        .navbar-container {
+            background: #BF4646;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            position: relative;
+            z-index: 10;
+            width: 1920px;
+        }
+
+        .nav-logo {
+            position: absolute;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+            .nav-logo svg {
+                width: 44px;
+                height: 28px;
+            }
+
+        .navbar {
+            display: flex;
+            gap: 60px;
+        }
+
+            .navbar a {
+                color: rgba(0,0,0,0.75);
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                text-decoration: none;
+                font-size: 14px;
+                letter-spacing: 0.5px;
+                transition: color 0.2s;
+                cursor: pointer;
+            }
+
+                .navbar a:hover {
+                    color: rgba(0,0,0,0.95);
+                }
+
+                .navbar a.active {
+                    color: #fff;
+                    border-bottom: 3px solid white;
+                    padding-bottom: 2px;
+                }
+
+        /* ══ BELL — protrudes below nav ══ */
+        .nav-bell {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 80px;
+            height: 78px;
+            background: #BF4646;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: filter 0.15s;
+            z-index: 20;
+            text-decoration: none;
+        }
+
+            .nav-bell:hover {
+                filter: brightness(1.15);
+            }
+
+            .nav-bell img {
+                width: 46px;
+                height: 46px;
+                object-fit: contain;
+                margin-top: 20px;
+                animation: ring 2.5s ease-in-out infinite;
+                transform-origin: top center;
+            }
+
+        @@keyframes ring {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+
+            10% {
+                transform: rotate(14deg);
+            }
+
+            20% {
+                transform: rotate(-12deg);
+            }
+
+            30% {
+                transform: rotate(9deg);
+            }
+
+            40% {
+                transform: rotate(-6deg);
+            }
+
+            50% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .nav-bell .bdg {
+            position: absolute;
+            top: 8px;
+            right: 6px;
+            background: #D88628;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* ══ PAGE WRAP ══ */
+        .page-wrap {
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 1920px;
+            height: 1030px;
+            padding: 24px 36px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+    @RenderSection("Styles", required: false)
 </head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
-            </div>
+<body data-page="@ViewBag.Page">
+
+    <!-- NAVBAR -->
+    <div class="navbar-container">
+
+        <!-- Back/Forward arrows -->
+        <div class="nav-logo">
+            <svg viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="2,14  18,4  18,24" fill="white"
+                         style="cursor:pointer" onclick="history.back()" />
+                <polygon points="26,4  42,14  26,24" fill="white"
+                         style="cursor:pointer" onclick="history.forward()" />
+            </svg>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
+        <!-- Nav links — black inactive, white active -->
+        <nav class="navbar">
+            <a href="/Home/Index"
+               class="@(ViewBag.Page=="store"     ? "active" : "")"
+               onclick="navigateTo('/Home/Index'); return false;">Store</a>
+            <a href="/Home/Message"
+               class="@(ViewBag.Page=="message"   ? "active" : "")"
+               onclick="navigateTo('/Home/Message'); return false;">Message</a>
+            <a href="/Home/Analytics"
+               class="@(ViewBag.Page=="analytics" ? "active" : "")"
+               onclick="navigateTo('/Home/Analytics'); return false;">Analytics</a>
+            <a href="/Home/Account"
+               class="@(ViewBag.Page=="account"   ? "active" : "")"
+               onclick="navigateTo('/Home/Account'); return false;">Account</a>
+        </nav>
+
+        <!-- ──────────────────────────────────────
+             BELL BUTTON
+             FIX: was only showing the popup, never going to the page.
+             Now it does BOTH — shows popup AND navigates.
+
+             ► To show popup only (no navigation):
+               onclick="npToggle(); return false;"
+
+             ► To navigate only (no popup):
+               onclick="navigateTo('/Home/Notifications'); return false;"
+
+             ► Current: does both (popup + navigate):
+               onclick="npToggle(); navigateTo('/Home/Notifications'); return false;"
+             ────────────────────────────────────── -->
+        <a class="nav-bell" href="#"
+           onclick="npToggle(); navigateTo('/Home/Notifications'); return false;">
+            <img src="/Content/images/notification.png" alt="Notifications"
+                 onerror="this.outerHTML='<span style=\'font-size:28px;margin-top:20px\'>&#128276;</span>'" />
+            <span class="bdg">3</span>
+        </a>
+
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <!-- Page label -->
+    @if (!string.IsNullOrEmpty(ViewBag.PageLabel as string))
+    {
+        <div style="position:absolute;top:52px;left:4px;font-size:11px;color:#555;padding:1px 8px;z-index:5;">
+            @ViewBag.PageLabel
+        </div>
+    }
+
+    <!-- Page content -->
+    <div class="page-wrap">
+        @RenderBody()
+    </div>
+
+    <!-- NOTIFICATION POPUP -->
+    <style>
+        #np {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 340px;
+            background: var(--panel);
+            border: var(--bw) solid var(--border);
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+            z-index: 8000;
+            box-shadow: -4px 6px 20px rgba(0,0,0,.3);
+            transform: translateX(360px);
+            opacity: 0;
+            transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+            #np.show {
+                transform: translateX(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+        .np-label {
+            background: var(--cream);
+            border-bottom: var(--bw) solid var(--border);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--dark);
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: .5px;
+        }
+
+        .np-x {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            color: var(--dark);
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .np-body {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .np-search {
+            display: flex;
+            align-items: center;
+            background: var(--orange);
+            border: var(--bw) solid var(--border);
+            border-radius: 10px;
+            height: 52px;
+            padding: 0 10px;
+            gap: 8px;
+        }
+
+            .np-search input {
+                flex: 1;
+                background: var(--white);
+                border: none;
+                border-radius: 6px;
+                height: 34px;
+                padding: 0 10px;
+                font-family: 'Poppins', sans-serif;
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--dark);
+                outline: none;
+            }
+
+        .np-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+            border: var(--bw) solid var(--border);
+            height: 72px;
+            padding: 0 10px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            background: var(--panel);
+            color: var(--dark);
+        }
+
+            .np-item.warn {
+                background: var(--red);
+                color: var(--white);
+            }
+
+        .np-ic {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: var(--bw) solid var(--border);
+            background: var(--teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+            .np-ic img {
+                width: 26px;
+                height: 26px;
+                object-fit: contain;
+                filter: brightness(0) invert(1);
+            }
+
+        .np-item.warn .np-ic {
+            background: rgba(0,0,0,.15);
+            border-color: rgba(255,255,255,.4);
+        }
+    </style>
+
+    <div id="np">
+        <div class="np-label">
+            <span>Popup notification - Seller Side</span>
+            <button class="np-x" onclick="npClose()">✕</button>
+        </div>
+        <div class="np-body">
+            <div class="np-search">
+                <img src="/Content/images/search.png"
+                     style="width:24px;height:24px;object-fit:contain;flex-shrink:0;"
+                     onerror="this.outerHTML='<span style=\'font-size:18px\'>🔍</span>'" />
+                <input type="text" placeholder="Search Notification" />
+            </div>
+            <div class="np-item warn">
+                <div class="np-ic">
+                    <img src="/Content/images/warning.png"
+                         onerror="this.outerHTML='<span style=\'font-size:20px\'>⚠️</span>'" />
+                </div>
+                <span>Warning: Only 3 pieces of Chubb remaining!</span>
+            </div>
+            <div class="np-item">
+                <div class="np-ic">
+                    <img src="/Content/images/message.png"
+                         onerror="this.outerHTML='<span style=\'font-size:20px\'>👤</span>'" />
+                </div>
+                <span>Client#1 has replied to your message</span>
+            </div>
+            <div class="np-item">
+                <div class="np-ic">
+                    <img src="/Content/images/goods.png"
+                         onerror="this.outerHTML='<span style=\'font-size:20px\'>✔️</span>'" />
+                </div>
+                <span>Chubb has been sold successfully!</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var el = document.getElementById('np'), t;
+            function show() { el.classList.add('show'); t = setTimeout(npClose, 7000); }
+            window.npClose = function () { clearTimeout(t); el.classList.remove('show'); };
+            setTimeout(show, 900);
+        })();
+        function npToggle() {
+            var el = document.getElementById('np');
+            el.classList.contains('show') ? npClose() : el.classList.add('show');
+        }
+        function navigateTo(url) {
+            if (url && url !== '#' && url !== '')
+                window.location.href = url;
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
