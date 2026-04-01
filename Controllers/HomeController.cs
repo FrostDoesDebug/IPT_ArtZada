@@ -18,8 +18,13 @@ namespace ArtZada.Controllers
             ViewBag.Page = "store";
             return View();
         }
-
-        public ActionResult Cart()
+        public ActionResult AdminAccount()
+        {
+            ViewBag.AdminUsername = ""; // Replace with your session/db value
+            ViewBag.ProfileImageUrl = "";        // Replace with actual image path if available
+            return View();
+        }
+        public ActionResult AdminEditAccount()
         {
             ViewBag.Title = "Cart";
             ViewBag.Page = "Cart";
@@ -237,5 +242,22 @@ namespace ArtZada.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
+
+        public ActionResult SellerSideStore()
+        {
+            return View();
+        }
+
+        public ActionResult SellerSideStoreAddItem()
+        {
+            return View();
+        }
+
+        public ActionResult SellerSideEditItem()
+        {
+            return View();
+        }
+
+        
     }
 }

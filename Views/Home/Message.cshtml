@@ -5,88 +5,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="messaging-layout">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Messages</title>
+    <link rel="stylesheet" href="~/Content/site.css" />
+</head>
 
-    <div class="chat-sidebar-container">
+<body>
 
-        <div class="chat-sidebar">
-            <div class="chat-contact selected" onclick="selectContact(this,'CLIENT #1')">
-                <div class="avatar" style="width:60px;height:60px;">
-                    <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
-                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
-                         onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
-                </div>
-                <span class="contact-name">CLIENT #1</span>
-            </div>
-            <div class="chat-contact-empty"></div>
-            <div class="chat-contact-empty"></div>
+    @{
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    }
+
+    <!-- NAVBAR -->
+    <div class="navbar-container">
+        <div class="nav-arrows">
+            <button class="nav-btn">&#9664;</button>
+            <button class="nav-btn">&#9654;</button>
         </div>
 
     </div>
 
-    <div class="chat-window">
-        <div class="chat-header">
-            <div class="avatar" style="width:60px;height:60px;">
-                <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
-                     style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
-                     onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+    <div class="message-layout">
+
+        <!-- LEFT PANEL -->
+        <div class="message-sidebar">
+
+            <div class="sidebar-header">
+                <div class="profile">
+                    <div class="profile-pic"></div>
+                    <strong>Chats</strong>
+                </div>
             </div>
-            <span class="chat-header-name" id="chatHeaderName">CLIENT #1</span>
+
+            <!-- USERS -->
+            <div class="sidebar-user" onclick="loadChat('User 1')">
+                <div class="profile-pic small"></div>
+                <span>User 1</span>
+            </div>
+
+            <div class="sidebar-user" onclick="loadChat('User 2')">
+                <div class="profile-pic small"></div>
+                <span>User 2</span>
+            </div>
+
         </div>
 
-        <div class="chat-body" id="chatBody">
-            <div class="chat-date">April 9</div>
+        <!-- CHAT PANEL -->
+        <div class="chat-panel">
 
-            <div class="chat-row sent">
-                <div class="bubble sent">Kwekkwek ka ba?</div>
-            </div>
-            <div class="chat-row received">
-                <div class="avatar" style="width:60px;height:60px;">
-                    <img src="@Url.Content("~/Content/images/message.png")" alt="c"
-                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
-                         onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+            <!-- HEADER -->
+            <div class="chat-header">
+                <div class="profile">
+                    <div class="profile-pic"></div>
+                    <strong id="chatName">KWEKKWEKSASTIX</strong>
                 </div>
-                <div class="bubble received">Bakit?</div>
             </div>
-            <div class="chat-row sent">
-                <div class="bubble sent">Sarap mo kasi tusukin</div>
+
+            <!-- CHAT -->
+            <div class="chat-body" id="chatBody">
+                <!-- Messages will load here -->
             </div>
-            <div class="chat-row received">
-                <div class="avatar" style="width:60px;height:60px;">
-                    <img src="@Url.Content("~/Content/images/message.png")" alt="c"
-                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
-                         onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
-                </div>
-                <div class="bubble received">haha</div>
+
+            <!-- INPUT -->
+            <div class="chat-input">
+
+                <label class="attach-btn">
+                    📎
+                    <input type="file" accept="image/png" hidden />
+                </label>
+
+                <input type="text" id="messageInput" placeholder="Ayos" />
+                <button onclick="sendMessage()">Send</button>
             </div>
-        </div>
 
-        <div class="chat-input-row">
-
-            <!-- ── HIDDEN FILE INPUT — opened by attach button ── -->
-            <input type="file"
-                   id="fileAttach"
-                   accept="image/*,video/*,.pdf,.doc,.docx"
-                   style="display:none;"
-                   onchange="handleAttach(this)" />
-
-            <!-- ── ATTACH BUTTON — clicks hidden file input ── -->
-            <button class="attach-btn"
-                    onclick="document.getElementById('fileAttach').click()"
-                    title="Attach file">
-                <img src="@Url.Content("~/Content/images/attach.png")"
-                     alt="attach"
-                     onerror="this.outerHTML='<span style=\'font-size:40px\'>📎</span>'" />
-            </button>
-
-            <input type="text" id="msgInput" class="chat-input" onkeydown="handleKey(event)" />
-
-            <!-- ── SEND BUTTON ── -->
-            <button class="send-btn" onclick="sendMessage()">
-                <img src="@Url.Content("~/Content/images/send_message.png")"
-                     alt="send"
-                     onerror="this.outerHTML='<span style=\'font-size:40px;color:white\'>&#10148;</span>'" />
-            </button>
         </div>
     </div>
 </div>
