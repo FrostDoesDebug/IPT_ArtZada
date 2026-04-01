@@ -9,6 +9,17 @@
     <meta charset="utf-8" />
     <title>Messages</title>
     <link rel="stylesheet" href="~/Content/site.css" />
+
+    <style>
+        /* Override navbar top only for this page */
+        .navbar-container {
+            top: 0; /* navbar starts at the very top */
+        }
+
+        body {
+            padding-top: 50px; /* height of navbar so content doesn't go under it */
+        }
+    </style>
 </head>
 
 <body>
@@ -42,59 +53,124 @@
         </div>
     </div>
 
-    <div class="message-layout">
-
+    <!-- MESSAGE LAYOUT -->
+    <div style="display: flex; gap: 20px; margin: 20px">
         <!-- LEFT PANEL -->
-        <div class="message-sidebar">
-
-            <div class="sidebar-header">
-                <div class="profile">
-                    <div class="profile-pic"></div>
-                    <strong>Chats</strong>
-                </div>
+        <div style="
+          width: 300px;
+          background: #7ea4a8;
+          border: 5px solid black;
+          border-radius: 15px;
+          padding: 10px;
+        ">
+            <div style="
+            background: #bf4646;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+          ">
+                <strong>KWEKKWEKSASTIX</strong>
             </div>
 
-            <!-- USERS -->
-            <div class="sidebar-user" onclick="loadChat('User 1')">
-                <div class="profile-pic small"></div>
-                <span>User 1</span>
-            </div>
-
-            <div class="sidebar-user" onclick="loadChat('User 2')">
-                <div class="profile-pic small"></div>
-                <span>User 2</span>
-            </div>
-
+            <div style="
+            height: 100px;
+            border: 3px solid black;
+            border-radius: 10px;
+            margin-bottom: 10px;
+          "></div>
+            <div style="
+            height: 100px;
+            border: 3px solid black;
+            border-radius: 10px;
+            margin-bottom: 10px;
+          "></div>
         </div>
 
         <!-- CHAT PANEL -->
-        <div class="chat-panel">
-
+        <div style="
+          flex: 1;
+          background: #7ea4a8;
+          border: 5px solid black;
+          border-radius: 15px;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+        ">
             <!-- HEADER -->
-            <div class="chat-header">
-                <div class="profile">
-                    <div class="profile-pic"></div>
-                    <strong id="chatName">KWEKKWEKSASTIX</strong>
-                </div>
+            <div style="
+            background: #bf4646;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+          ">
+                <strong>KWEKKWEKSASTIX</strong>
             </div>
 
             <!-- CHAT -->
-            <div class="chat-body" id="chatBody">
-                <!-- Messages will load here -->
+            <div style="flex: 1">
+                <p><strong>April 9</strong></p>
+
+                <div style="
+              background: #276470;
+              padding: 10px 15px;
+              border-radius: 20px;
+              width: max-content;
+              margin-bottom: 10px;
+            ">
+                    Kwekkwek ka ba?
+                </div>
+
+                <div style="
+              background: #276470;
+              padding: 10px 15px;
+              border-radius: 20px;
+              width: max-content;
+              margin-left: auto;
+              margin-bottom: 10px;
+            ">
+                    Bakit?
+                </div>
+
+                <div style="
+              background: #276470;
+              padding: 10px 15px;
+              border-radius: 20px;
+              width: max-content;
+              margin-bottom: 10px;
+            ">
+                    Sarap mo kasi tusukin
+                </div>
+
+                <div style="
+              background: #276470;
+              padding: 10px 15px;
+              border-radius: 20px;
+              width: max-content;
+              margin-left: auto;
+            ">
+                    haha
+                </div>
             </div>
 
             <!-- INPUT -->
-            <div class="chat-input">
+            <div style="display: flex; gap: 10px; margin-top: 20px">
+                <input type="text"
+                       placeholder="Ayos"
+                       style="
+              flex: 1;
+              padding: 10px;
+              border-radius: 10px;
+              border: 3px solid black;
+            " />
 
-                <label class="attach-btn">
-                    📎
-                    <input type="file" accept="image/png" hidden />
-                </label>
-
-                <input type="text" id="messageInput" placeholder="Ayos" />
-                <button onclick="sendMessage()">Send</button>
+                <button style="
+              padding: 10px 15px;
+              border-radius: 10px;
+              border: 3px solid black;
+            ">
+                    Send
+                </button>
             </div>
-
         </div>
     </div>
     <script src="~/Scripts/site.js"></script>

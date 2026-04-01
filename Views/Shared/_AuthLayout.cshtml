@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ArtZada</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body class="auth-body">
+    <div class="auth-page @(ViewBag.PageClass ?? "")">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        (function () {
+            var adminLandingUrl = '@Url.Action("Enable", "Admin")';
+            var path = (window.location.pathname || '').toLowerCase();
+            if (path.indexOf('/admin') !== -1) {
+                return;
+            }
+
+            var ctrlDown = false;
+            var eDown = false;
+            var timerId = null;
+
+            function clearTimer() {
+                if (timerId) {
+                    clearTimeout(timerId);
+                    timerId = null;
+                }
+            }
+
+            function tryStartTimer() {
+                if (timerId || !ctrlDown || !eDown) {
+                    return;
+                }
+
+                timerId = setTimeout(function () {
+                    if (ctrlDown && eDown) {
+                        window.location.href = adminLandingUrl;
+                    }
+                }, 3000);
+            }
+
+            window.addEventListener('keydown', function (ev) {
+                var key = ev.key || '';
+                if (key === 'Control') {
+                    ctrlDown = true;
+                    tryStartTimer();
+                    return;
+                }
+
+                if ((ev.ctrlKey || ctrlDown) && (key === 'e' || key === 'E' || ev.code === 'KeyE')) {
+                    ev.preventDefault();
+                    ctrlDown = true;
+                    eDown = true;
+                    tryStartTimer();
+                }
+            }, true);
+
+            window.addEventListener('keyup', function (ev) {
+                var key = ev.key || '';
+                if (key === 'Control') {
+                    ctrlDown = false;
+                    clearTimer();
+                    return;
+                }
+
+                if (key === 'e' || key === 'E' || ev.code === 'KeyE') {
+                    eDown = false;
+                    clearTimer();
+                }
+            }, true);
+
+            window.addEventListener('blur', function () {
+                ctrlDown = false;
+                eDown = false;
+                clearTimer();
+            });
+        })();
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
