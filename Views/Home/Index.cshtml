@@ -10,7 +10,7 @@
     <title>Artzada</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/Content/site.css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/Site.css")" />
 </head>
 
 <body>
@@ -56,12 +56,12 @@
             </div>
 
             <div class="icons">
-                <a href="/Cart" class="icon cart-icon">
+                <a href="@Url.Action("Cart", "Home")" class="icon cart-icon">
                     <img src="~/Content/images/cart.png" alt="Cart" />
                     <span class="badge">3</span>
                 </a>
 
-                <a href="/Notifications" class="icon">
+                <a href="@Url.Action("Notifications", "Home")" class="icon">
                     <img src="~/Content/images/notification.png" alt="Notifications" />
                 </a>
             </div>
@@ -166,7 +166,7 @@
     </div>
 
     <!-- Javascript -->
-    <script src="~/Scripts/site.js"></script>
+    <script src="@Url.Content("~/Scripts/site.js")"></script>
     <script>
         // Make the entire card clickable
         document.querySelectorAll('.clickable-card').forEach(card => {
