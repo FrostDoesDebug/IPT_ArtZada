@@ -32,5 +32,32 @@ namespace ArtZada.Controllers
         {
             return View();
         }
+        public ActionResult AdminAccount()
+        {
+            ViewBag.AdminUsername = ""; // Replace with your session/db value
+            ViewBag.ProfileImageUrl = "";        // Replace with actual image path if available
+            return View();
+        }
+        public ActionResult AdminEditAccount()
+        {
+            return View();
+        }
+
+        public ActionResult SellerSideStore()
+        {
+            return View();
+        }
+
+        public ActionResult SellerSideStoreAddItem()
+        {
+            return View();
+        }
+
+        public ActionResult SellerSideEditItem()
+        {
+            return View();
+        }
+
+        
     }
 }

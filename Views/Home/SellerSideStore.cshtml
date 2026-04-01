@@ -1,0 +1,419 @@
+﻿@{
+    ViewBag.Title = "Store";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store - Seller</title>
+    <style>
+        @@font-face {
+            font-family: 'RushonGround';
+            src: url('/Content/Font/Rushon Ground.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('/Content/images/paperbg.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar-container {
+            background: #BF4646;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-logo {
+            position: absolute;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+            .nav-logo svg {
+                width: 44px;
+                height: 28px;
+            }
+
+        .navbar {
+            display: flex;
+            gap: 60px;
+        }
+
+            .navbar a {
+                color: rgba(0,0,0,0.75);
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                text-decoration: none;
+                font-size: 14px;
+                letter-spacing: 0.5px;
+                transition: color 0.2s;
+            }
+
+                .navbar a:hover {
+                    color: rgba(0,0,0,0.95);
+                }
+
+                .navbar a.active {
+                    color: #ffffff;
+                }
+
+        .nav-bell {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 80px;
+            height: 78px;
+            background: #BF4646;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: filter 0.15s;
+            z-index: 20;
+        }
+
+            .nav-bell:hover {
+                filter: brightness(1.15);
+            }
+
+            .nav-bell img {
+                width: 46px;
+                height: 46px;
+                object-fit: contain;
+                margin-top: 20px;
+            }
+
+        .page-content {
+            flex: 1;
+            padding: 24px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding-right: 110px;
+        }
+
+        .page-title {
+            font-family: 'RushonGround', cursive;
+            font-size: 3.5rem;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            -webkit-text-stroke: 2px #1a1a1a;
+            line-height: 1;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .action-btn-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+            .action-btn-wrap span {
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+                font-size: 0.88rem;
+                color: #1a1a1a;
+            }
+
+        .action-btn {
+            background: #276470;
+            border: none;
+            border-radius: 14px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: filter 0.15s, transform 0.1s;
+        }
+
+            .action-btn:hover {
+                filter: brightness(1.15);
+                transform: translateY(-2px);
+            }
+
+            .action-btn:active {
+                transform: translateY(0);
+                filter: brightness(0.88);
+            }
+
+            .action-btn img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+        .store-panel {
+            background: #276470;
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: stretch;
+            min-height: 320px;
+        }
+
+        .item-card {
+            background: #7EACB5;
+            border: 4px solid #1a1a1a;
+            border-radius: 14px;
+            padding: 12px;
+            width: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+            .item-card img.item-img {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 3px solid #1a1a1a;
+            }
+
+        .item-name {
+            font-family: 'RushonGround', cursive;
+            font-size: 1.4rem;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            text-align: center;
+        }
+
+        .item-type {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #1a1a1a;
+        }
+
+        .item-price {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #BF4646;
+        }
+
+        .item-checkbox {
+            width: 26px;
+            height: 26px;
+            border: 3px solid #1a1a1a;
+            border-radius: 4px;
+            background: #ffffff;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            margin-top: 4px;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+            .item-checkbox:checked {
+                background: #5DDB44;
+            }
+
+        .add-card {
+            background: #7EACB5;
+            border: 4px solid #1a1a1a;
+            border-radius: 14px;
+            width: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: filter 0.15s, transform 0.1s;
+            min-height: 200px;
+        }
+
+            .add-card:hover {
+                filter: brightness(1.08);
+                transform: translateY(-3px);
+            }
+
+            .add-card:active {
+                transform: translateY(0);
+                filter: brightness(0.92);
+            }
+
+            .add-card img.add-icon {
+                width: 90px;
+                height: 90px;
+                object-fit: contain;
+            }
+
+            .add-card span {
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                font-size: 0.95rem;
+                color: #1a1a1a;
+            }
+
+        @@media (max-width: 768px) {
+            .navbar {
+                gap: 20px;
+            }
+
+            .page-title {
+                font-size: 2.4rem;
+            }
+
+            .page-header {
+                padding-right: 20px;
+            }
+
+            .store-panel {
+                justify-content: center;
+            }
+
+            .item-card, .add-card {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <div class="nav-logo">
+            <svg viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="2,14  18,4  18,24" fill="white"></polygon>
+                <polygon points="26,4  42,14  26,24" fill="white"></polygon>
+            </svg>
+        </div>
+        <nav class="navbar">
+            <a href="@Url.Action("SellerSideStore","Home")" class="active">Store</a>
+            <a href="@Url.Action("SellerSideMessage","Home")">Message</a>
+            <a href="@Url.Action("SellerSideAnalytics","Home")">Analytics</a>
+            <a href="@Url.Action("SellerSideAccount","Home")">Account</a>
+        </nav>
+        <div class="nav-bell" onclick="window.location.href='@Url.Action("Notifications","Home")'">
+            <img src="@Url.Content("~/Content/images/notification.png")" alt="Notifications" />
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="page-header">
+            <div class="page-title">Store</div>
+            <div class="header-actions">
+                <div class="action-btn-wrap" onclick="editSelected()">
+                    <div class="action-btn">
+                        <img src="@Url.Content("~/Content/images/edit_items.png")" alt="Edit" />
+                    </div>
+                    <span>Edit</span>
+                </div>
+                <div class="action-btn-wrap" onclick="deleteSelected()">
+                    <div class="action-btn">
+                        <img src="@Url.Content("~/Content/images/delete_item.png")" alt="Delete" />
+                    </div>
+                    <span>Delete</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="store-panel" id="storePanel">
+            <div class="add-card" onclick="window.location.href='@Url.Action("SellerSideStoreAddItem","Home")'">
+                <img class="add-icon" src="@Url.Content("~/Content/images/add_item.png")" alt="Add Items" />
+                <span>Add Items</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ADD_CARD_HTML = document.querySelector('.add-card').outerHTML;
+
+        function loadItems() {
+            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
+            var panel = document.getElementById('storePanel');
+            panel.innerHTML = '';
+
+            items.forEach(function (item) {
+                var card = document.createElement('div');
+                card.className = 'item-card';
+                card.dataset.id = item.id;
+                card.innerHTML =
+                    '<img class="item-img" src="' + item.photo + '" alt="' + item.name + '" />' +
+                    '<div class="item-name">' + item.name + '</div>' +
+                    '<div class="item-type">' + item.type + '</div>' +
+                    '<div class="item-price">&#8369;' + parseFloat(item.price).toFixed(2) + '</div>' +
+                    '<input type="checkbox" class="item-checkbox" />';
+                panel.appendChild(card);
+            });
+
+            var addCard = document.createElement('div');
+            addCard.innerHTML = ADD_CARD_HTML;
+            panel.appendChild(addCard.firstChild);
+        }
+
+        function editSelected() {
+            var checked = document.querySelectorAll('.item-checkbox:checked');
+            if (checked.length === 0) { alert('Please select an item to edit.'); return; }
+            if (checked.length > 1) { alert('Please select only one item to edit at a time.'); return; }
+            var itemId = checked[0].closest('.item-card').dataset.id;
+            localStorage.setItem('editItemId', itemId);
+            window.location.href = '@Url.Action("SellerSideEditItem","Home")';
+        }
+
+        function deleteSelected() {
+            var checked = document.querySelectorAll('.item-checkbox:checked');
+            if (checked.length === 0) { alert('Please select an item to delete.'); return; }
+            if (!confirm('Delete the selected item(s)? This cannot be undone.')) return;
+
+            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
+            checked.forEach(function (cb) {
+                var id = cb.closest('.item-card').dataset.id;
+                items = items.filter(function (i) { return i.id !== id; });
+            });
+            localStorage.setItem('sellerItems', JSON.stringify(items));
+            loadItems();
+        }
+
+        loadItems();
+    </script>
+</body>
+</html>
