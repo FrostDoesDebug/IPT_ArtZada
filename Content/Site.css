@@ -1,12 +1,15 @@
-﻿/* =============================================
-   ARTZADA — Page Styles (appended to Site.css)
-   Works inside leader's _Layout.cshtml
-============================================= */
+﻿/* ========================= */
+/* GLOBAL STYLES & RESETS    */
+/* ========================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* Added a fallback background color in case the image path fails */
-    background: #f4f4f4 url('../images/paperbg.png') no-repeat center center fixed;
+    background: #f4f4f4 url('images/paperbg.png') no-repeat center center fixed;
     background-size: cover;
     color: #333;
 }
@@ -20,119 +23,123 @@ body {
 /* HEADER & TOP BAR          */
 /* ========================= */
 .top-bar {
-    background: #ffffff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background: #7EACB5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px; /* Prevents infinite stretching on large monitors */
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 15px 20px;
 }
 
 .logo img {
-    height: 50px;
-    width: auto;
+    height: 100px;
 }
 
 /* SEARCH & FILTER */
 .search-panel {
     display: flex;
     align-items: center;
-    gap: 9px; /* ← GAP between avatar and name HERE  */
-    cursor: pointer;
-    transition: filter 0.15s;
+    gap: 15px;
+    flex: 1;
+    justify-content: center;
+    max-width: 600px;
 }
 
-    .chat-contact:hover {
-        filter: brightness(1.1);
+.search-container {
+    display: flex;
+    background: #f1f1f1;
+    border-radius: 25px;
+    overflow: hidden;
+    width: 100%;
+}
+
+    .search-container input {
+        border: none;
+        background: transparent;
+        padding: 10px 20px;
+        width: 100%;
+        outline: none;
+        font-family: 'Poppins', sans-serif;
     }
 
 .search-btn {
-    background: transparent;
+    background: #D88628;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
 }
 
     .search-btn img {
-        height: 18px;
-        opacity: 0.6;
+        height: 25px;
+        opacity:1;
     }
 
-/* ──────────────────────────────────────────────────────
-   CONTACT NAME TEXT
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ► Change boldness     → change font-weight
-   ────────────────────────────────────────────────────── */
-.contact-name {
-    color: black; /* ← CONTACT NAME COLOR HERE           */
-    font-size: 24px; /* ← CONTACT NAME SIZE HERE            */
-    font-weight: 700; /* ← CONTACT NAME BOLDNESS HERE        */
-    font-family: 'Poppins', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* FILTER DROPDOWN */
+.filter {
+    position: relative;
 }
 
+.dropdown-header {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+/* UPDATED: Full-page overlay for dropdown */
 .dropdown-overlay {
     display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 9999;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 120px; /* space for header */
+}
+
+    .dropdown-overlay.active {
+        display: flex;
+    }
+
+.dropdown-panel {
     background: white;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    z-index: 1000;
-    padding: 15px;
-    border-radius: 8px;
-    min-width: 220px;
-    margin-top: 10px;
-    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 250px;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.filter:hover .dropdown-overlay {
-    display: block;
+.close-btn {
+    float: right;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
 }
 
-    .attach-btn:hover {
-        transform: scale(1.1);
-    }
-
-    .attach-btn img {
-        width: 50px; /* ← ATTACH ICON WIDTH HERE           */
-        height: 90px; /* ← ATTACH ICON HEIGHT HERE          */
-        object-fit: contain;
-    }
-
-/* ──────────────────────────────────────────────────────
-   CHAT TEXT INPUT FIELD
-   ► Make taller/shorter  → change padding-top/bottom
-   ► Change text size     → change font-size
-   ► Change BG color      → change background
-   ► Change border        → change border
-   ► Change roundness     → change border-radius
-   ────────────────────────────────────────────────────── */
-.chat-input {
-    flex: 1;
-    background: #7EACB5; /* ← INPUT FIELD BG COLOR HERE        */
-    border: 5px solid #1a1a1a; /* ← INPUT FIELD BORDER HERE     */
-    border-radius: 5px; /* ← INPUT FIELD ROUNDNESS HERE       */
-    padding-top: 33px; /* ← TOP SPACE INSIDE INPUT HERE      */
-    padding-bottom: 33px; /* ← BOTTOM SPACE INSIDE INPUT HERE   */
-    padding-left: 22px; /* ← LEFT SPACE INSIDE INPUT HERE     */
-    padding-right: 22px; /* ← RIGHT SPACE INSIDE INPUT HERE    */
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px; /* ← INPUT TEXT SIZE HERE             */
-    font-weight: 700; /* ← INPUT TEXT BOLDNESS HERE         */
-    color: #1a1a1a; /* ← INPUT TEXT COLOR HERE            */
-    outline: none;
-    height: 36px; /* ← INPUT FIELD HEIGHT HERE          */
+.dropdown-section {
+    margin-bottom: 15px;
 }
 
 .section-title {
+    font-family: 'RushonGround', sans-serif;
     font-size: 14px;
     margin-bottom: 8px;
     color: #555;
@@ -149,7 +156,7 @@ body {
 /* ICONS */
 .icons {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
 }
 
@@ -161,7 +168,8 @@ body {
 }
 
     .icon img {
-        height: 24px;
+        height: 50px;
+        width: auto;
     }
 
 .badge {
@@ -185,7 +193,11 @@ body {
     justify-content: center;
     align-items: center;
     height: 50px;
-    position: relative;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    z-index: 9998;
 }
 
 .nav-arrows {
@@ -289,7 +301,6 @@ h2.section-title {
 /* ========================= */
 .grid {
     display: grid;
-    /* auto-fill ensures cards don't stretch indefinitely on large screens */
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 25px;
     max-width: 1200px;
@@ -297,15 +308,15 @@ h2.section-title {
     padding: 0 20px 60px;
 }
 
-/* ──────────────────────────────────────────────────────
-   LEFT COLUMN WRAPPER
-   ► Change gap between revenue and duedates → change gap
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .analytics-left {
+.card {
+    background: #7ea4a8;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 4px solid #111;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* ← GAP between revenue/duedates box */
-    overflow: hidden;
 }
 
     .card:hover {
@@ -315,8 +326,8 @@ body[data-page="analytics"] .analytics-left {
 
     .card img {
         width: 100%;
-        height: 220px; /* Fixed height stops the squished look */
-        object-fit: cover; /* or use 'contain' if you don't want images cropped */
+        height: 220px;
+        object-fit: cover;
         border-radius: 6px;
         background: #fff;
         margin-bottom: 15px;
@@ -328,84 +339,25 @@ body[data-page="analytics"] .analytics-left {
     font-size: 18px;
 }
 
-/* ──────────────────────────────────────────────────────
-   "TOTAL REVENUE" label
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .revenue-label {
-    font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 50px; /* ← LABEL SIZE HERE                  */
-    font-weight: 900;
-    color: #1a1a1a; /* ← LABEL COLOR HERE                 */
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.card p {
+    font-size: 14px;
+    margin: 0 0 10px;
 }
 
-/* ──────────────────────────────────────────────────────
-   ₱100.00 value
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ► Move down from label → change margin-top
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .revenue-amount {
-    font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 94px; /* ← REVENUE VALUE SIZE HERE          */
-    font-weight: 900;
-    color: #BF4646; /* ← REVENUE VALUE COLOR HERE         */
-    margin-top: 30px; /* ← SPACE ABOVE VALUE HERE           */
+.price {
+    display: block;
+    color: #a00;
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
-/* ──────────────────────────────────────────────────────
-   DUEDATES BOX
-   ► Change BG color   → change background
-   ► Change border     → change border
-   ► Change roundness  → change border-radius
-   ► Change padding    → change padding
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .duedates-box {
-    background: #7EACB5; /* ← DUEDATES BOX BG COLOR HERE       */
-    border: 5px solid #1a1a1a; /* ← DUEDATES BOX BORDER HERE    */
-    border-radius: 14px; /* ← DUEDATES BOX ROUNDNESS HERE      */
-    padding: 20px 22px; /* ← DUEDATES BOX PADDING HERE        */
-    flex: 1;
-}
-
-/* ──────────────────────────────────────────────────────
-   "DUEDATES" label
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ► Space below label   → change margin-bottom
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .duedates-label {
-    font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 50px; /* ← DUEDATES LABEL SIZE HERE         */
-    font-weight: 900;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 16px; /* ← SPACE BELOW LABEL HERE           */
-    color: #1a1a1a; /* ← DUEDATES LABEL COLOR HERE        */
-}
-
-/* ──────────────────────────────────────────────────────
-   DUEDATE ROW  (Client #1 — January 13)
-   ► Make taller/shorter  → change padding
-   ► Change text size     → change font-size
-   ► Change BG color      → change background
-   ► Change border        → change border
-   ► Change roundness     → change border-radius
-   ► Space below each row → change margin-bottom
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .duedate-row {
-    background: #EDDCC6; /* ← DUEDATE ROW BG COLOR HERE        */
-    border: 3px solid #1a1a1a; /* ← DUEDATE ROW BORDER HERE     */
-    border-radius: 10px; /* ← DUEDATE ROW ROUNDNESS HERE       */
-    padding: 17px 21px; /* ← DUEDATE ROW INNER PADDING HERE   */
+/* BUTTONS */
+.buttons {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: auto; /* Pushes buttons to the bottom of the card */
+    margin-top: auto;
 }
 
 .cart-btn,
@@ -415,224 +367,25 @@ body[data-page="analytics"] .duedate-row {
     border: none;
     cursor: pointer;
     font-weight: 700;
-    margin-bottom: 10px; /* ← SPACE BELOW EACH ROW HERE        */
+    transition: background 0.2s;
 }
 
-/* ──────────────────────────────────────────────────────
-   EMPTY DUEDATE SLOT
-   ► Make taller/shorter → change height
-   ► Change BG color     → change background
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .duedate-empty {
-    background: #EDDCC6; /* ← EMPTY SLOT COLOR HERE            */
-    border: 3px solid #1a1a1a;
-    border-radius: 10px;
-    height: 84px; /* ← EMPTY SLOT HEIGHT HERE           */
-    margin-bottom: 7px;
+.cart-btn {
+    background: #ffcc00;
+    color: #111;
 }
 
-/* ──────────────────────────────────────────────────────
-   CHART BOX
-   ► Change BG color      → change background
-   ► Change border        → change border
-   ► Change roundness     → change border-radius
-   ► Change inner padding → change padding
-   ► Change min height    → change min-height
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .chart-box {
-    background: #7EACB5; /* ← CHART BOX BG COLOR HERE          */
-    border: 5px solid #1a1a1a; /* ← CHART BOX BORDER HERE       */
-    border-radius: 14px; /* ← CHART BOX ROUNDNESS HERE         */
-    padding: 62px 64px 60px; /* ← CHART BOX PADDING HERE       */
-    min-height: 300px; /* ← CHART BOX MIN HEIGHT HERE        */
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-}
-
-    body[data-page="analytics"] .chart-box canvas {
-        width: 100% !important;
-        height: 100% !important;
+    .cart-btn:hover {
+        background: #e6b800;
     }
 
-/* ──────────────────────────────────────────────────────
-   STOCKS BOX
-   ► Change BG color   → change background
-   ► Change border     → change border
-   ► Change roundness  → change border-radius
-   ► Change padding    → change padding
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .stocks-box {
-    background: #7EACB5; /* ← STOCKS BOX BG COLOR HERE         */
-    border: 5px solid #1a1a1a; /* ← STOCKS BOX BORDER HERE      */
-    border-radius: 14px; /* ← STOCKS BOX ROUNDNESS HERE        */
-    padding: 10px; /* ← STOCKS BOX PADDING HERE          */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+.buy-btn {
+    background: #00cc66;
+    color: white;
 }
 
-/* ──────────────────────────────────────────────────────
-   "STOCKS" label
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ► Space below label   → change margin-bottom
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .stocks-label {
-    font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 13px; /* ← STOCKS LABEL SIZE HERE           */
-    font-weight: 900;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px; /* ← SPACE BELOW LABEL HERE           */
-    color: #1a1a1a; /* ← STOCKS LABEL COLOR HERE          */
-    flex-shrink: 0;
-}
-
-/* ──────────────────────────────────────────────────────
-   EACH STOCK ROW  (Chubb x3 / Boss x10 / Drawing x5)
-   ► Make taller/shorter  → change padding-top/bottom
-   ► Change text size     → change font-size
-   ► Change border        → change border
-   ► Change roundness     → change border-radius
-   ► Space below each row → change margin-bottom
-   ────────────────────────────────────────────────────── */
-body[data-page="analytics"] .stock-row {
-    border: 3px solid #1a1a1a; /* ← STOCK ROW BORDER HERE       */
-    border-radius: 10px; /* ← STOCK ROW ROUNDNESS HERE         */
-    padding-top: 18px; /* ← TOP SPACE INSIDE ROW HERE        */
-    padding-bottom: 18px; /* ← BOTTOM SPACE INSIDE ROW HERE     */
-    padding-left: 21px; /* ← LEFT SPACE INSIDE ROW HERE       */
-    padding-right: 21px; /* ← RIGHT SPACE INSIDE ROW HERE      */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 45px; /* ← STOCK ROW TEXT SIZE HERE         */
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    margin-bottom: 10px; /* ← SPACE BELOW EACH ROW HERE        */
-    flex-shrink: 0;
-    transition: transform 0.15s;
-}
-
-    body[data-page="analytics"] .stock-row:hover {
-        transform: translateX(3px);
-    }
-
-    /* ──────────────────────────────────────────────────────
-   STOCK ROW COLORS
-   ► Chubb (low)    → .red   → change background
-   ► Boss (ok)      → .green → change background
-   ► Drawing (high) → .lime  → change background
-   ► Empty slots    → .empty → change background/height
-   ────────────────────────────────────────────────────── */
-    body[data-page="analytics"] .stock-row.red {
-        background: #BF4646; /* ← LOW STOCK COLOR HERE             */
-        color: white;
-    }
-
-    body[data-page="analytics"] .stock-row.green {
-        background: #5DDB44; /* ← MID STOCK COLOR HERE             */
-        color: #1a1a1a;
-    }
-
-    body[data-page="analytics"] .stock-row.lime {
-        background: #DDFA36; /* ← HIGH STOCK COLOR HERE            */
-        color: #1a1a1a;
-    }
-
-    body[data-page="analytics"] .stock-row.empty {
-        background: #EDDCC6; /* ← EMPTY SLOT COLOR HERE            */
-        min-height: 34px; /* ← EMPTY SLOT HEIGHT HERE           */
-    }
-
-
-/* ══════════════════════════════════════════════════════
-   NOTIFICATIONS PAGE — FULL MANUAL CONTROLS
-══════════════════════════════════════════════════════ */
-
-body[data-page="notifications"] .page-wrap {
-    overflow: visible;
-    height: auto;
-    display: block;
-}
-
-/* ──────────────────────────────────────────────────────
-   NOTIFICATIONS PAGE WRAPPER
-   ► Move DOWN/UP      → change top
-   ► Move RIGHT/LEFT   → change left
-   ► Make WIDER/NARROW → change width
-   ────────────────────────────────────────────────────── */
-body[data-page="notifications"] .notifications-page {
-    position: absolute;
-    top: 30px; /* ← MOVE DOWN/UP HERE                */
-    left: 100px; /* ← MOVE RIGHT/LEFT HERE             */
-    width: 1700px; /* ← CHANGE WIDTH HERE                */
-    max-width: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* ← GAP between title/search/list    */
-}
-
-/* ──────────────────────────────────────────────────────
-   "NOTIFICATIONS" TITLE
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ► Change spacing      → change letter-spacing
-   ────────────────────────────────────────────────────── */
-.notif-title {
-    font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 40px; /* ← TITLE SIZE HERE                  */
-    font-weight: 900;
-    color: #1a1a1a; /* ← TITLE COLOR HERE                 */
-    text-align: left;
-    text-transform: uppercase;
-}
-
-/* ──────────────────────────────────────────────────────
-   SEARCH BAR ROW
-   ► Change BG color   → change background
-   ► Change border     → change border
-   ► Change roundness  → change border-radius
-   ► Change padding    → change padding
-   ► Change gap        → change gap
-   ────────────────────────────────────────────────────── */
-.notif-search-row {
-    display: flex;
-    align-items: center;
-    background: #7EACB5; /* ← SEARCH ROW BG COLOR HERE         */
-    border: 5px solid #1a1a1a; /* ← SEARCH ROW BORDER HERE      */
-    border-radius: 14px; /* ← SEARCH ROW ROUNDNESS HERE        */
-    padding: 7px 10px; /* ← SEARCH ROW PADDING HERE          */
-    gap: 9px; /* ← GAP between icon and input HERE  */
-}
-
-/* ──────────────────────────────────────────────────────
-   SEARCH ICON BOX  (orange box with magnifier)
-   ► Make bigger/smaller → change width/height
-   ► Change BG color     → change background
-   ► Change border       → change border
-   ► Change icon size    → change img width/height
-   ────────────────────────────────────────────────────── */
-.notif-search-icon {
-    width: 32px; /* ← SEARCH ICON BOX WIDTH HERE       */
-    height: 32px; /* ← SEARCH ICON BOX HEIGHT HERE      */
-    background: #D88628; /* ← SEARCH ICON BG COLOR HERE        */
-    border-radius: 10px; /* ← SEARCH ICON ROUNDNESS HERE       */
-    border: 3px solid #1a1a1a; /* ← SEARCH ICON BORDER HERE     */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-}
-
-    .notif-search-icon img {
-        width: 18px; /* ← MAGNIFIER ICON SIZE HERE         */
-        height: 18px;
-        object-fit: contain;
+    .buy-btn:hover {
+        background: #00b359;
     }
 
 /* ========================= */
@@ -651,7 +404,7 @@ body[data-page="notifications"] .notifications-page {
 
 .footer-logo {
     width: 140px;
-    filter: brightness(0) invert(1); /* Turns a dark logo white for better contrast */
+    filter: brightness(0) invert(1);
 }
 
 .footer-right {
@@ -696,4 +449,172 @@ body[data-page="notifications"] .notifications-page {
     .footer-right {
         text-align: center;
     }
+}
+/* ========================= */
+/* CART PAGE                 */
+/* ========================= */
+
+.cart-wrapper {
+    max-width: 1200px;
+    margin: 160px auto 120px;
+    padding: 0 20px;
+}
+
+.cart-title {
+    font-family: 'RushonGround', sans-serif;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* ITEM */
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #7ea4a8;
+    border: 4px solid #111;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.cart-checkbox {
+    width: 25px;
+    height: 25px;
+}
+
+/* IMAGE */
+.cart-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #ddd;
+}
+
+/* INFO */
+.cart-info {
+    flex: 1;
+}
+
+.cart-name {
+    font-family: 'RushonGround';
+    font-size: 28px;
+}
+
+.cart-type {
+    font-size: 16px;
+    color: #444;
+}
+
+/* RIGHT */
+.cart-right {
+    text-align: right;
+}
+
+.cart-price {
+    color: red;
+    font-size: 40px;
+    font-weight: 800;
+}
+
+/* QUANTITY */
+.cart-qty {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.qty-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    border: 2px solid #333;
+    background: #d9d9ff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.qty-number {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* ========================= */
+/* CHECKOUT BAR (FIXED)      */
+/* ========================= */
+
+.checkout-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #d6c4ad;
+    border-top: 4px solid #111;
+    display: flex;
+    justify-content: center;
+}
+
+/* CENTER CONTENT */
+.checkout-inner {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .checkout-inner h2 {
+        font-size: 40px;
+        font-weight: 900;
+    }
+
+    .checkout-inner span {
+        color: red;
+    }
+
+/* BUTTON */
+.checkout-btn {
+    background: #c94c4c;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 15px;
+    cursor: pointer;
+    min-width: 180px;
+}
+
+    .checkout-btn:hover {
+        background: #a63b3b;
+    }
+
+/* ========================= */
+/* RESPONSIVE                */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-right {
+        width: 100%;
+        text-align: left;
+    }
+
+    .checkout-inner {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+        .checkout-inner h2 {
+            font-size: 28px;
+        }
 }
