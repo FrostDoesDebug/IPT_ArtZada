@@ -251,9 +251,14 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- NAVBAR -->
+    @{
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    }
+
     <div class="navbar-container">
         <div class="nav-logo">
             <svg viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,36 +266,23 @@
                 <polygon points="26,4  42,14  26,24" fill="white"></polygon>
             </svg>
         </div>
-        <nav class="navbar">
-            <a href="@Url.Action("BuyerSideHome","Home")">Home</a>
-            <a href="@Url.Action("BuyerSideShop","Home")">Shop</a>
-            <a href="@Url.Action("BuyerSideMessage","Home")">Message</a>
-            <a href="@Url.Action("BuyerSideCart","Home")" class="active">Cart</a>
-            <a href="@Url.Action("BuyerSideAccount","Home")">Account</a>
-        </nav>
-        <div class="nav-bell" onclick="window.location.href='@Url.Action("Notifications","Home")'">
-            <img src="@Url.Content("~/Content/images/notification.png")" alt="Notifications" />
+
+        <div class="navbar">
+            <a href="/Home/Index" class="@(currentAction == "Index" ? "active" : "")">Home</a>
+            <a href="#">Shop</a>
+            <a href="/Home/Message" class="@(currentAction == "Message" ? "active" : "")">Message</a>
+            <a href="/Home/Cart" class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
+            <a href="/Home/Account" class="@(currentAction == "Account" ? "active" : "")">Account</a>
         </div>
     </div>
 
-    <!-- PAGE CONTENT -->
-    <div class="page-content">
+    <!-- CART -->
+    <div class="cart-wrapper">
+        <h1 class="cart-title">ART BY KWEKKWEKSASTIX</h1>
 
-        <!-- TAB BUTTONS: to_pay → to_ship → to_recieve -->
-        <div class="tab-buttons">
-            <div class="tab-btn active" id="btn-to_pay" onclick="switchTab('to_pay')" title="To Pay">
-                <img src="@Url.Content("~/Content/images/to_pay.png")" alt="To Pay" />
-            </div>
-            <div class="tab-btn" id="btn-to_ship" onclick="switchTab('to_ship')" title="To Ship">
-                <img src="@Url.Content("~/Content/images/to_ship.png")" alt="To Ship" />
-            </div>
-            <div class="tab-btn" id="btn-to_recieve" onclick="switchTab('to_recieve')" title="To Recieve">
-                <img src="@Url.Content("~/Content/images/to_receive.png")" alt="To Recieve" />
-            </div>
-        </div>
-
-        <!-- MAIN PANEL -->
-        <div class="main-panel">
+        <div class="cart-item">
+            <input type="checkbox" class="cart-checkbox" />
+            <img src="~/images/sample-art.png" class="cart-img" />
 
             <!-- HEADER ROW -->
             <div class="panel-header" id="panel-header">
@@ -321,35 +313,80 @@
         </div>
     </div>
 
+    <!-- OVERLAY -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- CHECKOUT BAR -->
+    <div class="checkout-bar" id="checkoutBar">
+
+        <!-- COLLAPSED -->
+        <div class="checkout-inner">
+            <h2>Total <span>₱100.00</span></h2>
+            <button class="checkout-btn" onclick="openCheckout()">Check out</button>
+        </div>
+
+        <!-- EXPANDED -->
+        <div class="checkout-expanded">
+
+            <div class="form-row">
+                <label>Full Name:</label>
+                <input type="text">
+            </div>
+
+            <div class="form-row">
+                <label>Address:</label>
+                <input type="text">
+            </div>
+
+            <div class="form-row">
+                <label>Payment:</label>
+                <select>
+                    <option>Cash on Delivery</option>
+                    <option>GCash</option>
+                </select>
+            </div>
+
+            <div class="checkout-bottom">
+                <h3>Total: <span>₱999</span></h3>
+                <button class="place-order-btn">Place Order</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
     <script>
-        var currentTab = 'to_pay';
-
-        function switchTab(tab) {
-            // Remove active from all buttons using underscore IDs
-            document.getElementById('btn-to_pay').classList.remove('active');
-            document.getElementById('btn-to_ship').classList.remove('active');
-            document.getElementById('btn-to_recieve').classList.remove('active');
-
-            // Hide all panels
-            document.querySelectorAll('.tab-panel').forEach(function (p) {
-                p.classList.remove('active');
-            });
-
-            // Activate selected tab and panel
-            currentTab = tab;
-            document.getElementById('panel-' + tab).classList.add('active');
-            document.getElementById('btn-' + tab).classList.add('active');
-
-            // Show Order Recieved button only on to_recieve tab
-            var orderBtn = document.getElementById('btn-order-recieved');
-            orderBtn.style.display = (tab === 'to_recieve') ? 'inline-block' : 'none';
+        function openCheckout() {
+            document.getElementById("checkoutBar").classList.add("expanded");
+            document.getElementById("overlay").classList.add("active");
         }
 
-        function markOrderRecieved() {
-            alert('Order marked as recieved!');
+        function closeCheckout() {
+            document.getElementById("checkoutBar").classList.remove("expanded");
+            document.getElementById("overlay").classList.remove("active");
         }
+
+        // CLICK OUTSIDE = CLOSE
+        document.addEventListener("click", function (e) {
+            var checkout = document.getElementById("checkoutBar");
+
+            if (checkout.classList.contains("expanded")) {
+                if (!checkout.contains(e.target)) {
+                    closeCheckout();
+                }
+            }
+        });
+
+        // PREVENT CLOSE WHEN CLICKING INSIDE
+        document.getElementById("checkoutBar").addEventListener("click", function (e) {
+            e.stopPropagation();
+        });
+
+        // OVERLAY CLICK
+        document.getElementById("overlay").addEventListener("click", function () {
+            closeCheckout();
+        });
     </script>
 
 </body>
 </html>
-
