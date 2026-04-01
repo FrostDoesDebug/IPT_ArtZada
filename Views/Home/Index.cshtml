@@ -11,6 +11,21 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/site.css" />
+    <style>
+        /* Make the card clickable without breaking layout */
+        .clickable-card {
+            cursor: pointer;
+            display: flex;
+            text-decoration: none;
+
+            color: inherit;
+            transition: transform 0.2s ease;
+        }
+
+            .clickable-card:hover {
+                transform: translateY(-5px);
+            }
+    </style>
 </head>
 
 <body>
@@ -33,7 +48,6 @@
                     <button class="dropdown-header">Filter</button>
                     <div class="dropdown-overlay">
                         <div class="dropdown-panel">
-                            <button class="close-btn">&times;</button>
                             <div class="dropdown-section">
                                 <h4 class="section-title">Prices</h4>
                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Below 100</label>
@@ -86,8 +100,6 @@
             </div>
         </div>
     </div>
-
-    <br /><br /><br /><br />
 
     <!-- FEATURED ARTISTS -->
     <h2 class="section-title">FEATURED ARTISTS</h2>
@@ -175,25 +187,6 @@
                 const url = card.getAttribute('data-url');
                 if (url) window.location.href = url;
             });
-        });
-
-        // Filter button functionality
-        const filterBtn = document.querySelector('.dropdown-header');
-        const dropdownOverlay = document.querySelector('.dropdown-overlay');
-        const closeBtn = document.querySelector('.close-btn');
-
-        filterBtn.addEventListener('click', () => {
-            dropdownOverlay.classList.toggle('active');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            dropdownOverlay.classList.remove('active');
-        });
-
-        dropdownOverlay.addEventListener('click', (e) => {
-            if (e.target === dropdownOverlay) {
-                dropdownOverlay.classList.remove('active');
-            }
         });
     </script>
 </body>
