@@ -7,13 +7,12 @@
     <title>Cart</title>
     <link rel="stylesheet" href="~/Content/Site.css" />
     <style>
-        /* Override navbar top only for this page */
         .navbar-container {
-            top: 0; /* navbar starts at the very top */
+            top: 0;
         }
 
         body {
-            padding-top: 50px; /* height of navbar so content doesn't go under it */
+            padding-top: 50px;
         }
     </style>
 </head>
@@ -40,7 +39,7 @@
         </div>
     </div>
 
-    <!-- CART ITEMS -->
+    <!-- CART -->
     <div class="cart-wrapper">
         <h1 class="cart-title">ART BY KWEKKWEKSASTIX</h1>
 
@@ -67,7 +66,7 @@
     </div>
 
     <!-- OVERLAY -->
-    <div id="overlay" class="overlay" onclick="closeCheckout()"></div>
+    <div id="overlay" class="overlay"></div>
 
     <!-- CHECKOUT BAR -->
     <div class="checkout-bar" id="checkoutBar">
@@ -103,8 +102,8 @@
                 <h3>Total: <span>₱999</span></h3>
                 <button class="place-order-btn">Place Order</button>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <!-- SCRIPT -->
@@ -118,6 +117,27 @@
             document.getElementById("checkoutBar").classList.remove("expanded");
             document.getElementById("overlay").classList.remove("active");
         }
+
+        // CLICK OUTSIDE = CLOSE
+        document.addEventListener("click", function (e) {
+            var checkout = document.getElementById("checkoutBar");
+
+            if (checkout.classList.contains("expanded")) {
+                if (!checkout.contains(e.target)) {
+                    closeCheckout();
+                }
+            }
+        });
+
+        // PREVENT CLOSE WHEN CLICKING INSIDE
+        document.getElementById("checkoutBar").addEventListener("click", function (e) {
+            e.stopPropagation();
+        });
+
+        // OVERLAY CLICK
+        document.getElementById("overlay").addEventListener("click", function () {
+            closeCheckout();
+        });
     </script>
 
 </body>
