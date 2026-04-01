@@ -1,26 +1,1770 @@
-﻿/* ========================= */
-/* GLOBAL STYLES & RESETS    */
-/* ========================= */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+﻿/* =============================================
+   ARTZADA — Page Styles (appended to Site.css)
+   Works inside leader's _Layout.cshtml
+============================================= */
+
+/* ══════════════════════════════════════════════════════
+   MESSAGING PAGE — FULL MANUAL CONTROLS
+══════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────
+   MESSAGING OUTER LAYOUT
+   ► Move DOWN/UP      → change margin-top
+   ► Move RIGHT/LEFT   → change margin-left (remove auto)
+   ► Make WIDER/NARROW → change width
+   ► Make TALLER/SHORT → change height
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ► Change inner gap  → change gap
+   ► Change padding    → change padding
+   ────────────────────────────────────────────────────── */
+.messaging-layout {
+    width: 90%; /* ← CHANGE WIDTH HERE                */
+    height: 90%; /* ← CHANGE HEIGHT HERE               */
+    margin-top: 0px; /* ← MOVE DOWN/UP HERE                */
+    margin-left: auto; /* ← MOVE RIGHT/LEFT (replace auto)   */
+    margin-right: auto;
+    display: flex;
+    gap: 12px; /* ← GAP between sidebar and chat     */
+    background: #276470; /* ← OUTER LAYOUT BG COLOR HERE       */
+    border: 5px solid #1a1a1a; /* ← OUTER BORDER HERE           */
+    border-radius: 24px; /* ← OUTER CORNER ROUNDNESS HERE      */
+    padding: 20px; /* ← OUTER PADDING HERE               */
+    overflow: hidden;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #f4f4f4 url('images/paperbg.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #333;
+/* ========================= */
+/* ADMIN (USER OVERVIEW)     */
+/* ========================= */
+.admin-shell .admin-page-strip {
+    display: none;
+}
+
+.admin-shell .top-bar {
+    top: 0;
+    background: #7EACB5;
+}
+
+.admin-shell .header {
+    max-width: 100%;
+    margin: 0;
+    padding: 8px 18px 10px;
+    justify-content: center;
+    gap: 18px;
+}
+
+.admin-shell .logo img {
+    height: 70px;
+}
+
+.admin-shell .search-panel {
+    max-width: 440px;
+    width: 100%;
+    justify-content: center;
+}
+
+.admin-shell .search-container {
+    border: 2px solid #111;
+    border-radius: 4px;
+    background: #ebebeb;
+}
+
+.admin-shell .search-btn {
+    padding: 7px 11px;
+    border-right: 2px solid #d8a04b;
+}
+
+.admin-shell .search-btn img {
+    height: 20px;
+}
+
+.admin-shell .search-container input {
+    font-weight: 700;
+    font-size: 16px;
+    color: #5c5c5c;
+}
+
+.admin-shell .navbar-container {
+    top: 78px;
+    height: 35px;
+    justify-content: center;
+    padding-left: 0;
+}
+
+.admin-shell .nav-arrows {
+    left: 8px;
+}
+
+.admin-shell .nav-btn {
+    color: #f0f0f0;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.admin-shell .navbar {
+    gap: 86px;
+}
+
+.admin-shell .navbar a {
+    color: #111;
+    text-transform: none;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.admin-shell .navbar a.active,
+.admin-shell .navbar a:hover {
+    color: #fff;
+}
+
+.admin-shell-spacer {
+    height: 123px;
+}
+
+.admin-users-wrap {
+    max-width: 100%;
+    margin: 0;
+    padding: 0 34px 22px;
+}
+
+.admin-pending-page .admin-users-panel {
+    min-height: 500px;
+}
+
+.admin-pending-page .admin-user-card {
+    margin-bottom: 0;
+}
+
+.admin-users-panel {
+    background: #2C6A73;
+    border: 4px solid #111;
+    border-radius: 20px;
+    padding: 10px 12px;
+    min-height: 276px;
+}
+
+.admin-panel-title {
+    color: #fff;
+    margin: 0 0 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.admin-panel-subtitle {
+    color: rgba(255,255,255,0.9);
+    margin: 0 0 16px;
+}
+
+.admin-user-card {
+    background: #8AB9C1;
+    border: 3px solid #111;
+    border-radius: 20px;
+    padding: 10px 12px 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.admin-user-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-user-info {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    min-width: 0;
+}
+
+.admin-user-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid #111;
+    object-fit: cover;
+    background: #fff;
+    flex: 0 0 auto;
+}
+
+.admin-user-name {
+    font-weight: 800;
+    font-size: 18px;
+    color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 180px;
+}
+
+.admin-user-role {
+    font-weight: 800;
+    font-size: 16px;
+    color: #111;
+    white-space: nowrap;
+}
+
+.admin-user-actions {
+    display: flex;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
+.admin-action-btn {
+    border: 3px solid #111;
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-weight: 800;
+    cursor: pointer;
+    background: #eee;
+    color: #111;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 74px;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.admin-action-btn.view {
+    background: #D88628;
+}
+
+.admin-action-btn.ban,
+.admin-action-btn.decline {
+    background: #BF4646;
+}
+
+.admin-action-btn.accept {
+    background: #4CAF50;
+}
+
+.admin-action-btn:hover {
+    filter: brightness(0.95);
+}
+
+.admin-account-actions {
+    margin-top: 16px;
+}
+
+.admin-ban-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.admin-ban-modal.active {
+    display: flex;
+}
+
+.admin-ban-modal-card {
+    width: 100%;
+    max-width: 420px;
+    background: #2C6A73;
+    border: 3px solid #111;
+    border-radius: 20px;
+    padding: 24px 32px 28px;
+    text-align: center;
+}
+
+.admin-ban-modal-card h3 {
+    margin-bottom: 12px;
+    font-weight: 800;
+    color: #111;
+}
+
+.admin-ban-reason-wrap {
+    margin-bottom: 14px;
+}
+
+.admin-ban-reason-select {
+    width: 100%;
+    border: 3px solid #111;
+    border-radius: 6px;
+    background: #e9e9e9;
+    color: #111;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 8px 12px;
+    outline: none;
+}
+
+.admin-ban-modal-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-ban-modal-actions .admin-action-btn {
+    width: 100%;
+    max-width: 340px;
+}
+
+.admin-action-btn.admin-cancel-btn {
+    background: #B9F2A6;
 }
 
 @font-face {
     font-family: 'RushonGround';
-    src: url('../Font/Rushon Ground.ttf') format('truetype');
+    src: url('Font/Rushon Ground.ttf') format('truetype');
+}
+
+/* ──────────────────────────────────────────────────────
+   CHAT SIDEBAR INNER LIST
+   ► Change gap between contacts → change gap
+   ────────────────────────────────────────────────────── */
+.chat-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* ← GAP BETWEEN CONTACT CARDS HERE   */
+}
+
+/* ──────────────────────────────────────────────────────
+   CONTACT CARD  (each person in sidebar)
+   ► Make TALLER/SHORTER  → change padding-top/bottom
+   ► Make WIDER/NARROWER  → controlled by .chat-sidebar width
+   ► Change BG color      → change background
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ► Change inner space   → change padding
+   ► Change gap (avatar to name) → change gap
+   ────────────────────────────────────────────────────── */
+.chat-contact {
+    background: #BF4646; /* ← CONTACT CARD BG COLOR HERE       */
+    border: 5px solid #1a1a1a; /* ← CONTACT CARD BORDER HERE    */
+    border-radius: 10px; /* ← CONTACT CARD ROUNDNESS HERE      */
+    padding-top: 20px; /* ← TOP SPACE INSIDE CARD HERE       */
+    padding-bottom: 20px; /* ← BOTTOM SPACE INSIDE CARD HERE    */
+    padding-left: 35px; /* ← LEFT SPACE INSIDE CARD HERE      */
+    padding-right: 35px; /* ← RIGHT SPACE INSIDE CARD HERE     */
+    display: flex;
+    align-items: center;
+    gap: 9px; /* ← GAP between avatar and name HERE  */
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+    .chat-contact:hover {
+        filter: brightness(1.1);
+    }
+
+    .chat-contact.selected {
+        outline: 3px solid black;
+        outline-offset: -3px;
+    }
+
+/* ──────────────────────────────────────────────────────
+   CONTACT NAME TEXT
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Change boldness     → change font-weight
+   ────────────────────────────────────────────────────── */
+.contact-name {
+    color: black; /* ← CONTACT NAME COLOR HERE           */
+    font-size: 24px; /* ← CONTACT NAME SIZE HERE            */
+    font-weight: 700; /* ← CONTACT NAME BOLDNESS HERE        */
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ──────────────────────────────────────────────────────
+   EMPTY CONTACT SLOT
+   ► Make taller/shorter → change height
+   ► Change BG color     → change background
+   ────────────────────────────────────────────────────── */
+.chat-contact-empty {
+    background: #7EACB5; /* ← EMPTY SLOT COLOR HERE            */
+    border: 5px solid #1a1a1a;
+    border-radius: 10px;
+    height: 95px; /* ← EMPTY SLOT HEIGHT HERE           */
+    flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────────────
+   AVATAR CIRCLE
+   ► Make bigger/smaller → change width and height
+     (set it in your HTML with style="width:Xpx;height:Xpx")
+   ► Change border       → change border
+   ────────────────────────────────────────────────────── */
+.avatar {
+    border-radius: 50%;
+    border: 3px solid #1a1a1a; /* ← AVATAR BORDER HERE          */
+    background: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+    .avatar svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+/* ──────────────────────────────────────────────────────
+   CHAT WINDOW  (right panel)
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ────────────────────────────────────────────────────── */
+.chat-window {
+    flex: 1;
+    background: #7EACB5; /* ← CHAT WINDOW BG COLOR HERE        */
+    border: 5px solid #1a1a1a; /* ← CHAT WINDOW BORDER HERE     */
+    border-radius: 14px; /* ← CHAT WINDOW ROUNDNESS HERE       */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────
+   CHAT HEADER BAR  (red bar at top of chat)
+   ► Make TALLER/SHORTER  → change padding-top/bottom
+                            OR change min-height
+   ► Change WIDTH         → change width (% or px)
+   ► Move DOWN/UP         → change margin-top
+   ► Change BG color      → change background
+   ► Change border        → change border-bottom
+   ► Change roundness     → change border-radius
+   ► Change left/right space → change padding-left/right
+   ► Change gap (avatar to name) → change gap
+   ────────────────────────────────────────────────────── */
+.chat-header {
+    min-height: 110px; /* ← HEADER HEIGHT — increase/decrease  */
+    padding-top: 8px; /* ← TOP space inside header            */
+    padding-bottom: 8px; /* ← BOTTOM space inside header         */
+    padding-left: 35px; /* ← LEFT space inside header           */
+    padding-right: 35px; /* ← RIGHT space inside header          */
+    /* ── SHRINK FROM BOTH SIDES (like original) ──
+       Increase margin-left AND margin-right equally
+       to make header shorter on both sides.
+       Example: margin-left:20px; margin-right:20px;
+       makes it 40px narrower total */
+    margin-left: 10px; /* ← SHRINK FROM LEFT SIDE HERE        */
+    margin-right: 10px; /* ← SHRINK FROM RIGHT SIDE HERE       */
+    margin-top: 10px; /* ← PUSH DOWN from top HERE           */
+
+    background: #BF4646; /* ← HEADER COLOR                      */
+    border: 5px solid #1a1a1a; /* ← HEADER BORDER                     */
+    border-radius: 14px; /* ← HEADER CORNER ROUNDNESS           */
+    display: flex;
+    align-items: center;
+    gap: 13px; /* ← GAP between avatar and name       */
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow: visible;
+    /* ── WIDTH auto-calculates from margins ──
+       width = 100% minus margin-left minus margin-right */
+    width: auto; /* ← DO NOT change this line           */
+}
+
+/* ──────────────────────────────────────────────────────
+   CHAT HEADER NAME TEXT
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Change boldness     → change font-weight
+   ────────────────────────────────────────────────────── */
+.chat-header-name {
+    color: black; /* ← HEADER NAME COLOR HERE           */
+    font-size: 26px; /* ← HEADER NAME SIZE HERE            */
+    font-weight: 700; /* ← HEADER NAME BOLDNESS HERE        */
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ──────────────────────────────────────────────────────
+   CHAT BODY  (message scroll area)
+   ► Change padding   → change padding
+   ► Change gap between bubbles → change gap
+   ► Change BG color  → change background
+   ────────────────────────────────────────────────────── */
+.chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px; /* ← CHAT BODY PADDING HERE         */
+    display: flex;
+    flex-direction: column;
+    gap: 11px; /* ← GAP BETWEEN BUBBLES HERE         */
+    background: #7EACB5; /* ← CHAT BODY BG COLOR HERE         */
+}
+
+    .chat-body::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .chat-body::-webkit-scrollbar-thumb {
+        background: #276470;
+        border-radius: 3px;
+    }
+
+/* ──────────────────────────────────────────────────────
+   DATE LABEL  (e.g. "April 9")
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ────────────────────────────────────────────────────── */
+.chat-date {
+    text-align: center;
+    font-size: 24px; /* ← DATE LABEL SIZE HERE             */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #1a1a1a; /* ← DATE LABEL COLOR HERE            */
+    opacity: 0.65; /* ← DATE LABEL OPACITY HERE          */
+}
+
+/* ──────────────────────────────────────────────────────
+   CHAT ROW  (wrapper for each bubble)
+   ────────────────────────────────────────────────────── */
+.chat-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+}
+
+    .chat-row.sent {
+        justify-content: flex-end;
+    }
+
+    .chat-row.received {
+        justify-content: flex-start;
+    }
+
+/* ──────────────────────────────────────────────────────
+   CHAT BUBBLE
+   ► Make bigger/smaller text → change font-size
+   ► Change padding (bubble size) → change padding
+   ► Change BG color     → change background
+   ► Change text color   → change color
+   ► Change border       → change border
+   ► Change roundness    → change border-radius in .sent/.received
+   ► Max width of bubble → change max-width
+   ────────────────────────────────────────────────────── */
+.bubble {
+    max-width: 70%; /* ← MAX BUBBLE WIDTH HERE            */
+    padding: 23px 30px; /* ← BUBBLE PADDING HERE              */
+    border: 3px solid #1a1a1a; /* ← BUBBLE BORDER HERE          */
+    font-size: 25px; /* ← BUBBLE TEXT SIZE HERE            */
+    font-weight: 700; /* ← BUBBLE TEXT BOLDNESS HERE        */
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.4;
+    animation: pop-in 0.2s ease;
+    background: #276470; /* ← BUBBLE BG COLOR HERE             */
+    color: white; /* ← BUBBLE TEXT COLOR HERE           */
+}
+
+    .bubble.sent {
+        border-radius: 28px 28px 14px 28px; /* ← SENT BUBBLE ROUNDNESS     */
+    }
+
+    .bubble.received {
+        border-radius: 28px 28px 28px 14px; /* ← RECEIVED BUBBLE ROUNDNESS */
+    }
+
+@keyframes pop-in {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ──────────────────────────────────────────────────────
+   CHAT INPUT ROW  (bottom bar with attach + input + send)
+   ► Change padding    → change padding
+   ► Change gap        → change gap
+   ► Change BG color   → change background
+   ► Make TALLER       → increase padding-top/bottom
+   ────────────────────────────────────────────────────── */
+.chat-input-row {
+    padding: 7px 40px; /* ← INPUT ROW PADDING HERE           */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← GAP between attach/input/send    */
+    background: #7EACB5; /* ← INPUT ROW BG COLOR HERE          */
+    flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────────────
+   ATTACH BUTTON  (paperclip icon)
+   ► Make icon bigger/smaller → change width/height on img
+   ────────────────────────────────────────────────────── */
+.attach-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    transition: transform 0.15s;
+}
+
+    .attach-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .attach-btn img {
+        width: 50px; /* ← ATTACH ICON WIDTH HERE           */
+        height: 90px; /* ← ATTACH ICON HEIGHT HERE          */
+        object-fit: contain;
+    }
+
+/* ──────────────────────────────────────────────────────
+   CHAT TEXT INPUT FIELD
+   ► Make taller/shorter  → change padding-top/bottom
+   ► Change text size     → change font-size
+   ► Change BG color      → change background
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ────────────────────────────────────────────────────── */
+.chat-input {
+    flex: 1;
+    background: #7EACB5; /* ← INPUT FIELD BG COLOR HERE        */
+    border: 5px solid #1a1a1a; /* ← INPUT FIELD BORDER HERE     */
+    border-radius: 5px; /* ← INPUT FIELD ROUNDNESS HERE       */
+    padding-top: 33px; /* ← TOP SPACE INSIDE INPUT HERE      */
+    padding-bottom: 33px; /* ← BOTTOM SPACE INSIDE INPUT HERE   */
+    padding-left: 22px; /* ← LEFT SPACE INSIDE INPUT HERE     */
+    padding-right: 22px; /* ← RIGHT SPACE INSIDE INPUT HERE    */
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px; /* ← INPUT TEXT SIZE HERE             */
+    font-weight: 700; /* ← INPUT TEXT BOLDNESS HERE         */
+    color: #1a1a1a; /* ← INPUT TEXT COLOR HERE            */
+    outline: none;
+    height: 36px; /* ← INPUT FIELD HEIGHT HERE          */
+}
+
+/* ──────────────────────────────────────────────────────
+   SEND BUTTON  (circle with arrow icon)
+   ► Make bigger/smaller → change width/height
+   ► Change BG color     → change background
+   ► Change border       → change border
+   ► Change icon size    → change img width/height
+   ────────────────────────────────────────────────────── */
+.send-btn {
+    background: #276470; /* ← SEND BUTTON BG COLOR HERE        */
+    border: 3px solid #1a1a1a; /* ← SEND BUTTON BORDER HERE     */
+    border-radius: 50%; /* ← SEND BUTTON SHAPE (50%=circle)   */
+    width: 36px; /* ← SEND BUTTON WIDTH HERE           */
+    height: 36px; /* ← SEND BUTTON HEIGHT HERE          */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background 0.15s;
+}
+
+    .send-btn:hover {
+        background: #1d5560; /* ← SEND HOVER COLOR */
+    }
+
+    .send-btn img {
+        width: 50px; /* ← SEND ICON WIDTH HERE             */
+        height: 50px; /* ← SEND ICON HEIGHT HERE            */
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+    }
+
+
+/* ══════════════════════════════════════════════════════
+   ANALYTICS PAGE — FULL MANUAL CONTROLS
+══════════════════════════════════════════════════════ */
+
+body[data-page="analytics"] .page-wrap {
+    overflow: visible;
+    height: auto;
+    display: block;
+}
+
+/* ──────────────────────────────────────────────────────
+   ANALYTICS OUTER LAYOUT
+   ► Move DOWN/UP      → change top
+   ► Move RIGHT/LEFT   → change left
+   ► Make WIDER/NARROW → change width
+   ► Make TALLER/SHORT → change height
+   ► Change gap between month-nav and grid → change gap
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .analytics-layout {
+    position: absolute;
+    top: 50px; /* ← MOVE DOWN/UP HERE                */
+    left: 36px; /* ← MOVE RIGHT/LEFT HERE             */
+    width: 1848px; /* ← CHANGE TOTAL WIDTH HERE          */
+    height: 940px; /* ← CHANGE TOTAL HEIGHT HERE         */
+    margin: 0;
+    max-width: none;
+    max-height: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* ← GAP between month-nav and grid   */
+    overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────
+   MONTH NAVIGATION BAR  (◄ JANUARY ►)
+   ► Move DOWN/UP      → change margin-top
+   ► Change gap        → change gap
+   ► Change height     → change min-height
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .analytics-month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px; /* ← GAP between ◄ text ► HERE        */
+    min-height: 36px; /* ← HEIGHT of month nav row HERE      */
+    margin-top: 0px; /* ← MOVE DOWN/UP HERE                */
+    flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────────────
+   MONTH ARROW BUTTONS  ◄  ►
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .month-arrow {
+    font-size: 39px; /* ← ARROW SIZE HERE                  */
+    color: #1a1a1a; /* ← ARROW COLOR HERE                 */
+    font-weight: 900;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px;
+    transition: transform 0.15s;
+}
+
+    body[data-page="analytics"] .month-arrow:hover {
+        transform: scale(1.3);
+    }
+
+/* ──────────────────────────────────────────────────────
+   MONTH LABEL TEXT  (e.g. JANUARY)
+   ► Make bigger/smaller  → change font-size
+   ► Make wider text area → change min-width
+   ► Change letter spacing → change letter-spacing
+   ► Change color         → change color
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .month-label-text {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 39px; /* ← MONTH TEXT SIZE HERE             */
+    font-weight: 900;
+    color: #1a1a1a; /* ← MONTH TEXT COLOR HERE            */
+    letter-spacing: 3px; /* ← LETTER SPACING HERE              */
+    min-width: 190px; /* ← MIN WIDTH OF LABEL HERE          */
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* ──────────────────────────────────────────────────────
+   ANALYTICS GRID  (3 columns: LEFT | CHART | RIGHT)
+   ► Widen/narrow LEFT col  → change first value e.g. 280px
+   ► Widen/narrow RIGHT col → change third value e.g. 240px
+   ► Chart takes rest automatically (1fr)
+   ► Change gap between cols → change gap
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .analytics-grid {
+    display: grid;
+    grid-template-columns: 495px 1fr 405px; /* ← LEFT | CHART | RIGHT */
+    gap: 13px; /* ← GAP BETWEEN COLUMNS HERE         */
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────
+   LEFT COLUMN WRAPPER
+   ► Change gap between revenue and duedates → change gap
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .analytics-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* ← GAP between revenue/duedates box */
+    overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────
+   REVENUE BOX  (TOTAL REVENUE + ₱100.00)
+   ► Make taller/shorter  → change padding-top/bottom
+   ► Change BG color      → change background
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ► Change inner spacing → change padding
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .revenue-box {
+    background: #7EACB5; /* ← REVENUE BOX BG COLOR HERE        */
+    border: 5px solid #1a1a1a; /* ← REVENUE BOX BORDER HERE     */
+    border-radius: 14px; /* ← REVENUE BOX ROUNDNESS HERE       */
+    padding-top: 26px; /* ← TOP SPACE INSIDE HERE            */
+    padding-bottom: 36px; /* ← BOTTOM SPACE INSIDE HERE         */
+    padding-left: 54px; /* ← LEFT SPACE INSIDE HERE           */
+    padding-right: 24px; /* ← RIGHT SPACE INSIDE HERE          */
+    flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────────────
+   "TOTAL REVENUE" label
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .revenue-label {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 50px; /* ← LABEL SIZE HERE                  */
+    font-weight: 900;
+    color: #1a1a1a; /* ← LABEL COLOR HERE                 */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ──────────────────────────────────────────────────────
+   ₱100.00 value
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Move down from label → change margin-top
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .revenue-amount {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 94px; /* ← REVENUE VALUE SIZE HERE          */
+    font-weight: 900;
+    color: #BF4646; /* ← REVENUE VALUE COLOR HERE         */
+    margin-top: 30px; /* ← SPACE ABOVE VALUE HERE           */
+}
+
+/* ──────────────────────────────────────────────────────
+   DUEDATES BOX
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ► Change padding    → change padding
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .duedates-box {
+    background: #7EACB5; /* ← DUEDATES BOX BG COLOR HERE       */
+    border: 5px solid #1a1a1a; /* ← DUEDATES BOX BORDER HERE    */
+    border-radius: 14px; /* ← DUEDATES BOX ROUNDNESS HERE      */
+    padding: 20px 22px; /* ← DUEDATES BOX PADDING HERE        */
+    flex: 1;
+}
+
+/* ──────────────────────────────────────────────────────
+   "DUEDATES" label
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Space below label   → change margin-bottom
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .duedates-label {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 50px; /* ← DUEDATES LABEL SIZE HERE         */
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px; /* ← SPACE BELOW LABEL HERE           */
+    color: #1a1a1a; /* ← DUEDATES LABEL COLOR HERE        */
+}
+
+/* ──────────────────────────────────────────────────────
+   DUEDATE ROW  (Client #1 — January 13)
+   ► Make taller/shorter  → change padding
+   ► Change text size     → change font-size
+   ► Change BG color      → change background
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ► Space below each row → change margin-bottom
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .duedate-row {
+    background: #EDDCC6; /* ← DUEDATE ROW BG COLOR HERE        */
+    border: 3px solid #1a1a1a; /* ← DUEDATE ROW BORDER HERE     */
+    border-radius: 10px; /* ← DUEDATE ROW ROUNDNESS HERE       */
+    padding: 17px 21px; /* ← DUEDATE ROW INNER PADDING HERE   */
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px; /* ← DUEDATE ROW TEXT SIZE HERE       */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin-bottom: 10px; /* ← SPACE BELOW EACH ROW HERE        */
+}
+
+/* ──────────────────────────────────────────────────────
+   EMPTY DUEDATE SLOT
+   ► Make taller/shorter → change height
+   ► Change BG color     → change background
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .duedate-empty {
+    background: #EDDCC6; /* ← EMPTY SLOT COLOR HERE            */
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    height: 84px; /* ← EMPTY SLOT HEIGHT HERE           */
+    margin-bottom: 7px;
+}
+
+/* ──────────────────────────────────────────────────────
+   CHART BOX
+   ► Change BG color      → change background
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ► Change inner padding → change padding
+   ► Change min height    → change min-height
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .chart-box {
+    background: #7EACB5; /* ← CHART BOX BG COLOR HERE          */
+    border: 5px solid #1a1a1a; /* ← CHART BOX BORDER HERE       */
+    border-radius: 14px; /* ← CHART BOX ROUNDNESS HERE         */
+    padding: 62px 64px 60px; /* ← CHART BOX PADDING HERE       */
+    min-height: 300px; /* ← CHART BOX MIN HEIGHT HERE        */
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+    body[data-page="analytics"] .chart-box canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+/* ──────────────────────────────────────────────────────
+   STOCKS BOX
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ► Change padding    → change padding
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .stocks-box {
+    background: #7EACB5; /* ← STOCKS BOX BG COLOR HERE         */
+    border: 5px solid #1a1a1a; /* ← STOCKS BOX BORDER HERE      */
+    border-radius: 14px; /* ← STOCKS BOX ROUNDNESS HERE        */
+    padding: 10px; /* ← STOCKS BOX PADDING HERE          */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ──────────────────────────────────────────────────────
+   "STOCKS" label
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Space below label   → change margin-bottom
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .stocks-label {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 13px; /* ← STOCKS LABEL SIZE HERE           */
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px; /* ← SPACE BELOW LABEL HERE           */
+    color: #1a1a1a; /* ← STOCKS LABEL COLOR HERE          */
+    flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────────────
+   EACH STOCK ROW  (Chubb x3 / Boss x10 / Drawing x5)
+   ► Make taller/shorter  → change padding-top/bottom
+   ► Change text size     → change font-size
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ► Space below each row → change margin-bottom
+   ────────────────────────────────────────────────────── */
+body[data-page="analytics"] .stock-row {
+    border: 3px solid #1a1a1a; /* ← STOCK ROW BORDER HERE       */
+    border-radius: 10px; /* ← STOCK ROW ROUNDNESS HERE         */
+    padding-top: 18px; /* ← TOP SPACE INSIDE ROW HERE        */
+    padding-bottom: 18px; /* ← BOTTOM SPACE INSIDE ROW HERE     */
+    padding-left: 21px; /* ← LEFT SPACE INSIDE ROW HERE       */
+    padding-right: 21px; /* ← RIGHT SPACE INSIDE ROW HERE      */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 45px; /* ← STOCK ROW TEXT SIZE HERE         */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin-bottom: 10px; /* ← SPACE BELOW EACH ROW HERE        */
+    flex-shrink: 0;
+    transition: transform 0.15s;
+}
+
+    body[data-page="analytics"] .stock-row:hover {
+        transform: translateX(3px);
+    }
+
+    /* ──────────────────────────────────────────────────────
+   STOCK ROW COLORS
+   ► Chubb (low)    → .red   → change background
+   ► Boss (ok)      → .green → change background
+   ► Drawing (high) → .lime  → change background
+   ► Empty slots    → .empty → change background/height
+   ────────────────────────────────────────────────────── */
+    body[data-page="analytics"] .stock-row.red {
+        background: #BF4646; /* ← LOW STOCK COLOR HERE             */
+        color: white;
+    }
+
+    body[data-page="analytics"] .stock-row.green {
+        background: #5DDB44; /* ← MID STOCK COLOR HERE             */
+        color: #1a1a1a;
+    }
+
+    body[data-page="analytics"] .stock-row.lime {
+        background: #DDFA36; /* ← HIGH STOCK COLOR HERE            */
+        color: #1a1a1a;
+    }
+
+    body[data-page="analytics"] .stock-row.empty {
+        background: #EDDCC6; /* ← EMPTY SLOT COLOR HERE            */
+        min-height: 34px; /* ← EMPTY SLOT HEIGHT HERE           */
+    }
+
+
+/* ══════════════════════════════════════════════════════
+   NOTIFICATIONS PAGE — FULL MANUAL CONTROLS
+══════════════════════════════════════════════════════ */
+
+body[data-page="notifications"] .page-wrap {
+    overflow: visible;
+    height: auto;
+    display: block;
+}
+
+/* ──────────────────────────────────────────────────────
+   NOTIFICATIONS PAGE WRAPPER
+   ► Move DOWN/UP      → change top
+   ► Move RIGHT/LEFT   → change left
+   ► Make WIDER/NARROW → change width
+   ────────────────────────────────────────────────────── */
+body[data-page="notifications"] .notifications-page {
+    position: absolute;
+    top: 30px; /* ← MOVE DOWN/UP HERE                */
+    left: 100px; /* ← MOVE RIGHT/LEFT HERE             */
+    width: 1700px; /* ← CHANGE WIDTH HERE                */
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* ← GAP between title/search/list    */
+}
+
+/* ──────────────────────────────────────────────────────
+   "NOTIFICATIONS" TITLE
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Change spacing      → change letter-spacing
+   ────────────────────────────────────────────────────── */
+.notif-title {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 40px; /* ← TITLE SIZE HERE                  */
+    font-weight: 900;
+    color: #1a1a1a; /* ← TITLE COLOR HERE                 */
+    text-align: left;
+    text-transform: uppercase;
+}
+
+/* ──────────────────────────────────────────────────────
+   SEARCH BAR ROW
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ► Change padding    → change padding
+   ► Change gap        → change gap
+   ────────────────────────────────────────────────────── */
+.notif-search-row {
+    display: flex;
+    align-items: center;
+    background: #7EACB5; /* ← SEARCH ROW BG COLOR HERE         */
+    border: 5px solid #1a1a1a; /* ← SEARCH ROW BORDER HERE      */
+    border-radius: 14px; /* ← SEARCH ROW ROUNDNESS HERE        */
+    padding: 7px 10px; /* ← SEARCH ROW PADDING HERE          */
+    gap: 9px; /* ← GAP between icon and input HERE  */
+}
+
+/* ──────────────────────────────────────────────────────
+   SEARCH ICON BOX  (orange box with magnifier)
+   ► Make bigger/smaller → change width/height
+   ► Change BG color     → change background
+   ► Change border       → change border
+   ► Change icon size    → change img width/height
+   ────────────────────────────────────────────────────── */
+.notif-search-icon {
+    width: 32px; /* ← SEARCH ICON BOX WIDTH HERE       */
+    height: 32px; /* ← SEARCH ICON BOX HEIGHT HERE      */
+    background: #D88628; /* ← SEARCH ICON BG COLOR HERE        */
+    border-radius: 10px; /* ← SEARCH ICON ROUNDNESS HERE       */
+    border: 3px solid #1a1a1a; /* ← SEARCH ICON BORDER HERE     */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+    .notif-search-icon img {
+        width: 18px; /* ← MAGNIFIER ICON SIZE HERE         */
+        height: 18px;
+        object-fit: contain;
+    }
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 10%;
+    background: #2f6f73;
+    color: white;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* ──────────────────────────────────────────────────────
+   NOTIFICATION LIST WRAPPER
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ► Change padding    → change padding
+   ► Change gap between items → change gap
+   ────────────────────────────────────────────────────── */
+.notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px; /* ← GAP BETWEEN NOTIF ITEMS HERE     */
+    background: #7EACB5; /* ← NOTIF LIST BG COLOR HERE         */
+    border: 5px solid #1a1a1a; /* ← NOTIF LIST BORDER HERE      */
+    border-radius: 14px; /* ← NOTIF LIST ROUNDNESS HERE        */
+    padding: 10px; /* ← NOTIF LIST PADDING HERE          */
+}
+
+/* ──────────────────────────────────────────────────────
+   EACH NOTIFICATION ITEM
+   ► Make taller/shorter  → change padding-top/bottom
+   ► Change text size     → change font-size
+   ► Change border        → change border
+   ► Change roundness     → change border-radius
+   ► Change gap (icon to text) → change gap
+   ────────────────────────────────────────────────────── */
+.notif-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ← GAP between icon and text HERE   */
+    padding-top: 11px; /* ← TOP SPACE INSIDE ITEM HERE       */
+    padding-bottom: 11px; /* ← BOTTOM SPACE INSIDE ITEM HERE    */
+    padding-left: 14px; /* ← LEFT SPACE INSIDE ITEM HERE      */
+    padding-right: 14px; /* ← RIGHT SPACE INSIDE ITEM HERE     */
+    border-radius: 14px; /* ← ITEM ROUNDNESS HERE              */
+    border: 3px solid #1a1a1a; /* ← ITEM BORDER HERE            */
+    font-size: 13px; /* ← ITEM TEXT SIZE HERE              */
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: transform 0.15s;
+    animation: slide-in 0.3s ease both;
+}
+
+    .notif-item:hover {
+        transform: translateX(3px);
+    }
+
+    /* ──────────────────────────────────────────────────────
+   NOTIFICATION ITEM COLORS
+   ► Warning (red)  → change background in .warning
+   ► Message (teal) → change background in .message
+   ► Success (teal) → change background in .success
+   ────────────────────────────────────────────────────── */
+    .notif-item.warning {
+        background: #BF4646; /* ← WARNING ITEM COLOR HERE          */
+        color: white;
+    }
+
+    .notif-item.message {
+        background: #7EACB5; /* ← MESSAGE ITEM COLOR HERE          */
+        color: #1a1a1a;
+    }
+
+    .notif-item.success {
+        background: #7EACB5; /* ← SUCCESS ITEM COLOR HERE          */
+        color: #1a1a1a;
+    }
+
+    .notif-item.read {
+        opacity: 0.5;
+    }
+
+    .notif-item.active {
+        outline: 3px solid black;
+        transform: scale(0.97);
+    }
+
+/* ──────────────────────────────────────────────────────
+   NOTIFICATION ICON CIRCLE
+   ► Make bigger/smaller → change width/height
+   ► Change BG color     → change background
+   ► Change border       → change border
+   ► Change icon size    → change img width/height
+   ────────────────────────────────────────────────────── */
+.notif-icon {
+    width: 38px; /* ← ICON CIRCLE WIDTH HERE           */
+    height: 38px; /* ← ICON CIRCLE HEIGHT HERE          */
+    border-radius: 50%;
+    border: 3px solid #1a1a1a; /* ← ICON CIRCLE BORDER HERE     */
+    background: rgba(0,0,0,0.12); /* ← ICON CIRCLE BG HERE      */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.notif-item.warning .notif-icon {
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(255,255,255,0.4);
+}
+
+.notif-icon img {
+    width: 22px; /* ← ICON IMAGE SIZE HERE             */
+    height: 22px;
+    object-fit: contain;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-18px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   ACCOUNT PAGE — FULL MANUAL CONTROLS
+══════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────
+   ACCOUNT CARD  (main teal container)
+   ► Move DOWN/UP      → change margin-top
+   ► Move RIGHT/LEFT   → change margin-left (remove auto)
+   ► Make WIDER/NARROW → change max-width
+   ► Change BG color   → change background
+   ► Change border     → change border
+   ► Change roundness  → change border-radius
+   ► Change inner space → change padding
+   ────────────────────────────────────────────────────── */
+.account-card {
+    max-width: 1400px; /* ← CHANGE CARD WIDTH HERE           */
+    width: 100%;
+    margin-top: 80px; /* ← MOVE DOWN/UP HERE                */
+    margin-left: auto; /* ← MOVE RIGHT/LEFT (replace auto)   */
+    margin-right: auto;
+    background: #276470; /* ← CARD BG COLOR HERE               */
+    border: 5px solid #1a1a1a; /* ← CARD BORDER HERE            */
+    border-radius: 24px; /* ← CARD ROUNDNESS HERE              */
+    padding-top: 30px; /* ← TOP SPACE INSIDE CARD HERE       */
+    padding-bottom: 90px; /* ← BOTTOM SPACE INSIDE CARD HERE    */
+    padding-left: 94px; /* ← LEFT SPACE INSIDE CARD HERE      */
+    padding-right: 34px; /* ← RIGHT SPACE INSIDE CARD HERE     */
+    position: relative;
+}
+
+/* ──────────────────────────────────────────────────────
+   ACCOUNT HEADER  (avatar + name row)
+   ► Change gap between avatar and name → change gap
+   ► Change space below header → change margin-bottom
+   ────────────────────────────────────────────────────── */
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 50px; /* ← GAP between avatar and name HERE */
+    margin-bottom: 26px; /* ← SPACE BELOW HEADER ROW HERE      */
+}
+
+/* ──────────────────────────────────────────────────────
+   PROFILE AVATAR  (circle image)
+   ► Make bigger/smaller → change width/height
+   ► Change border       → change border
+   ────────────────────────────────────────────────────── */
+.profile-avatar {
+    width: 174px; /* ← AVATAR WIDTH HERE                */
+    height: 174px; /* ← AVATAR HEIGHT HERE               */
+    border-radius: 50%;
+    border: 5px solid #1a1a1a; /* ← AVATAR BORDER HERE          */
+    background: #888;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+    .profile-avatar:hover {
+        filter: brightness(1.1);
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+/* ──────────────────────────────────────────────────────
+   PROFILE NAME TEXT
+   ► Make bigger/smaller → change font-size
+   ► Change color        → change color
+   ► Change letter spacing → change letter-spacing
+   ────────────────────────────────────────────────────── */
+.profile-name {
+    font-family: 'Rushon Ground', 'Poppins', sans-serif;
+    font-size: 90px; /* ← NAME TEXT SIZE HERE              */
+    font-weight: 900;
+    color: white; /* ← NAME TEXT COLOR HERE             */
+    text-transform: uppercase;
+    letter-spacing: 12px; /* ← NAME LETTER SPACING HERE         */
+    outline: none;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s;
+}
+
+    .profile-name[contenteditable="true"] {
+        border-bottom: 3px solid rgba(255,255,255,0.6);
+    }
+
+/* ──────────────────────────────────────────────────────
+   SAVE / CANCEL BUTTONS  (top-right of card)
+   ► Move DOWN/UP    → change top
+   ► Move LEFT/RIGHT → change right
+   ────────────────────────────────────────────────────── */
+.save-cancel-group {
+    position: absolute;
+    top: 58px; /* ← MOVE DOWN/UP HERE                */
+    right: 78px; /* ← MOVE LEFT/RIGHT HERE             */
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* ← GAP between save and cancel HERE */
+}
+
+/* ──────────────────────────────────────────────────────
+   SAVE BUTTON
+   ► Change text size → change font-size
+   ► Change BG color  → change background
+   ► Change padding   → change padding
+   ► Change roundness → change border-radius
+   ────────────────────────────────────────────────────── */
+.btn-save {
+    background: #5DDB44; /* ← SAVE BUTTON COLOR HERE           */
+    border: 3px solid #1a1a1a; /* ← SAVE BUTTON BORDER HERE     */
+    border-radius: 10px; /* ← SAVE BUTTON ROUNDNESS HERE       */
+    padding: 13px 13px; /* ← SAVE BUTTON PADDING HERE         */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 22px; /* ← SAVE BUTTON TEXT SIZE HERE       */
+    cursor: pointer;
+    color: #1a1a1a;
+}
+
+/* ──────────────────────────────────────────────────────
+   CANCEL BUTTON (small)
+   ► Change text size → change font-size
+   ► Change BG color  → change background
+   ► Change padding   → change padding
+   ────────────────────────────────────────────────────── */
+.btn-cancel-sm {
+    background: #BF4646; /* ← CANCEL BUTTON COLOR HERE         */
+    border: 3px solid #1a1a1a; /* ← CANCEL BUTTON BORDER HERE   */
+    border-radius: 10px; /* ← CANCEL BUTTON ROUNDNESS HERE     */
+    padding: 3px 3px; /* ← CANCEL BUTTON PADDING HERE       */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 21px; /* ← CANCEL BUTTON TEXT SIZE HERE     */
+    cursor: pointer;
+    color: white;
+}
+
+/* ──────────────────────────────────────────────────────
+   ACTION BUTTONS ROW  (Edit Username / Change Profile / Switch)
+   ► Change gap between buttons → change gap
+   ► Change space below row     → change margin-bottom
+   ────────────────────────────────────────────────────── */
+.account-actions {
+    display: flex;
+    gap: 10px; /* ← GAP BETWEEN ACTION BUTTONS HERE  */
+    margin-bottom: 22px; /* ← SPACE BELOW BUTTONS HERE         */
+    justify-content: center;
+}
+
+/* ──────────────────────────────────────────────────────
+   EACH ACTION BUTTON
+   ► Make bigger/smaller text → change font-size
+   ► Change padding (button size) → change padding
+   ► Change min width → change min-width
+   ► Change BG color  → change background
+   ► Change border    → change border
+   ► Change roundness → change border-radius
+   ────────────────────────────────────────────────────── */
+.btn-action {
+    background: #7EACB5; /* ← ACTION BUTTON BG COLOR HERE      */
+    border: 3px solid #1a1a1a; /* ← ACTION BUTTON BORDER HERE   */
+    border-radius: 40px; /* ← ACTION BUTTON ROUNDNESS HERE     */
+    padding: 51px 58px; /* ← ACTION BUTTON PADDING HERE       */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px; /* ← ACTION BUTTON TEXT SIZE HERE     */
+    cursor: pointer;
+    color: #1a1a1a; /* ← ACTION BUTTON TEXT COLOR HERE    */
+    text-align: center;
+    line-height: 1.3;
+    min-width: 130px; /* ← ACTION BUTTON MIN WIDTH HERE     */
+    transition: transform 0.15s;
+}
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+    }
+
+/* ──────────────────────────────────────────────────────
+   SIGN OUT BUTTON  (centered red button)
+   ► Make wider/narrower → change padding-left/right
+   ► Make taller/shorter → change padding-top/bottom
+   ► Change text size    → change font-size
+   ► Change BG color     → change background
+   ► Change border       → change border
+   ► Change roundness    → change border-radius
+   ────────────────────────────────────────────────────── */
+.btn-signout {
+    display: block;
+    margin: 0 auto; /* centers button */
+    background: #BF4646; /* ← SIGN OUT BUTTON COLOR HERE       */
+    border: 5px solid #1a1a1a; /* ← SIGN OUT BUTTON BORDER HERE */
+    border-radius: 14px; /* ← SIGN OUT BUTTON ROUNDNESS HERE   */
+    padding-top: 11px; /* ← TOP SPACE INSIDE BUTTON HERE     */
+    padding-bottom: 11px; /* ← BOTTOM SPACE INSIDE BUTTON HERE  */
+    padding-left: 48px; /* ← LEFT SPACE INSIDE BUTTON HERE    */
+    padding-right: 48px; /* ← RIGHT SPACE INSIDE BUTTON HERE   */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 25px; /* ← SIGN OUT TEXT SIZE HERE          */
+    color: white; /* ← SIGN OUT TEXT COLOR HERE         */
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: filter 0.15s;
+    width: fit-content;
+}
+
+    .btn-signout:hover {
+        filter: brightness(1.1);
+    }
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+/* ══════════════════════════════════════════════════════
+   ANALYTICS CHART — INTERNAL CONTROLS
+   These control the text, lines, and colors INSIDE
+   the chart canvas. Add to end of Site.css.
+══════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────
+   HOW TO USE THESE:
+   The CSS variables below are read by your Chart.js
+   script in Analytics.cshtml.
+
+   STEP 1 — Change the values here in CSS
+   STEP 2 — Make sure your Analytics.cshtml <script>
+            reads these variables using:
+
+   var style = getComputedStyle(document.documentElement);
+
+   Then use style.getPropertyValue('--chart-line-color')
+   etc. in your Chart.js config (see bottom of this block
+   for the full script replacement).
+   ────────────────────────────────────────────────────── */
+
+:root {
+    /* ── LINE & FILL ── */
+    --chart-line-color: #BF4646; /* ← LINE COLOR HERE             */
+    --chart-fill-color: rgba(191, 70, 70, 0.08); /* ← FILL UNDER LINE HERE      */
+    --chart-line-width: 3; /* ← LINE THICKNESS HERE         */
+    /* ── DATA DOTS ── */
+    --chart-dot-color: #BF4646; /* ← DOT COLOR HERE              */
+    --chart-dot-size: 8; /* ← DOT RADIUS SIZE HERE        */
+    --chart-dot-hover-size: 11; /* ← DOT SIZE ON HOVER HERE      */
+    /* ── LEGEND (the "Revenue" label top of chart) ── */
+    --chart-legend-color: #1a1a1a; /* ← LEGEND TEXT COLOR HERE      */
+    --chart-legend-size: 14; /* ← LEGEND TEXT SIZE (px) HERE  */
+    --chart-legend-weight: 700; /* ← LEGEND TEXT BOLDNESS HERE   */
+    /* ── X AXIS ── */
+    --chart-x-label-color: #1a1a1a; /* ← X AXIS LABEL COLOR HERE     */
+    --chart-x-label-size: 13; /* ← X AXIS LABEL SIZE (px) HERE */
+    --chart-x-label-weight: 700; /* ← X AXIS LABEL BOLDNESS HERE  */
+    --chart-x-title-text: 'Weeks'; /* ← X AXIS TITLE TEXT HERE      */
+    --chart-x-title-color: #1a1a1a; /* ← X AXIS TITLE COLOR HERE     */
+    --chart-x-title-size: 13; /* ← X AXIS TITLE SIZE (px) HERE */
+    --chart-x-grid-color: rgba(0, 0, 0, 0.12); /* ← X AXIS GRID LINE COLOR HERE */
+    /* ── Y AXIS ── */
+    --chart-y-label-color: #1a1a1a; /* ← Y AXIS LABEL COLOR HERE     */
+    --chart-y-label-size: 13; /* ← Y AXIS LABEL SIZE (px) HERE */
+    --chart-y-label-weight: 700; /* ← Y AXIS LABEL BOLDNESS HERE  */
+    --chart-y-grid-color: rgba(0, 0, 0, 0.12); /* ← Y AXIS GRID LINE COLOR HERE */
+    /* ── TOOLTIP (popup on hover) ── */
+    --chart-tooltip-bg: #276470; /* ← TOOLTIP BG COLOR HERE       */
+    --chart-tooltip-text: #ffffff; /* ← TOOLTIP TEXT COLOR HERE     */
+    --chart-tooltip-size: 13; /* ← TOOLTIP TEXT SIZE (px) HERE */
+    --chart-tooltip-padding: 10; /* ← TOOLTIP PADDING (px) HERE   */
+    --chart-tooltip-radius: 8; /* ← TOOLTIP CORNER RADIUS HERE  */
+}
+/* ══════════════════════════════════════════════════════
+   FIXES — added without changing any manual edits above
+══════════════════════════════════════════════════════ */
+
+/* ── FIX: Send button overflow so icon shows freely ──
+   Your width/height above are kept — this just fixes visibility */
+.send-btn {
+    background: none; /* ← NO background so icon shows as-is */
+    border: none; /* ← NO border                         */
+    border-radius: 50%;
+    width: 100px; /* ← SEND BUTTON CLICK AREA WIDTH      */
+    height: 100px; /* ← SEND BUTTON CLICK AREA HEIGHT     */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    overflow: visible;
+    transition: opacity 0.15s;
+}
+
+.send-btn:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+
+    .attach-btn img {
+        width: 100px; /* ← ATTACH ICON WIDTH — change freely  */
+        height: 140px; /* ← ATTACH ICON HEIGHT — change freely */
+        object-fit: contain;
+        display: block;
+        flex-shrink: 0;
+    }
+
+/* ── FIX: Notification icons — free resize outside circle ──
+   overflow:visible lets you resize the img beyond the circle */
+.notif-icon {
+    overflow: visible; /* ← icon can now go outside circle     */
+    position: relative;
+}
+
+    .notif-icon img {
+        width: 60px; /* ← NOTIF ICON WIDTH — change freely   */
+        height: 60px; /* ← NOTIF ICON HEIGHT — change freely  */
+        object-fit: contain;
+        position: relative;
+        z-index: 1;
+        flex-shrink: 0;
+    }
+
+/* ── FIX: Chat header overflow so avatar icon shows freely ── */
+.chat-header {
+    overflow: visible;
+}
+
+    /* ── CHAT HEADER AVATAR SIZE ──
+   Change the width/height numbers inside the HTML
+   style="width:60px;height:60px;" on the avatar div
+   OR change the number below to override all header avatars */
+    .chat-header .avatar {
+        overflow: visible; /* ← avatar icon can show freely        */
+        flex-shrink: 0;
+    }
+
+        .checkout-inner h2 {
+            font-size: 28px;
+        }
 }
 
 /* ========================= */
-/* HEADER & TOP BAR          */
+/* CHECKOUT BAR STYLES       */
+/* ========================= */
+
+.checkout-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #d6c4ad;
+    border-top: 4px solid #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 10001; /* above overlay */
+}
+
+    /* EXPANDED */
+    .checkout-bar.expanded {
+        height: 220px;
+        padding-top: 10px;
+    }
+
+/* COLLAPSED INNER */
+.checkout-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 900px;
+}
+
+/* FORM CONTAINER */
+.checkout-expanded {
+    display: none;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+/* SHOW FORM WHEN EXPANDED */
+.checkout-bar.expanded .checkout-expanded {
+    display: block;
+}
+
+/* HIDE COLLAPSED SUMMARY WHEN EXPANDED */
+.checkout-bar.expanded .checkout-inner {
+    display: none;
+}
+
+/* BACK BUTTON */
+.close-checkout {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+/* FORM ROW */
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+    .form-row label {
+        width: 120px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .form-row input,
+    .form-row select {
+        flex: 1;
+        max-width: 250px;
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+/* BOTTOM AREA - TOTAL + BUTTON */
+.checkout-bottom {
+    display: flex;
+    justify-content: flex-end; /* align items right */
+    align-items: center;
+    gap: 20px; /* space between total and button */
+    margin-top: 10px;
+}
+
+    .checkout-bottom h3 {
+        font-size: 22px; /* bigger total */
+        font-weight: 700;
+        margin: 0;
+    }
+
+/* PLACE ORDER BUTTON */
+.place-order-btn {
+    background: #c94c4c;
+    color: white;
+    border: 5px solid #000000; /* ✅ added border */
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+    .place-order-btn:hover {
+        background: #a63b3b;
+        border-color: #6e2323; /* optional: darker border on hover */
+}
+
+/* COLLAPSED CHECKOUT BUTTON */
+.checkout-btn {
+    background: #c94c4c;
+    color: white;
+    border: 5px solid #000000; /* ✅ added border */
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+    .checkout-btn:hover {
+        background: #a63b3b;
+        border-color: #6e2323; /* optional: darker border on hover */
+    }
+
+@media (max-width: 900px) {
+    .admin-shell .search-container input,
+    .admin-shell .navbar a,
+    .admin-user-name,
+    .admin-user-role,
+    .admin-action-btn {
+        font-size: 14px;
+    }
+
+    .admin-shell .navbar {
+        gap: 28px;
+    }
+
+    .admin-user-info {
+        gap: 22px;
+    }
+}
+
+/* ========================= */
+/* HOME PAGE (RESTORED)      */
 /* ========================= */
 .top-bar {
     background: #7EACB5;
@@ -43,7 +1787,6 @@ body {
     height: 100px;
 }
 
-/* SEARCH & FILTER */
 .search-panel {
     display: flex;
     align-items: center;
@@ -79,10 +1822,9 @@ body {
 
     .search-btn img {
         height: 25px;
-        opacity:1;
+        opacity: 1;
     }
 
-/* FILTER DROPDOWN */
 .filter {
     position: relative;
 }
@@ -97,7 +1839,6 @@ body {
     font-weight: 600;
 }
 
-/* UPDATED: Full-page overlay for dropdown */
 .dropdown-overlay {
     display: none;
     position: fixed;
@@ -109,7 +1850,7 @@ body {
     z-index: 9999;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 120px; /* space for header */
+    padding-top: 120px;
 }
 
     .dropdown-overlay.active {
@@ -153,7 +1894,6 @@ body {
     cursor: pointer;
 }
 
-/* ICONS */
 .icons {
     display: flex;
     gap: 10px;
@@ -165,6 +1905,49 @@ body {
     text-decoration: none;
     display: flex;
     align-items: center;
+}
+
+.top-bar .navbar-container {
+    background: #BF4646;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    position: relative;
+    z-index: 9998;
+}
+
+.top-bar .nav-arrows {
+    position: absolute;
+    left: 8px;
+    display: flex;
+    gap: 4px;
+}
+
+.top-bar .nav-btn {
+    background: #f1f1f1;
+    border: 1px solid #999;
+    width: 22px;
+    height: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.top-bar .navbar {
+    display: flex;
+    gap: 22px;
+}
+
+.top-bar .navbar a {
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.top-bar .navbar a:hover,
+.top-bar .navbar a.active {
+    color: #fff;
 }
 
     .icon img {
@@ -184,63 +1967,6 @@ body {
     font-weight: bold;
 }
 
-/* ========================= */
-/* RED NAVBAR                */
-/* ========================= */
-.navbar-container {
-    background: #BF4646;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    position: fixed;
-    top: 90px;
-    left: 0;
-    width: 100%;
-    z-index: 9998;
-}
-
-.nav-arrows {
-    position: absolute;
-    left: 20px;
-}
-
-.nav-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    opacity: 0.8;
-}
-
-    .nav-btn:hover {
-        opacity: 1;
-    }
-
-.navbar {
-    display: flex;
-    gap: 50px;
-}
-
-    .navbar a {
-        color: rgba(255,255,255,0.8);
-        font-weight: 600;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-size: 14px;
-        letter-spacing: 1px;
-        transition: 0.3s;
-    }
-
-        .navbar a:hover,
-        .navbar a.active {
-            color: white;
-        }
-
-/* ========================= */
-/* MAIN CONTENT AREAS        */
-/* ========================= */
 h2.section-title {
     text-align: center;
     margin: 50px 0 30px;
@@ -249,7 +1975,6 @@ h2.section-title {
     letter-spacing: 2px;
 }
 
-/* CAROUSEL */
 .carousel {
     max-width: 1200px;
     margin: 0 auto 40px;
@@ -296,9 +2021,6 @@ h2.section-title {
         opacity: 0.9;
     }
 
-/* ========================= */
-/* GRIDS & PRODUCT CARDS     */
-/* ========================= */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -352,7 +2074,6 @@ h2.section-title {
     margin-bottom: 15px;
 }
 
-/* BUTTONS */
 .buttons {
     display: flex;
     justify-content: center;
@@ -388,9 +2109,6 @@ h2.section-title {
         background: #00b359;
     }
 
-/* ========================= */
-/* FOOTER                    */
-/* ========================= */
 .footer {
     display: flex;
     justify-content: space-between;
@@ -398,7 +2116,7 @@ h2.section-title {
     padding: 40px 10%;
     background: #2f6f73;
     color: white;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    flex-wrap: wrap;
     gap: 30px;
 }
 
@@ -424,9 +2142,6 @@ h2.section-title {
         line-height: 1.6;
     }
 
-/* ========================= */
-/* RESPONSIVE DESIGN         */
-/* ========================= */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -449,172 +2164,4 @@ h2.section-title {
     .footer-right {
         text-align: center;
     }
-}
-/* ========================= */
-/* CART PAGE                 */
-/* ========================= */
-
-.cart-wrapper {
-    max-width: 1200px;
-    margin: 160px auto 120px;
-    padding: 0 20px;
-}
-
-.cart-title {
-    font-family: 'RushonGround', sans-serif;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-/* ITEM */
-.cart-item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #7ea4a8;
-    border: 4px solid #111;
-    border-radius: 25px;
-    padding: 20px;
-}
-
-.cart-checkbox {
-    width: 25px;
-    height: 25px;
-}
-
-/* IMAGE */
-.cart-img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 10px;
-    background: #ddd;
-}
-
-/* INFO */
-.cart-info {
-    flex: 1;
-}
-
-.cart-name {
-    font-family: 'RushonGround';
-    font-size: 28px;
-}
-
-.cart-type {
-    font-size: 16px;
-    color: #444;
-}
-
-/* RIGHT */
-.cart-right {
-    text-align: right;
-}
-
-.cart-price {
-    color: red;
-    font-size: 40px;
-    font-weight: 800;
-}
-
-/* QUANTITY */
-.cart-qty {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.qty-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
-    border: 2px solid #333;
-    background: #d9d9ff;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.qty-number {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-/* ========================= */
-/* CHECKOUT BAR (FIXED)      */
-/* ========================= */
-
-.checkout-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #d6c4ad;
-    border-top: 4px solid #111;
-    display: flex;
-    justify-content: center;
-}
-
-/* CENTER CONTENT */
-.checkout-inner {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-    .checkout-inner h2 {
-        font-size: 40px;
-        font-weight: 900;
-    }
-
-    .checkout-inner span {
-        color: red;
-    }
-
-/* BUTTON */
-.checkout-btn {
-    background: #c94c4c;
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    font-size: 20px;
-    font-weight: 800;
-    border-radius: 15px;
-    cursor: pointer;
-    min-width: 180px;
-}
-
-    .checkout-btn:hover {
-        background: #a63b3b;
-    }
-
-/* ========================= */
-/* RESPONSIVE                */
-/* ========================= */
-
-@media (max-width: 768px) {
-
-    .cart-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .cart-right {
-        width: 100%;
-        text-align: left;
-    }
-
-    .checkout-inner {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-        .checkout-inner h2 {
-            font-size: 28px;
-        }
 }

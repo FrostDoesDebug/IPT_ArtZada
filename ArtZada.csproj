@@ -109,7 +109,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LandingController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -134,6 +137,8 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\images\add_item.png" />
     <Content Include="Content\images\add_quantity.png" />
+    <Content Include="Content\images\ACCESS.png" />
+    <Content Include="Content\images\ADMIN.png" />
     <Content Include="Content\images\artzada_logo.png" />
     <Content Include="Content\images\attach.png" />
     <Content Include="Content\images\basket.png" />
@@ -155,6 +160,7 @@
     <Content Include="Content\images\warning.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Auth.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\images\rushon_ground.zip" />
     <Content Include="Content\Font\Rushon Ground.ttf" />
@@ -214,9 +220,29 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Message.cshtml" />
+    <Content Include="Views\Home\Notifications.cshtml" />
+    <Content Include="Views\Home\Analytics.cshtml" />
+    <Content Include="Views\Home\Account.cshtml" />
+    <Content Include="Views\Home\AdminAccount.cshtml" />
+    <Content Include="Views\Home\AdminEditAccount.cshtml" />
+    <Content Include="Views\Home\BanList.cshtml" />
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\SellerProf.cshtml" />
+    <Content Include="Views\Home\SellerSideStore.cshtml" />
+    <Content Include="Views\Home\SellerSideStoreAddItem.cshtml" />
+    <Content Include="Views\Home\SellerSideEditItem.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Landing\Landing.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\Signup.cshtml" />
+    <Content Include="Views\Admin\Landing.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\UserOverview.cshtml" />
+    <Content Include="Views\Admin\Pending.cshtml" />
+    <Content Include="Views\Admin\BannedListed.cshtml" />
+    <Content Include="Views\Admin\Account.cshtml" />
+    <Content Include="Views\Shared\_AuthLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

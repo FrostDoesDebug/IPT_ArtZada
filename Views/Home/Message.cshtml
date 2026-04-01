@@ -1,178 +1,150 @@
 ﻿@{
-    ViewBag.Title = "Messages";
-    Layout = null;
+    ViewBag.Title = "Messaging";
+    ViewBag.Page = "message";
+    ViewBag.PageLabel = "Messaging";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Messages</title>
-    <link rel="stylesheet" href="~/Content/site.css" />
+<div class="messaging-layout">
 
-    <style>
-        /* Override navbar top only for this page */
-        .navbar-container {
-            top: 0; /* navbar starts at the very top */
-        }
+    <div class="chat-sidebar-container">
 
-        body {
-            padding-top: 50px; /* height of navbar so content doesn't go under it */
-        }
-    </style>
-</head>
-
-<body>
-
-    @{
-        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
-    }
-
-    <!-- NAVBAR -->
-    <div class="navbar-container">
-        <div class="nav-arrows">
-            <button class="nav-btn">&#9664;</button>
-            <button class="nav-btn">&#9654;</button>
+        <div class="chat-sidebar">
+            <div class="chat-contact selected" onclick="selectContact(this,'CLIENT #1')">
+                <div class="avatar" style="width:60px;height:60px;">
+                    <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
+                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                         onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+                </div>
+                <span class="contact-name">CLIENT #1</span>
+            </div>
+            <div class="chat-contact-empty"></div>
+            <div class="chat-contact-empty"></div>
         </div>
 
-        <div class="navbar">
-            <a href="/Home/Index"
-               class="@(currentAction == "Index" ? "active" : "")">Home</a>
-
-            <a href="/Home/Index"
-               class="@(currentAction == "Shop" ? "active" : "")">Shop</a>
-
-            <a href="/Home/Message"
-               class="@(currentAction == "Message" ? "active" : "")">Message</a>
-
-            <a href="/Home/Cart"
-               class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
-
-            <a href="/Home/Account"
-               class="@(currentAction == "Account" ? "active" : "")">Account</a>
-        </div>
     </div>
 
-    <!-- MESSAGE LAYOUT -->
-    <div style="display: flex; gap: 20px; margin: 20px">
-        <!-- LEFT PANEL -->
-        <div style="
-          width: 300px;
-          background: #7ea4a8;
-          border: 5px solid black;
-          border-radius: 15px;
-          padding: 10px;
-        ">
-            <div style="
-            background: #bf4646;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-          ">
-                <strong>KWEKKWEKSASTIX</strong>
+    <div class="chat-window">
+        <div class="chat-header">
+            <div class="avatar" style="width:60px;height:60px;">
+                <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
+                     style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                     onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
             </div>
-
-            <div style="
-            height: 100px;
-            border: 3px solid black;
-            border-radius: 10px;
-            margin-bottom: 10px;
-          "></div>
-            <div style="
-            height: 100px;
-            border: 3px solid black;
-            border-radius: 10px;
-            margin-bottom: 10px;
-          "></div>
+            <span class="chat-header-name" id="chatHeaderName">CLIENT #1</span>
         </div>
 
-        <!-- CHAT PANEL -->
-        <div style="
-          flex: 1;
-          background: #7ea4a8;
-          border: 5px solid black;
-          border-radius: 15px;
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-        ">
-            <!-- HEADER -->
-            <div style="
-            background: #bf4646;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-          ">
-                <strong>KWEKKWEKSASTIX</strong>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-date">April 9</div>
+
+            <div class="chat-row sent">
+                <div class="bubble sent">Kwekkwek ka ba?</div>
             </div>
-
-            <!-- CHAT -->
-            <div style="flex: 1">
-                <p><strong>April 9</strong></p>
-
-                <div style="
-              background: #276470;
-              padding: 10px 15px;
-              border-radius: 20px;
-              width: max-content;
-              margin-bottom: 10px;
-            ">
-                    Kwekkwek ka ba?
+            <div class="chat-row received">
+                <div class="avatar" style="width:60px;height:60px;">
+                    <img src="@Url.Content("~/Content/images/message.png")" alt="c"
+                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                         onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
                 </div>
-
-                <div style="
-              background: #276470;
-              padding: 10px 15px;
-              border-radius: 20px;
-              width: max-content;
-              margin-left: auto;
-              margin-bottom: 10px;
-            ">
-                    Bakit?
-                </div>
-
-                <div style="
-              background: #276470;
-              padding: 10px 15px;
-              border-radius: 20px;
-              width: max-content;
-              margin-bottom: 10px;
-            ">
-                    Sarap mo kasi tusukin
-                </div>
-
-                <div style="
-              background: #276470;
-              padding: 10px 15px;
-              border-radius: 20px;
-              width: max-content;
-              margin-left: auto;
-            ">
-                    haha
-                </div>
+                <div class="bubble received">Bakit?</div>
             </div>
-
-            <!-- INPUT -->
-            <div style="display: flex; gap: 10px; margin-top: 20px">
-                <input type="text"
-                       placeholder="Ayos"
-                       style="
-              flex: 1;
-              padding: 10px;
-              border-radius: 10px;
-              border: 3px solid black;
-            " />
-
-                <button style="
-              padding: 10px 15px;
-              border-radius: 10px;
-              border: 3px solid black;
-            ">
-                    Send
-                </button>
+            <div class="chat-row sent">
+                <div class="bubble sent">Sarap mo kasi tusukin</div>
             </div>
+            <div class="chat-row received">
+                <div class="avatar" style="width:60px;height:60px;">
+                    <img src="@Url.Content("~/Content/images/message.png")" alt="c"
+                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                         onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+                </div>
+                <div class="bubble received">haha</div>
+            </div>
+        </div>
+
+        <div class="chat-input-row">
+
+            <!-- ── HIDDEN FILE INPUT — opened by attach button ── -->
+            <input type="file"
+                   id="fileAttach"
+                   accept="image/*,video/*,.pdf,.doc,.docx"
+                   style="display:none;"
+                   onchange="handleAttach(this)" />
+
+            <!-- ── ATTACH BUTTON — clicks hidden file input ── -->
+            <button class="attach-btn"
+                    onclick="document.getElementById('fileAttach').click()"
+                    title="Attach file">
+                <img src="@Url.Content("~/Content/images/attach.png")"
+                     alt="attach"
+                     onerror="this.outerHTML='<span style=\'font-size:40px\'>📎</span>'" />
+            </button>
+
+            <input type="text" id="msgInput" class="chat-input" onkeydown="handleKey(event)" />
+
+            <!-- ── SEND BUTTON ── -->
+            <button class="send-btn" onclick="sendMessage()">
+                <img src="@Url.Content("~/Content/images/send_message.png")"
+                     alt="send"
+                     onerror="this.outerHTML='<span style=\'font-size:40px;color:white\'>&#10148;</span>'" />
+            </button>
         </div>
     </div>
-    <script src="~/Scripts/site.js"></script>
-</body>
-</html>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function sendMessage() {
+            var input = document.getElementById('msgInput');
+            var text = input.value.trim();
+            if (!text) return;
+            var body = document.getElementById('chatBody');
+            var row = document.createElement('div');
+            row.className = 'chat-row sent';
+            row.innerHTML = '<div class="bubble sent">' + escHtml(text) + '</div>';
+            body.appendChild(row);
+            body.scrollTop = body.scrollHeight;
+            input.value = '';
+        }
+
+        function handleKey(e) { if (e.key === 'Enter') sendMessage(); }
+
+        function escHtml(t) {
+            return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function selectContact(el, name) {
+            document.querySelectorAll('.chat-contact').forEach(function (c) { c.classList.remove('selected'); });
+            el.classList.add('selected');
+            document.getElementById('chatHeaderName').textContent = name;
+            document.getElementById('chatBody').innerHTML = '<div class="chat-date">Today</div>';
+        }
+
+        /* ── ATTACH FILE HANDLER ──
+           Images show as preview bubble
+           Other files show as filename bubble */
+        function handleAttach(input) {
+            var file = input.files[0];
+            if (!file) return;
+            var body = document.getElementById('chatBody');
+            var row = document.createElement('div');
+            row.className = 'chat-row sent';
+
+            if (file.type.startsWith('image/')) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    row.innerHTML = '<div class="bubble sent" style="padding:6px;">' +
+                        '<img src="' + e.target.result + '" style="max-width:200px;max-height:150px;border-radius:10px;display:block;" />' +
+                        '</div>';
+                    body.appendChild(row);
+                    body.scrollTop = body.scrollHeight;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                row.innerHTML = '<div class="bubble sent">📎 ' + escHtml(file.name) + '</div>';
+                body.appendChild(row);
+                body.scrollTop = body.scrollHeight;
+            }
+            input.value = '';
+        }
+    </script>
+}
