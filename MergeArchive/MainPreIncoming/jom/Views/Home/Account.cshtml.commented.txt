@@ -1,0 +1,122 @@
+﻿// Snapshot from Main before merging branch 'jom'
+// Original path: Views/Home/Account.cshtml
+// Status in Main..jom: D
+
+// @{
+//     ViewBag.Title = "Account";
+//     ViewBag.Page = "account";
+//     ViewBag.PageLabel = "Account";
+//     Layout = "~/Views/Shared/_Layout.cshtml";
+//     var username = (string)(ViewBag.Username) ?? "PAMILI IS LOVE";
+//     var isSeller = (bool)(ViewBag.IsSeller ?? true);
+// }
+// 
+// <div class="account-card">
+//     <div class="save-cancel-group hidden" id="editControls">
+//         <button class="btn-save" onclick="saveChanges()">Save Changes</button>
+//         <button class="btn-cancel-sm" onclick="cancelEdit()">Cancel</button>
+//     </div>
+//     <div class="account-header">
+// 
+//         <!-- Hidden file input for Change Profile -->
+//         <input type="file"
+//                id="profileFileInput"
+//                accept="image/*"
+//                style="display:none;"
+//                onchange="handleProfileImage(this)" />
+// 
+//         <div class="profile-avatar" onclick="changeProfile()" title="Click to change photo">
+//             @if (!string.IsNullOrEmpty(ViewBag.ProfileImageUrl as string))
+//             {
+//                 <img src="@ViewBag.ProfileImageUrl" alt="Profile" />
+//             }
+//             else
+//             {
+//                 <svg viewBox="0 0 80 80" fill="#555" style="width:100%;height:100%;">
+//                     <circle cx="40" cy="28" r="18" />
+//                     <path d="M8 72c0-18 64-18 64 0" />
+//                 </svg>
+//             }
+//         </div>
+//         <div class="profile-name" id="profileName">@username</div>
+//     </div>
+//     <div class="account-actions">
+//         <button class="btn-action" onclick="editUsername()">Edit Username</button>
+//         <button class="btn-action" onclick="changeProfile()">Change Profile</button>
+//         <button class="btn-action" onclick="switchAccount()">
+//             @(isSeller ? "Switch to Buyer' Account" : "Switch to Seller' Account")
+//         </button>
+//     </div>
+//     <a href="/Account/Logout" class="btn-signout"
+//        onclick="return confirm('Are you sure you want to sign out?')">Sign Out</a>
+// </div>
+// 
+// @section Scripts {
+//     <script type="text/javascript">
+//         var editing = false;
+//         var originalName = '';
+// 
+//         /* ── Edit Username ── */
+//         function editUsername() {
+//             if (editing) return;
+//             editing = true;
+//             originalName = document.getElementById('profileName').textContent;
+//             document.getElementById('editControls').classList.remove('hidden');
+//             var nameEl = document.getElementById('profileName');
+//             nameEl.contentEditable = 'true';
+//             nameEl.focus();
+//             var range = document.createRange();
+//             range.selectNodeContents(nameEl);
+//             window.getSelection().removeAllRanges();
+//             window.getSelection().addRange(range);
+//         }
+// 
+//         /* ── Save Changes ── */
+//         function saveChanges() {
+//             editing = false;
+//             var nameEl = document.getElementById('profileName');
+//             nameEl.contentEditable = 'false';
+//             document.getElementById('editControls').classList.add('hidden');
+//             fetch('/Home/UpdateUsername', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ username: nameEl.textContent.trim() })
+//             });
+//         }
+// 
+//         /* ── Cancel Edit — restores original name ── */
+//         function cancelEdit() {
+//             editing = false;
+//             var nameEl = document.getElementById('profileName');
+//             nameEl.contentEditable = 'false';
+//             nameEl.textContent = originalName;
+//             document.getElementById('editControls').classList.add('hidden');
+//         }
+// 
+//         /* ── Change Profile — opens file picker ── */
+//         function changeProfile() {
+//             document.getElementById('profileFileInput').click();
+//         }
+// 
+//         /* ── Handle selected profile image ── */
+//         function handleProfileImage(input) {
+//             var file = input.files[0];
+//             if (!file) return;
+// 
+//             var reader = new FileReader();
+//             reader.onload = function (e) {
+//                 /* Replace avatar content with selected image */
+//                 var avatar = document.querySelector('.profile-avatar');
+//                 avatar.innerHTML = '<img src="' + e.target.result +
+//                     '" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />';
+//             };
+//             reader.readAsDataURL(file);
+//             input.value = ''; /* reset so same image can be picked again */
+//         }
+// 
+//         /* ── Switch Account ── */
+//         function switchAccount() {
+//             window.location.href = '/Home/ToggleSeller';
+//         }
+//     </script>
+// }

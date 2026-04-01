@@ -1,0 +1,154 @@
+﻿// Snapshot from Main before merging branch 'jom'
+// Original path: Views/Home/Message.cshtml
+// Status in Main..jom: M
+
+// @{
+//     ViewBag.Title = "Messaging";
+//     ViewBag.Page = "message";
+//     ViewBag.PageLabel = "Messaging";
+//     Layout = "~/Views/Shared/_Layout.cshtml";
+// }
+// 
+// <div class="messaging-layout">
+// 
+//     <div class="chat-sidebar-container">
+// 
+//         <div class="chat-sidebar">
+//             <div class="chat-contact selected" onclick="selectContact(this,'CLIENT #1')">
+//                 <div class="avatar" style="width:60px;height:60px;">
+//                     <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
+//                          style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+//                          onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+//                 </div>
+//                 <span class="contact-name">CLIENT #1</span>
+//             </div>
+//             <div class="chat-contact-empty"></div>
+//             <div class="chat-contact-empty"></div>
+//         </div>
+// 
+//     </div>
+// 
+//     <div class="chat-window">
+//         <div class="chat-header">
+//             <div class="avatar" style="width:60px;height:60px;">
+//                 <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
+//                      style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+//                      onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+//             </div>
+//             <span class="chat-header-name" id="chatHeaderName">CLIENT #1</span>
+//         </div>
+// 
+//         <div class="chat-body" id="chatBody">
+//             <div class="chat-date">April 9</div>
+// 
+//             <div class="chat-row sent">
+//                 <div class="bubble sent">Kwekkwek ka ba?</div>
+//             </div>
+//             <div class="chat-row received">
+//                 <div class="avatar" style="width:60px;height:60px;">
+//                     <img src="@Url.Content("~/Content/images/message.png")" alt="c"
+//                          style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+//                          onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+//                 </div>
+//                 <div class="bubble received">Bakit?</div>
+//             </div>
+//             <div class="chat-row sent">
+//                 <div class="bubble sent">Sarap mo kasi tusukin</div>
+//             </div>
+//             <div class="chat-row received">
+//                 <div class="avatar" style="width:60px;height:60px;">
+//                     <img src="@Url.Content("~/Content/images/message.png")" alt="c"
+//                          style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+//                          onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+//                 </div>
+//                 <div class="bubble received">haha</div>
+//             </div>
+//         </div>
+// 
+//         <div class="chat-input-row">
+// 
+//             <!-- ── HIDDEN FILE INPUT — opened by attach button ── -->
+//             <input type="file"
+//                    id="fileAttach"
+//                    accept="image/*,video/*,.pdf,.doc,.docx"
+//                    style="display:none;"
+//                    onchange="handleAttach(this)" />
+// 
+//             <!-- ── ATTACH BUTTON — clicks hidden file input ── -->
+//             <button class="attach-btn"
+//                     onclick="document.getElementById('fileAttach').click()"
+//                     title="Attach file">
+//                 <img src="@Url.Content("~/Content/images/attach.png")"
+//                      alt="attach"
+//                      onerror="this.outerHTML='<span style=\'font-size:40px\'>📎</span>'" />
+//             </button>
+// 
+//             <input type="text" id="msgInput" class="chat-input" onkeydown="handleKey(event)" />
+// 
+//             <!-- ── SEND BUTTON ── -->
+//             <button class="send-btn" onclick="sendMessage()">
+//                 <img src="@Url.Content("~/Content/images/send_message.png")"
+//                      alt="send"
+//                      onerror="this.outerHTML='<span style=\'font-size:40px;color:white\'>&#10148;</span>'" />
+//             </button>
+//         </div>
+//     </div>
+// </div>
+// 
+// @section Scripts {
+//     <script type="text/javascript">
+//         function sendMessage() {
+//             var input = document.getElementById('msgInput');
+//             var text = input.value.trim();
+//             if (!text) return;
+//             var body = document.getElementById('chatBody');
+//             var row = document.createElement('div');
+//             row.className = 'chat-row sent';
+//             row.innerHTML = '<div class="bubble sent">' + escHtml(text) + '</div>';
+//             body.appendChild(row);
+//             body.scrollTop = body.scrollHeight;
+//             input.value = '';
+//         }
+// 
+//         function handleKey(e) { if (e.key === 'Enter') sendMessage(); }
+// 
+//         function escHtml(t) {
+//             return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+//         }
+// 
+//         function selectContact(el, name) {
+//             document.querySelectorAll('.chat-contact').forEach(function (c) { c.classList.remove('selected'); });
+//             el.classList.add('selected');
+//             document.getElementById('chatHeaderName').textContent = name;
+//             document.getElementById('chatBody').innerHTML = '<div class="chat-date">Today</div>';
+//         }
+// 
+//         /* ── ATTACH FILE HANDLER ──
+//            Images show as preview bubble
+//            Other files show as filename bubble */
+//         function handleAttach(input) {
+//             var file = input.files[0];
+//             if (!file) return;
+//             var body = document.getElementById('chatBody');
+//             var row = document.createElement('div');
+//             row.className = 'chat-row sent';
+// 
+//             if (file.type.startsWith('image/')) {
+//                 var reader = new FileReader();
+//                 reader.onload = function (e) {
+//                     row.innerHTML = '<div class="bubble sent" style="padding:6px;">' +
+//                         '<img src="' + e.target.result + '" style="max-width:200px;max-height:150px;border-radius:10px;display:block;" />' +
+//                         '</div>';
+//                     body.appendChild(row);
+//                     body.scrollTop = body.scrollHeight;
+//                 };
+//                 reader.readAsDataURL(file);
+//             } else {
+//                 row.innerHTML = '<div class="bubble sent">📎 ' + escHtml(file.name) + '</div>';
+//                 body.appendChild(row);
+//                 body.scrollTop = body.scrollHeight;
+//             }
+//             input.value = '';
+//         }
+//     </script>
+// }

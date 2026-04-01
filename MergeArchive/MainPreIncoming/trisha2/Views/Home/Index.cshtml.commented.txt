@@ -1,0 +1,204 @@
+﻿// Snapshot from Main before merging branch 'trisha2'
+// Original path: Views/Home/Index.cshtml
+// Status in Main..trisha2: M
+
+// @{
+//     ViewBag.Title = "Home";
+//     Layout = null;
+// }
+// 
+// <!DOCTYPE html>
+// <html>
+// <head>
+//     <meta charset="utf-8" />
+//     <title>Artzada</title>
+// 
+//     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+//     <link rel="stylesheet" href="@Url.Content("~/Content/Site.css")" />
+// </head>
+// 
+// <body>
+//     <!-- TOP BAR -->
+//     <div class="top-bar">
+//         <div class="header">
+//             <div class="logo">
+//                 <a href="/"><img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" /></a>
+//             </div>
+// 
+//             <div class="search-panel">
+//                 <div class="search-container">
+//                     <input type="text" placeholder="Search in Artzada" />
+//                     <button class="search-btn">
+//                         <img src="~/Content/images/search.png" alt="Search" />
+//                     </button>
+//                 </div>
+// 
+//                 <div class="filter">
+//                     <button class="dropdown-header">Filter</button>
+//                     <div class="dropdown-overlay">
+//                         <div class="dropdown-panel">
+//                             <button class="close-btn">&times;</button>
+//                             <div class="dropdown-section">
+//                                 <h4 class="section-title">Prices</h4>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Below 100</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Above 100</label>
+//                             </div>
+// 
+//                             <div class="dropdown-section">
+//                                 <h4 class="section-title">Medium</h4>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Digital Art</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Charcoal</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Colored Pencil</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Graphite</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Pastel</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Ink</label>
+//                                 <label class="custom-checkbox"><input type="checkbox" /><span class="checkmark"></span>Others</label>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+// 
+//             <div class="icons">
+//                 <a href="@Url.Action("Cart", "Home")" class="icon cart-icon">
+//                     <img src="~/Content/images/cart.png" alt="Cart" />
+//                     <span class="badge">3</span>
+//                 </a>
+// 
+//                 <a href="@Url.Action("Notifications", "Home")" class="icon">
+//                     <img src="~/Content/images/notification.png" alt="Notifications" />
+//                 </a>
+//             </div>
+//         </div>
+// 
+//         <!-- NAVBAR -->
+//         @{
+//             var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+//         }
+//         <div class="navbar-container">
+//             <div class="nav-arrows">
+//                 <button class="nav-btn">&#9664;</button>
+//                 <button class="nav-btn">&#9654;</button>
+//             </div>
+// 
+//             <div class="navbar">
+//                 <a href="/Home/Index" class="@(currentAction == "Index" ? "active" : "")">Home</a>
+//                 <a href="#hotSales">Shop</a>
+//                 <a href="/Home/Message" class="@(currentAction == "Message" ? "active" : "")">Message</a>
+//                 <a href="/Home/Cart" class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
+//                 <a href="/Home/Account" class="@(currentAction == "Account" ? "active" : "")">Account</a>
+//             </div>
+//         </div>
+//     </div>
+// 
+//     <br /><br /><br /><br />
+// 
+//     <!-- FEATURED ARTISTS -->
+//     <h2 class="section-title">FEATURED ARTISTS</h2>
+//     <div class="carousel">
+//         <div class="carousel-track" id="carouselTrack">
+//             @for (int i = 0; i < 5; i++)
+//             {
+//                 <div class="carousel-item">
+//                     <img src="~/Content/images/KwekKweksaStix (1).png" alt="Artist @i" class="artist-img" />
+//                     <div class="artist-info">
+//                         <h1>KwekKwekSaStix</h1>
+//                         <p>Digital Artist - Illustrator - Concept Artist</p>
+//                     </div>
+//                 </div>
+//             }
+//         </div>
+//     </div>
+// 
+//     <!-- HOT SALES -->
+//     <h2 class="section-title" id="hotSales">HOT SALES</h2>
+//     <div class="grid">
+//         @for (int i = 0; i < 7; i++)
+//         {
+//             <div class="card clickable-card" data-url="@Url.Action("Product", "Home", new { id = i })">
+//                 <img src="~/Content/images/artzada_logo.png" />
+//                 <h2 class="product-name">CHUBB @i</h2>
+//                 <p>Digital Print</p>
+//                 <span class="price">₱100.00</span>
+//                 <div class="buttons">
+//                     <button class="cart-btn">Add to cart</button>
+//                     <button class="buy-btn">Buy now</button>
+//                 </div>
+//             </div>
+//         }
+//     </div>
+// 
+//     <!-- FLASH SALES -->
+//     <h2 class="section-title">FLASH SALES</h2>
+//     <div class="grid">
+//         @for (int i = 0; i < 3; i++)
+//         {
+//             <div class="card large clickable-card" data-url="@Url.Action("Product", "Home", new { id = i + 10 })">
+//                 <h2>Product @i</h2>
+//                 <p>Flash Sale Item</p>
+//             </div>
+//         }
+//     </div>
+// 
+//     <!-- SERVICES -->
+//     <h2 class="section-title">SERVICES</h2>
+//     <div class="grid">
+//         @for (int i = 0; i < 3; i++)
+//         {
+//             <div class="card large clickable-card" data-url="@Url.Action("Product", "Home", new { id = i + 20 })">
+//                 <h2>Service @i</h2>
+//                 <p>Our Service</p>
+//             </div>
+//         }
+//     </div>
+// 
+//     <!-- FOOTER -->
+//     <div class="footer">
+//         <div class="footer-left">
+//             <img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" class="footer-logo" />
+//         </div>
+// 
+//         <div class="footer-right">
+//             <h3>ABOUT US</h3>
+//             <p>
+//                 Artzada was founded with a simple idea: give artists a space where their creativity can be valued and discovered.
+//                 Today, Artzada bridges imagination and opportunity.
+//             </p>
+// 
+//             <h3>CONTACT US: 0983-2134-231</h3>
+//         </div>
+//     </div>
+// 
+//     <!-- Javascript -->
+//     <script src="@Url.Content("~/Scripts/site.js")"></script>
+//     <script>
+//         // Make the entire card clickable
+//         document.querySelectorAll('.clickable-card').forEach(card => {
+//             card.addEventListener('click', function (e) {
+//                 if (e.target.tagName.toLowerCase() === 'button') return;
+//                 const url = card.getAttribute('data-url');
+//                 if (url) window.location.href = url;
+//             });
+//         });
+// 
+//         // Filter button functionality
+//         const filterBtn = document.querySelector('.dropdown-header');
+//         const dropdownOverlay = document.querySelector('.dropdown-overlay');
+//         const closeBtn = document.querySelector('.close-btn');
+// 
+//         filterBtn.addEventListener('click', () => {
+//             dropdownOverlay.classList.toggle('active');
+//         });
+// 
+//         closeBtn.addEventListener('click', () => {
+//             dropdownOverlay.classList.remove('active');
+//         });
+// 
+//         dropdownOverlay.addEventListener('click', (e) => {
+//             if (e.target === dropdownOverlay) {
+//                 dropdownOverlay.classList.remove('active');
+//             }
+//         });
+//     </script>
+// </body>
+// </html>

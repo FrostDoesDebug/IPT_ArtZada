@@ -1,0 +1,22 @@
+﻿// Snapshot from Main before merging branch 'trisha2'
+// Original path: Views/Admin/Account.cshtml
+// Status in Main..trisha2: D
+
+// @{
+//     ViewBag.Title = "Account";
+//     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+// 
+//     var adminUser = (Session["AdminUserName"] as string) ?? "admin";
+// }
+// 
+// <div class="admin-users-wrap">
+//     <div class="admin-users-panel">
+//         <h2 class="admin-panel-title">Account</h2>
+//         <p class="admin-panel-subtitle">Logged in as <strong>@adminUser</strong></p>
+// 
+//         <div class="admin-account-actions">
+//             <a class="admin-action-btn ban" href="@Url.Action("Logout", "Admin")">Logout</a>
+//         </div>
+//     </div>
+// </div>
+// 

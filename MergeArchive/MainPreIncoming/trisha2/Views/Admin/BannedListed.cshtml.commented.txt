@@ -1,0 +1,16 @@
+﻿// Snapshot from Main before merging branch 'trisha2'
+// Original path: Views/Admin/BannedListed.cshtml
+// Status in Main..trisha2: D
+
+// @{
+//     ViewBag.Title = "Banned Listed";
+//     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+// }
+// 
+// <div class="admin-users-wrap">
+//     <div class="admin-users-panel">
+//         <h2 class="admin-panel-title">Banned Listed</h2>
+//         <p class="admin-panel-subtitle">Demo page (no data yet).</p>
+//     </div>
+// </div>
+// 

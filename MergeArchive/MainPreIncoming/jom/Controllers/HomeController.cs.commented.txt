@@ -1,0 +1,245 @@
+﻿// Snapshot from Main before merging branch 'jom'
+// Original path: Controllers/HomeController.cs
+// Status in Main..jom: M
+
+// using System;
+// using System.Collections.Generic;
+// using System.Linq;
+// using System.Web;
+// using System.Web.Mvc;
+// 
+// namespace ArtZada.Controllers
+// {
+//     public class HomeController : Controller
+//     {
+//         // ══════════════════════════════════════════════════
+//         // STORE (Index)
+//         // GET: /Home/Index
+//         // ══════════════════════════════════════════════════
+//         public ActionResult Index()
+//         {
+//             ViewBag.Title = "Store";
+//             ViewBag.Page = "store";
+//             return View();
+//         }
+// 
+//         public ActionResult Cart()
+//         {
+//             ViewBag.Title = "Cart";
+//             ViewBag.Page = "Cart";
+//             return View();
+//         }
+//         // ══════════════════════════════════════════════════
+//         // MESSAGE
+//         // GET: /Home/Message
+//         // ══════════════════════════════════════════════════
+//         public ActionResult Message(string withUserId = null)
+//         {
+//             ViewBag.Title = "Messaging";
+//             ViewBag.Page = "message";
+//             ViewBag.WithUserId = withUserId;
+//             return View();
+//         }
+// 
+//         // POST: /Home/SendMessage
+//         [HttpPost]
+//         [ValidateAntiForgeryToken]
+//         public ActionResult SendMessage(string receiverId, string messageText)
+//         {
+//             if (!string.IsNullOrWhiteSpace(messageText)
+//                 && !string.IsNullOrWhiteSpace(receiverId))
+//             {
+//                 // TODO: save message to database
+//                 // Example with Entity Framework:
+//                 // var msg = new Message
+//                 // {
+//                 //     SenderId   = User.Identity.GetUserId(),
+//                 //     ReceiverId = receiverId,
+//                 //     Text       = messageText.Trim(),
+//                 //     SentAt     = DateTime.UtcNow
+//                 // };
+//                 // db.Messages.Add(msg);
+//                 // db.SaveChanges();
+//             }
+// 
+//             return RedirectToAction("Message", new { withUserId = receiverId });
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // NOTIFICATIONS
+//         // GET: /Home/Notifications
+//         // ══════════════════════════════════════════════════
+//         public ActionResult Notifications()
+//         {
+//             ViewBag.Title = "Notifications";
+//             ViewBag.Page = "notifications";
+// 
+//             // TODO: load real notifications from DB
+//             // Example:
+//             // var userId = User.Identity.GetUserId();
+//             // var notifs = db.Notifications
+//             //                .Where(n => n.UserId == userId)
+//             //                .OrderByDescending(n => n.CreatedAt)
+//             //                .ToList();
+//             // return View(notifs);
+// 
+//             return View();
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // ANALYTICS
+//         // GET: /Home/Analytics
+//         // ══════════════════════════════════════════════════
+//         public ActionResult Analytics()
+//         {
+//             ViewBag.Title = "Analytics";
+//             ViewBag.Page = "analytics";
+//             ViewBag.Revenue = "100.00";
+// 
+//             // TODO: load real revenue from DB
+//             // Example:
+//             // var userId  = User.Identity.GetUserId();
+//             // var revenue = db.Orders
+//             //                 .Where(o => o.SellerId == userId)
+//             //                 .Sum(o => (decimal?)o.Amount) ?? 0;
+//             // ViewBag.Revenue = revenue.ToString("N2");
+// 
+//             return View();
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // ACCOUNT
+//         // GET: /Home/Account
+//         // ══════════════════════════════════════════════════
+//         public ActionResult Account()
+//         {
+//             ViewBag.Title = "Account";
+//             ViewBag.Page = "account";
+//             ViewBag.Username = "PAMILI IS LOVE";
+//             ViewBag.IsSeller = true;
+//             return View(); // returns View(), not RedirectToAction
+//         }
+// 
+// 
+//         // ══════════════════════════════════════════════════
+//         // EDIT USERNAME
+//         // POST: /Home/EditUsername
+//         // ══════════════════════════════════════════════════
+//         [HttpPost]
+//         [ValidateAntiForgeryToken]
+//         public ActionResult EditUsername(string NewUsername)
+//         {
+//             if (!string.IsNullOrWhiteSpace(NewUsername))
+//             {
+//                 // TODO: update username in DB
+//                 // Example:
+//                 // var userId = User.Identity.GetUserId();
+//                 // var user   = db.Users.Find(userId);
+//                 // user.UserName    = NewUsername.Trim();
+//                 // user.DisplayName = NewUsername.Trim();
+//                 // db.SaveChanges();
+//             }
+// 
+//             return RedirectToAction("Account");
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // CHANGE PROFILE (avatar)
+//         // GET: /Home/ChangeProfile
+//         // ══════════════════════════════════════════════════
+//         public ActionResult ChangeProfile()
+//         {
+//             ViewBag.Title = "Change Profile";
+//             ViewBag.Page = "account";
+//             return View();
+//         }
+// 
+//         // POST: /Home/ChangeProfile
+//         [HttpPost]
+//         [ValidateAntiForgeryToken]
+//         public ActionResult ChangeProfile(HttpPostedFileBase avatarFile)
+//         {
+//             if (avatarFile != null && avatarFile.ContentLength > 0)
+//             {
+//                 // TODO: save uploaded avatar
+//                 // Example:
+//                 // var fileName = Path.GetFileName(avatarFile.FileName);
+//                 // var path     = Path.Combine(Server.MapPath("~/Content/images/avatars/"), fileName);
+//                 // avatarFile.SaveAs(path);
+//                 //
+//                 // var userId = User.Identity.GetUserId();
+//                 // var user   = db.Users.Find(userId);
+//                 // user.AvatarPath = "/Content/images/avatars/" + fileName;
+//                 // db.SaveChanges();
+//             }
+// 
+//             return RedirectToAction("Account");
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // TOGGLE SELLER (Save Changes / Cancel badges)
+//         // GET: /Home/ToggleSeller
+//         // ══════════════════════════════════════════════════
+//         public ActionResult ToggleSeller()
+//         {
+//             // TODO: flip IsSeller flag in DB
+//             // Example:
+//             // var userId = User.Identity.GetUserId();
+//             // var user   = db.Users.Find(userId);
+//             // user.IsSeller = !user.IsSeller;
+//             // db.SaveChanges();
+// 
+//             return RedirectToAction("Account");
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // SWITCH TO BUYER ACCOUNT
+//         // GET: /Home/SwitchToBuyer
+//         // ══════════════════════════════════════════════════
+//         public ActionResult SwitchToBuyer()
+//         {
+//             // TODO: change user role to Buyer in DB
+//             // Example:
+//             // var userId = User.Identity.GetUserId();
+//             // var user   = db.Users.Find(userId);
+//             // user.IsSeller = false;
+//             // db.SaveChanges();
+// 
+//             return RedirectToAction("Account");
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // SIGN OUT
+//         // POST: /Home/SignOut
+//         // ══════════════════════════════════════════════════
+//         [HttpPost]
+//         [ValidateAntiForgeryToken]
+//         public ActionResult SignOut()
+//         {
+//             System.Web.Security.FormsAuthentication.SignOut();
+//             Session.Clear();
+//             Session.Abandon();
+//             return RedirectToAction("Index", "Home"); // goes to Index, not itself
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // ABOUT (default from template — keep or delete)
+//         // GET: /Home/About
+//         // ══════════════════════════════════════════════════
+//         public ActionResult About()
+//         {
+//             ViewBag.Message = "Your application description page.";
+//             return View();
+//         }
+// 
+//         // ══════════════════════════════════════════════════
+//         // CONTACT (default from template — keep or delete)
+//         // GET: /Home/Contact
+//         // ══════════════════════════════════════════════════
+//         public ActionResult Contact()
+//         {
+//             ViewBag.Message = "Your contact page.";
+//             return View();
+//         }
+//     }
+// }
