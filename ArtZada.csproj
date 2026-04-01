@@ -212,17 +212,6 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\SellerProf.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
-    <Content Include="Views\Landing\Landing.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Shared\_AuthLayout.cshtml" />
-    <Content Include="Views\Login\Signup.cshtml" />
-    <Content Include="Views\Admin\Landing.cshtml" />
-    <Content Include="Views\Admin\Login.cshtml" />
-    <Content Include="Views\Admin\UserOverview.cshtml" />
-    <Content Include="Views\Admin\Pending.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Admin\BannedListed.cshtml" />
-    <Content Include="Views\Admin\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
