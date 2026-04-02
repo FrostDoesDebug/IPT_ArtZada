@@ -1,68 +1,85 @@
 ﻿@{
     ViewBag.Title = "SellerProf";
     Layout = null;
+
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
 }
 
-<link rel="stylesheet" href="~/Content/Site.css" />
+<link rel="stylesheet" href="~/Content/CSS/SellerProf.css" />
+
+<style>
+    /* CLICKABLE CARD */
+    .clickable-card {
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease;
+    }
+
+        .clickable-card:hover {
+            transform: translateY(-5px);
+        }
+</style>
 
 <div class="page-container">
 
-    @{
-        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
-    }
-
-    <!-- NAVBAR -->
+    <!-- =========================
+         NAVBAR
+    ========================== -->
     <div class="navbar-container">
         <div class="nav-arrows">
             <button class="nav-btn">&#9664;</button>
             <button class="nav-btn">&#9654;</button>
         </div>
 
-        <div class="navbar">
-            <a href="/Home/Index"
-               class="@(currentAction == "Index" ? "active" : "")">Home</a>
-
+        <nav class="navbar">
+            <a href="/Home/Index" class="@(currentAction == "Index" ? "active" : "")">Home</a>
             <a href="#">Shop</a>
-
-            <a href="/Home/Message"
-               class="@(currentAction == "Message" ? "active" : "")">Message</a>
-
-            <a href="/Home/Cart"
-               class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
-
-            <a href="/Home/Account"
-               class="@(currentAction == "Account" ? "active" : "")">Account</a>
-        </div>
+            <a href="/Home/Message" class="@(currentAction == "Message" ? "active" : "")">Message</a>
+            <a href="/Home/Cart" class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
+            <a href="/Home/Account" class="@(currentAction == "Account" ? "active" : "")">Account</a>
+        </nav>
     </div>
 
-    <!-- PROFILE HEADER -->
+    <!-- =========================
+         PROFILE HEADER
+    ========================== -->
     <div class="profile-header">
+
         <div class="profile-pic">
-            <img src="@Url.Content("~/images/profile.jpg")" alt="profile" />
+            <img src="@Url.Content("~/images/profile.jpg")" alt="Profile Picture" />
         </div>
 
         <div class="profile-info">
-            <h1>KWEKKWEKSASTIX</h1>
+            <h1>@(ViewBag.Username ?? "KWEKKWEKSASTIX")</h1>
 
             <button class="message-btn">
-                ✉ Send Message!
+                ✉ Send Message
             </button>
         </div>
+
     </div>
 
-    <!-- ARTWORK SECTION -->
+    <!-- =========================
+         ARTWORKS SECTION
+    ========================== -->
     <div class="artworks-section">
         <h2>ARTWORKS</h2>
 
         <div class="art-grid">
 
-            <div class="art-card">
-                <img src="@Url.Content("~/images/dog.jpg")" alt="art" />
-                <h3>CHUBB</h3>
-                <p>Digital Print</p>
-                <span class="price">₱100.00</span>
-            </div>
+            <!-- SAMPLE STATIC (Replace with loop later) -->
+            <a href="#" class="clickable-card">
+                <div class="art-card">
+                    <img src="@Url.Content("~/images/dog.jpg")" alt="Artwork" />
+                    <h3>CHUBB</h3>
+                    <p>Digital Print</p>
+                    <span class="price">₱100.00</span>
+                </div>
+            </a>
 
+            <!-- EMPTY SLOTS -->
             <div class="art-card empty"></div>
             <div class="art-card empty"></div>
             <div class="art-card empty"></div>

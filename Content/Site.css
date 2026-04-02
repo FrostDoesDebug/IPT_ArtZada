@@ -6,19 +6,6 @@
 /* ══════════════════════════════════════════════════════
    MESSAGING PAGE — FULL MANUAL CONTROLS
 ══════════════════════════════════════════════════════ */
-
-/* ──────────────────────────────────────────────────────
-   MESSAGING OUTER LAYOUT
-   ► Move DOWN/UP      → change margin-top
-   ► Move RIGHT/LEFT   → change margin-left (remove auto)
-   ► Make WIDER/NARROW → change width
-   ► Make TALLER/SHORT → change height
-   ► Change BG color   → change background
-   ► Change border     → change border
-   ► Change roundness  → change border-radius
-   ► Change inner gap  → change gap
-   ► Change padding    → change padding
-   ────────────────────────────────────────────────────── */
 .messaging-layout {
     width: 90%; /* ← CHANGE WIDTH HERE                */
     height: 90%; /* ← CHANGE HEIGHT HERE               */
@@ -322,10 +309,6 @@
     src: url('Font/Rushon Ground.ttf') format('truetype');
 }
 
-/* ──────────────────────────────────────────────────────
-   CHAT SIDEBAR INNER LIST
-   ► Change gap between contacts → change gap
-   ────────────────────────────────────────────────────── */
 .chat-sidebar {
     width: 300px;
     flex-shrink: 0;
@@ -334,16 +317,6 @@
     gap: 12px; /* ← GAP BETWEEN CONTACT CARDS HERE   */
 }
 
-/* ──────────────────────────────────────────────────────
-   CONTACT CARD  (each person in sidebar)
-   ► Make TALLER/SHORTER  → change padding-top/bottom
-   ► Make WIDER/NARROWER  → controlled by .chat-sidebar width
-   ► Change BG color      → change background
-   ► Change border        → change border
-   ► Change roundness     → change border-radius
-   ► Change inner space   → change padding
-   ► Change gap (avatar to name) → change gap
-   ────────────────────────────────────────────────────── */
 .chat-contact {
     background: #BF4646; /* ← CONTACT CARD BG COLOR HERE       */
     border: 5px solid #1a1a1a; /* ← CONTACT CARD BORDER HERE    */
@@ -1102,20 +1075,12 @@ body[data-page="notifications"] .notifications-page {
     padding: 7px 10px; /* ← SEARCH ROW PADDING HERE          */
     gap: 9px; /* ← GAP between icon and input HERE  */
 }
-
-/* ──────────────────────────────────────────────────────
-   SEARCH ICON BOX  (orange box with magnifier)
-   ► Make bigger/smaller → change width/height
-   ► Change BG color     → change background
-   ► Change border       → change border
-   ► Change icon size    → change img width/height
-   ────────────────────────────────────────────────────── */
 .notif-search-icon {
-    width: 32px; /* ← SEARCH ICON BOX WIDTH HERE       */
-    height: 32px; /* ← SEARCH ICON BOX HEIGHT HERE      */
-    background: #D88628; /* ← SEARCH ICON BG COLOR HERE        */
-    border-radius: 10px; /* ← SEARCH ICON ROUNDNESS HERE       */
-    border: 3px solid #1a1a1a; /* ← SEARCH ICON BORDER HERE     */
+    width: 32px; 
+    height: 32px; 
+    background: #D88628; 
+    border-radius: 10px; 
+    border: 3px solid #1a1a1a; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1124,7 +1089,7 @@ body[data-page="notifications"] .notifications-page {
 }
 
     .notif-search-icon img {
-        width: 18px; /* ← MAGNIFIER ICON SIZE HERE         */
+        width: 18px; 
         height: 18px;
         object-fit: contain;
     }
@@ -1140,14 +1105,6 @@ body[data-page="notifications"] .notifications-page {
     gap: 30px;
 }
 
-/* ──────────────────────────────────────────────────────
-   NOTIFICATION LIST WRAPPER
-   ► Change BG color   → change background
-   ► Change border     → change border
-   ► Change roundness  → change border-radius
-   ► Change padding    → change padding
-   ► Change gap between items → change gap
-   ────────────────────────────────────────────────────── */
 .notif-list {
     display: flex;
     flex-direction: column;
@@ -1158,14 +1115,7 @@ body[data-page="notifications"] .notifications-page {
     padding: 10px; /* ← NOTIF LIST PADDING HERE          */
 }
 
-/* ──────────────────────────────────────────────────────
-   EACH NOTIFICATION ITEM
-   ► Make taller/shorter  → change padding-top/bottom
-   ► Change text size     → change font-size
-   ► Change border        → change border
-   ► Change roundness     → change border-radius
-   ► Change gap (icon to text) → change gap
-   ────────────────────────────────────────────────────── */
+
 .notif-item {
     display: flex;
     align-items: center;
@@ -1188,12 +1138,6 @@ body[data-page="notifications"] .notifications-page {
         transform: translateX(3px);
     }
 
-    /* ──────────────────────────────────────────────────────
-   NOTIFICATION ITEM COLORS
-   ► Warning (red)  → change background in .warning
-   ► Message (teal) → change background in .message
-   ► Success (teal) → change background in .success
-   ────────────────────────────────────────────────────── */
     .notif-item.warning {
         background: #BF4646; /* ← WARNING ITEM COLOR HERE          */
         color: white;
@@ -1218,19 +1162,12 @@ body[data-page="notifications"] .notifications-page {
         transform: scale(0.97);
     }
 
-/* ──────────────────────────────────────────────────────
-   NOTIFICATION ICON CIRCLE
-   ► Make bigger/smaller → change width/height
-   ► Change BG color     → change background
-   ► Change border       → change border
-   ► Change icon size    → change img width/height
-   ────────────────────────────────────────────────────── */
 .notif-icon {
-    width: 38px; /* ← ICON CIRCLE WIDTH HERE           */
-    height: 38px; /* ← ICON CIRCLE HEIGHT HERE          */
+    width: 38px; 
+    height: 38px;
     border-radius: 50%;
-    border: 3px solid #1a1a1a; /* ← ICON CIRCLE BORDER HERE     */
-    background: rgba(0,0,0,0.12); /* ← ICON CIRCLE BG HERE      */
+    border: 3px solid #1a1a1a; 
+    background: rgba(0,0,0,0.12); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1244,7 +1181,7 @@ body[data-page="notifications"] .notifications-page {
 }
 
 .notif-icon img {
-    width: 22px; /* ← ICON IMAGE SIZE HERE             */
+    width: 22px; 
     height: 22px;
     object-fit: contain;
 }
@@ -1265,38 +1202,24 @@ body[data-page="notifications"] .notifications-page {
 /* ══════════════════════════════════════════════════════
    ACCOUNT PAGE — FULL MANUAL CONTROLS
 ══════════════════════════════════════════════════════ */
-
-/* ──────────────────────────────────────────────────────
-   ACCOUNT CARD  (main teal container)
-   ► Move DOWN/UP      → change margin-top
-   ► Move RIGHT/LEFT   → change margin-left (remove auto)
-   ► Make WIDER/NARROW → change max-width
-   ► Change BG color   → change background
-   ► Change border     → change border
-   ► Change roundness  → change border-radius
-   ► Change inner space → change padding
-   ────────────────────────────────────────────────────── */
 .account-card {
-    max-width: 1400px; /* ← CHANGE CARD WIDTH HERE           */
+    max-width: 1400px; 
     width: 100%;
-    margin-top: 80px; /* ← MOVE DOWN/UP HERE                */
-    margin-left: auto; /* ← MOVE RIGHT/LEFT (replace auto)   */
+    margin-top: 80px; 
+    margin-left: auto;
     margin-right: auto;
-    background: #276470; /* ← CARD BG COLOR HERE               */
-    border: 5px solid #1a1a1a; /* ← CARD BORDER HERE            */
-    border-radius: 24px; /* ← CARD ROUNDNESS HERE              */
-    padding-top: 30px; /* ← TOP SPACE INSIDE CARD HERE       */
-    padding-bottom: 90px; /* ← BOTTOM SPACE INSIDE CARD HERE    */
-    padding-left: 94px; /* ← LEFT SPACE INSIDE CARD HERE      */
-    padding-right: 34px; /* ← RIGHT SPACE INSIDE CARD HERE     */
+    background: #276470; 
+    border: 5px solid #1a1a1a; 
+    border-radius: 24px; 
+    padding-top: 30px; 
+    padding-bottom: 90px; 
+    padding-left: 94px; 
+    padding-right: 34px; 
     position: relative;
 }
 
-/* ──────────────────────────────────────────────────────
-   ACCOUNT HEADER  (avatar + name row)
-   ► Change gap between avatar and name → change gap
-   ► Change space below header → change margin-bottom
-   ────────────────────────────────────────────────────── */
+
+
 .account-header {
     display: flex;
     align-items: center;
@@ -1304,11 +1227,6 @@ body[data-page="notifications"] .notifications-page {
     margin-bottom: 26px; /* ← SPACE BELOW HEADER ROW HERE      */
 }
 
-/* ──────────────────────────────────────────────────────
-   PROFILE AVATAR  (circle image)
-   ► Make bigger/smaller → change width/height
-   ► Change border       → change border
-   ────────────────────────────────────────────────────── */
 .profile-avatar {
     width: 174px; /* ← AVATAR WIDTH HERE                */
     height: 174px; /* ← AVATAR HEIGHT HERE               */
@@ -1331,12 +1249,6 @@ body[data-page="notifications"] .notifications-page {
         object-fit: cover;
     }
 
-/* ──────────────────────────────────────────────────────
-   PROFILE NAME TEXT
-   ► Make bigger/smaller → change font-size
-   ► Change color        → change color
-   ► Change letter spacing → change letter-spacing
-   ────────────────────────────────────────────────────── */
 .profile-name {
     font-family: 'Rushon Ground', 'Poppins', sans-serif;
     font-size: 90px; /* ← NAME TEXT SIZE HERE              */
@@ -1367,13 +1279,6 @@ body[data-page="notifications"] .notifications-page {
     gap: 5px; /* ← GAP between save and cancel HERE */
 }
 
-/* ──────────────────────────────────────────────────────
-   SAVE BUTTON
-   ► Change text size → change font-size
-   ► Change BG color  → change background
-   ► Change padding   → change padding
-   ► Change roundness → change border-radius
-   ────────────────────────────────────────────────────── */
 .btn-save {
     background: #5DDB44; /* ← SAVE BUTTON COLOR HERE           */
     border: 3px solid #1a1a1a; /* ← SAVE BUTTON BORDER HERE     */
@@ -1386,12 +1291,6 @@ body[data-page="notifications"] .notifications-page {
     color: #1a1a1a;
 }
 
-/* ──────────────────────────────────────────────────────
-   CANCEL BUTTON (small)
-   ► Change text size → change font-size
-   ► Change BG color  → change background
-   ► Change padding   → change padding
-   ────────────────────────────────────────────────────── */
 .btn-cancel-sm {
     background: #BF4646; /* ← CANCEL BUTTON COLOR HERE         */
     border: 3px solid #1a1a1a; /* ← CANCEL BUTTON BORDER HERE   */
@@ -1403,12 +1302,6 @@ body[data-page="notifications"] .notifications-page {
     cursor: pointer;
     color: white;
 }
-
-/* ──────────────────────────────────────────────────────
-   ACTION BUTTONS ROW  (Edit Username / Change Profile / Switch)
-   ► Change gap between buttons → change gap
-   ► Change space below row     → change margin-bottom
-   ────────────────────────────────────────────────────── */
 .account-actions {
     display: flex;
     gap: 10px; /* ← GAP BETWEEN ACTION BUTTONS HERE  */
@@ -1416,15 +1309,6 @@ body[data-page="notifications"] .notifications-page {
     justify-content: center;
 }
 
-/* ──────────────────────────────────────────────────────
-   EACH ACTION BUTTON
-   ► Make bigger/smaller text → change font-size
-   ► Change padding (button size) → change padding
-   ► Change min width → change min-width
-   ► Change BG color  → change background
-   ► Change border    → change border
-   ► Change roundness → change border-radius
-   ────────────────────────────────────────────────────── */
 .btn-action {
     background: #7EACB5; /* ← ACTION BUTTON BG COLOR HERE      */
     border: 3px solid #1a1a1a; /* ← ACTION BUTTON BORDER HERE   */
@@ -1445,18 +1329,9 @@ body[data-page="notifications"] .notifications-page {
         transform: translateY(-2px);
     }
 
-/* ──────────────────────────────────────────────────────
-   SIGN OUT BUTTON  (centered red button)
-   ► Make wider/narrower → change padding-left/right
-   ► Make taller/shorter → change padding-top/bottom
-   ► Change text size    → change font-size
-   ► Change BG color     → change background
-   ► Change border       → change border
-   ► Change roundness    → change border-radius
-   ────────────────────────────────────────────────────── */
 .btn-signout {
     display: block;
-    margin: 0 auto; /* centers button */
+    margin: 0 auto; 
     background: #BF4646; /* ← SIGN OUT BUTTON COLOR HERE       */
     border: 5px solid #1a1a1a; /* ← SIGN OUT BUTTON BORDER HERE */
     border-radius: 14px; /* ← SIGN OUT BUTTON ROUNDNESS HERE   */
@@ -1485,26 +1360,7 @@ body[data-page="notifications"] .notifications-page {
 }
 /* ══════════════════════════════════════════════════════
    ANALYTICS CHART — INTERNAL CONTROLS
-   These control the text, lines, and colors INSIDE
-   the chart canvas. Add to end of Site.css.
-══════════════════════════════════════════════════════ */
-
-/* ──────────────────────────────────────────────────────
-   HOW TO USE THESE:
-   The CSS variables below are read by your Chart.js
-   script in Analytics.cshtml.
-
-   STEP 1 — Change the values here in CSS
-   STEP 2 — Make sure your Analytics.cshtml <script>
-            reads these variables using:
-
-   var style = getComputedStyle(document.documentElement);
-
-   Then use style.getPropertyValue('--chart-line-color')
-   etc. in your Chart.js config (see bottom of this block
-   for the full script replacement).
-   ────────────────────────────────────────────────────── */
-
+    ══════════════════════════════════════════════════════
 :root {
     /* ── LINE & FILL ── */
     --chart-line-color: #BF4646; /* ← LINE COLOR HERE             */
@@ -1590,15 +1446,9 @@ body[data-page="notifications"] .notifications-page {
         flex-shrink: 0;
     }
 
-/* ── FIX: Chat header overflow so avatar icon shows freely ── */
 .chat-header {
     overflow: visible;
 }
-
-    /* ── CHAT HEADER AVATAR SIZE ──
-   Change the width/height numbers inside the HTML
-   style="width:60px;height:60px;" on the avatar div
-   OR change the number below to override all header avatars */
     .chat-header .avatar {
         overflow: visible; /* ← avatar icon can show freely        */
         flex-shrink: 0;
