@@ -22,7 +22,7 @@ body {
     align-items: center;
     height: 50px;
     position: fixed;
-    top: 90px;
+    top: 0; /* changed from 90px to 0 */
     left: 0;
     width: 100%;
     z-index: 9998;
@@ -71,7 +71,7 @@ body {
 /* ========================= */
 .cart-wrapper {
     max-width: 1200px;
-    margin: 120px auto 120px;
+    margin: 70px auto 120px;
     padding: 20px;
 }
 
