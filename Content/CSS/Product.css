@@ -1,0 +1,7 @@
+/* Product view styles */
+
+@media (max-width: 768px) {
+    .navbar {
+        gap: 16px;
+    }
+}

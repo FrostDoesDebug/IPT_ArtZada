@@ -1,5 +1,37 @@
 /* Message view specific overrides extracted from inline styles */
 
+.messaging-layout {
+    width: min(100%, 1400px);
+    height: auto;
+    min-height: min(76vh, 820px);
+    margin: 0 auto;
+}
+
+.chat-sidebar {
+    width: min(30%, 320px);
+}
+
+.chat-contact,
+.chat-header {
+    padding: clamp(10px, 1.2vw, 18px) clamp(14px, 1.8vw, 26px);
+}
+
+.contact-name,
+.chat-header-name {
+    font-size: clamp(18px, 2vw, 30px);
+}
+
+.bubble {
+    font-size: clamp(16px, 1.4vw, 25px);
+    padding: clamp(10px, 1.4vw, 23px) clamp(14px, 1.8vw, 30px);
+}
+
+.chat-input {
+    font-size: clamp(14px, 1.4vw, 25px);
+    padding-top: clamp(10px, 1.8vw, 22px);
+    padding-bottom: clamp(10px, 1.8vw, 22px);
+}
+
 .message-avatar {
     width: 60px;
     height: 60px;
@@ -25,4 +57,43 @@
     max-height: 150px;
     border-radius: 10px;
     display: block;
+}
+
+@media (max-width: 1024px) {
+    .messaging-layout {
+        width: 100%;
+        min-height: 72vh;
+        padding: 12px;
+    }
+
+    .chat-sidebar {
+        width: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .messaging-layout {
+        flex-direction: column;
+        gap: 10px;
+        min-height: auto;
+    }
+
+    .chat-sidebar {
+        width: 100%;
+    }
+
+    .chat-contact,
+    .chat-contact-empty {
+        min-height: 72px;
+    }
+
+    .chat-input-row {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .message-avatar {
+        width: 44px;
+        height: 44px;
+    }
 }
