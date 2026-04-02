@@ -1,0 +1,28 @@
+/* Message view specific overrides extracted from inline styles */
+
+.message-avatar {
+    width: 60px;
+    height: 60px;
+}
+
+.message-avatar-icon {
+    width: 65%;
+    height: 65%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.message-file-input {
+    display: none;
+}
+
+.message-image-bubble {
+    padding: 6px;
+}
+
+.message-image-preview {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 10px;
+    display: block;
+}

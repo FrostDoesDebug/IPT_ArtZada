@@ -5,166 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .notifications-page {
-        max-width: 660px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-    }
-
-    .notif-title {
-        font-family: 'Rushon Ground', 'Poppins', sans-serif;
-        font-size: 82px; /* ← TITLE SIZE */
-        font-weight: 900;
-        color: #1a1a1a;
-        text-align: left;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .notif-search-row {
-        display: flex;
-        align-items: center;
-        background: #7EACB5;
-        border: 5px solid #1a1a1a;
-        border-radius: 14px;
-        padding: 13px 12px; /* ← SEARCH ROW PADDING */
-        gap: 10px;
-    }
-
-    .notif-search-icon {
-        width: 54px; /* ← ICON BOX WIDTH */
-        height: 54px; /* ← ICON BOX HEIGHT */
-        background: #D88628;
-        border-radius: 10px;
-        border: 3px solid #1a1a1a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        overflow: visible; /* ← ICON FREE TO RESIZE */
-        position: relative;
-    }
-
-        .notif-search-icon img {
-            width: 40px; /* ← SEARCH ICON WIDTH — change freely */
-            height: 40px; /* ← SEARCH ICON HEIGHT — change freely */
-            object-fit: contain;
-            position: relative;
-            z-index: 1;
-        }
-
-    .notif-search-input {
-        flex: 1;
-        background: white;
-        border: 2px solid #1a1a1a;
-        border-radius: 6px;
-        padding: 17px 12px; /* ← INPUT PADDING */
-        font-family: 'Poppins', sans-serif;
-        font-size: 13px; /* ← INPUT TEXT SIZE */
-        font-weight: 700;
-        outline: none;
-        color: #1a1a1a;
-    }
-
-    .notif-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* ← GAP between items */
-        background: #7EACB5;
-        border: 5px solid #1a1a1a;
-        border-radius: 14px;
-        padding: 22px; /* ← LIST PADDING */
-    }
-
-    .notif-item {
-        display: flex;
-        align-items: center;
-        gap: 62px; /* ← GAP between icon and text */
-        padding: 27px 31px; /* ← ITEM PADDING */
-        border-radius: 24px;
-        border: 3px solid #1a1a1a;
-        font-size: 34px; /* ← ITEM TEXT SIZE */
-        font-weight: 700;
-        font-family: 'Poppins', sans-serif;
-        cursor: pointer;
-        transition: transform 0.15s;
-        animation: slide-in 0.3s ease both;
-    }
-
-        .notif-item:hover {
-            transform: translateX(4px);
-        }
-
-    @@keyframes slide-in {
-        from {
-            transform: translateX(-20px);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    .notif-item.warning {
-        background: #BF4646;
-        color: white;
-    }
-
-    .notif-item.message {
-        background: #7EACB5;
-        color: #1a1a1a;
-    }
-
-    .notif-item.success {
-        background: #7EACB5;
-        color: #1a1a1a;
-    }
-
-    .notif-item.read {
-        opacity: 0.5;
-    }
-
-    .notif-item.active {
-        outline: 3px solid black;
-        transform: scale(0.97);
-    }
-
-    /* ── NOTIFICATION ICON CIRCLE ──
-       overflow:visible = icon resizes freely outside the circle
-       Change width/height of the CIRCLE below
-       Change width/height of the IMG below separately */
-    .notif-icon {
-        width: 80px; /* ← ICON CIRCLE WIDTH — change freely  */
-        height: 80px; /* ← ICON CIRCLE HEIGHT — change freely */
-        border-radius: 50%;
-        border: 3px solid #1a1a1a;
-        background: rgba(0,0,0,0.12);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        overflow: visible; /* ← ICON FREE TO RESIZE OUTSIDE CIRCLE */
-        position: relative;
-    }
-
-    .notif-item.warning .notif-icon {
-        background: rgba(0,0,0,0.2);
-        border-color: rgba(255,255,255,0.4);
-    }
-
-    .notif-icon img {
-        width: 80px; /* ← ICON IMAGE WIDTH — change freely   */
-        height: 80px; /* ← ICON IMAGE HEIGHT — change freely  */
-        object-fit: contain;
-        position: relative; /* ← lets it render outside circle      */
-        z-index: 1;
-    }
-</style>
+@section Styles {
+    <link href="@Url.Content("~/Content/CSS/Notification.css")" rel="stylesheet" />
+}
 
 <div class="notifications-page">
 
@@ -200,7 +43,7 @@
             <div class="notif-icon">
                 <img src="@Url.Content("~/Content/images/message.png")"
                      alt="message"
-                     style="filter:brightness(0.3);"
+                     class="notif-message-icon"
                      onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'#333\' width=\'60\' height=\'60\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
             </div>
             <span>Client#1 has replied to your message</span>
