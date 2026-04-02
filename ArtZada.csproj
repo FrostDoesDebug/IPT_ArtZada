@@ -135,8 +135,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CSS\Analytics.css" />
     <Content Include="Content\CSS\Cart.css" />
     <Content Include="Content\CSS\Index.css" />
+    <Content Include="Content\CSS\Message.css" />
+    <Content Include="Content\CSS\Notification.css" />
     <Content Include="Content\CSS\SellerProf.css" />
     <Content Include="Content\images\add_item.png" />
     <Content Include="Content\images\add_quantity.png" />

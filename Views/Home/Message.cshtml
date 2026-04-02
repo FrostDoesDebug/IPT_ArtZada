@@ -5,15 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    <link href="@Url.Content("~/Content/CSS/Message.css")" rel="stylesheet" />
+}
+
 <div class="messaging-layout">
 
     <div class="chat-sidebar-container">
 
         <div class="chat-sidebar">
             <div class="chat-contact selected" onclick="selectContact(this,'CLIENT #1')">
-                <div class="avatar" style="width:60px;height:60px;">
+                <div class="avatar message-avatar">
                     <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
-                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                         class="message-avatar-icon"
                          onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
                 </div>
                 <span class="contact-name">CLIENT #1</span>
@@ -26,9 +30,9 @@
 
     <div class="chat-window">
         <div class="chat-header">
-            <div class="avatar" style="width:60px;height:60px;">
+            <div class="avatar message-avatar">
                 <img src="@Url.Content("~/Content/images/message.png")" alt="contact"
-                     style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                     class="message-avatar-icon"
                      onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
             </div>
             <span class="chat-header-name" id="chatHeaderName">CLIENT #1</span>
@@ -41,9 +45,9 @@
                 <div class="bubble sent">Kwekkwek ka ba?</div>
             </div>
             <div class="chat-row received">
-                <div class="avatar" style="width:60px;height:60px;">
+                <div class="avatar message-avatar">
                     <img src="@Url.Content("~/Content/images/message.png")" alt="c"
-                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                         class="message-avatar-icon"
                          onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
                 </div>
                 <div class="bubble received">Bakit?</div>
@@ -52,9 +56,9 @@
                 <div class="bubble sent">Sarap mo kasi tusukin</div>
             </div>
             <div class="chat-row received">
-                <div class="avatar" style="width:60px;height:60px;">
+                <div class="avatar message-avatar">
                     <img src="@Url.Content("~/Content/images/message.png")" alt="c"
-                         style="width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1);"
+                         class="message-avatar-icon"
                          onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'white\' style=\'width:65%;height:65%\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
                 </div>
                 <div class="bubble received">haha</div>
@@ -67,7 +71,7 @@
             <input type="file"
                    id="fileAttach"
                    accept="image/*,video/*,.pdf,.doc,.docx"
-                   style="display:none;"
+                   class="message-file-input"
                    onchange="handleAttach(this)" />
 
             <!-- ── ATTACH BUTTON — clicks hidden file input ── -->
@@ -132,8 +136,8 @@
             if (file.type.startsWith('image/')) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    row.innerHTML = '<div class="bubble sent" style="padding:6px;">' +
-                        '<img src="' + e.target.result + '" style="max-width:200px;max-height:150px;border-radius:10px;display:block;" />' +
+                    row.innerHTML = '<div class="bubble sent message-image-bubble">' +
+                        '<img src="' + e.target.result + '" class="message-image-preview" />' +
                         '</div>';
                     body.appendChild(row);
                     body.scrollTop = body.scrollHeight;
