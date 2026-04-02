@@ -15,6 +15,10 @@ namespace ArtZada.Controllers
             return View();
         }
 
+        public ActionResult BuyerMessage()
+        {
+            return View();
+        }   
         public ActionResult Cart()
         {
             ViewBag.Title = "Cart";
