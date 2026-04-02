@@ -2,31 +2,26 @@
     ViewBag.Title = "Cart";
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cart</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
     <link href="~/Content/CSS/Cart.css" rel="stylesheet" />
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
     @{
         var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
     }
 
+    <!-- NAVBAR -->
     <div class="navbar-container">
-        <div class="nav-logo">
-            <svg viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="2,14  18,4  18,24" fill="white"></polygon>
-                <polygon points="26,4  42,14  26,24" fill="white"></polygon>
-            </svg>
-        </div>
-
         <div class="navbar">
             <a href="/Home/Index" class="@(currentAction == "Index" ? "active" : "")">Home</a>
             <a href="#">Shop</a>
@@ -42,35 +37,17 @@
 
         <div class="cart-item">
             <input type="checkbox" class="cart-checkbox" />
+
             <img src="~/images/sample-art.png" class="cart-img" />
 
-            <!-- HEADER ROW -->
-            <div class="panel-header" id="panel-header">
-                <button class="btn-order-recieved" id="btn-order-recieved" onclick="markOrderRecieved()">
-                    Order Recieved
-                </button>
+            <div class="cart-info">
+                <div class="cart-name">CHUBB</div>
+                <div class="cart-type">Digital Print</div>
             </div>
 
-            <!-- PANEL BODY -->
-            <div class="panel-body">
-
-                <!-- TO PAY PANEL -->
-                <div class="tab-panel active" id="panel-to_pay">
-                    <!-- Items waiting for payment listed here -->
-                </div>
-
-                <!-- TO SHIP PANEL -->
-                <div class="tab-panel" id="panel-to_ship">
-                    <!-- Items to ship listed here -->
-                </div>
-
-                <!-- TO RECIEVE PANEL -->
-                <div class="tab-panel" id="panel-to_recieve">
-                    <!-- Items to recieve listed here -->
-                </div>
-
-            </div>
+            <div class="cart-price">₱100</div>
         </div>
+
     </div>
 
     <!-- OVERLAY -->
@@ -107,7 +84,7 @@
             </div>
 
             <div class="checkout-bottom">
-                <h3>Total: <span>₱999</span></h3>
+                <h3>Total: <span>₱100.00</span></h3>
                 <button class="place-order-btn">Place Order</button>
             </div>
 
@@ -126,7 +103,6 @@
             document.getElementById("overlay").classList.remove("active");
         }
 
-        // CLICK OUTSIDE = CLOSE
         document.addEventListener("click", function (e) {
             var checkout = document.getElementById("checkoutBar");
 
@@ -137,15 +113,11 @@
             }
         });
 
-        // PREVENT CLOSE WHEN CLICKING INSIDE
         document.getElementById("checkoutBar").addEventListener("click", function (e) {
             e.stopPropagation();
         });
 
-        // OVERLAY CLICK
-        document.getElementById("overlay").addEventListener("click", function () {
-            closeCheckout();
-        });
+        document.getElementById("overlay").addEventListener("click", closeCheckout);
     </script>
 
 </body>
