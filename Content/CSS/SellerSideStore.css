@@ -1,1 +1,319 @@
-/* SellerSideStore view styles */
+﻿@font-face {
+    font-family: 'RushonGround';
+    src: url('/Content/Font/Rushon%20Ground.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* BODY */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    background-image: url('/Content/images/paperbg.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar-container {
+    background: #BF4646;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    position: relative;
+    z-index: 10;
+}
+
+.nav-logo {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+    .nav-logo svg {
+        width: 44px;
+        height: 28px;
+    }
+
+.navbar {
+    display: flex;
+    gap: 60px;
+}
+
+    .navbar a {
+        color: rgba(0,0,0,0.75);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        transition: color 0.2s;
+    }
+
+        .navbar a:hover {
+            color: rgba(0,0,0,0.95);
+        }
+
+        .navbar a.active {
+            color: #ffffff;
+        }
+
+/* BELL */
+.nav-bell {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80px;
+    height: 78px;
+    background: #BF4646;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: filter 0.15s;
+    z-index: 20;
+}
+
+    .nav-bell:hover {
+        filter: brightness(1.15);
+    }
+
+    .nav-bell img {
+        width: 46px;
+        height: 46px;
+        object-fit: contain;
+        margin-top: 20px;
+    }
+
+/* PAGE */
+.page-content {
+    flex: 1;
+    padding: 24px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-right: 110px;
+}
+
+.page-title {
+    font-family: 'RushonGround', cursive;
+    font-size: 3.5rem;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    -webkit-text-stroke: 2px #1a1a1a;
+    line-height: 1;
+}
+
+/* HEADER BUTTONS */
+.header-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.action-btn-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+    .action-btn-wrap span {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: #1a1a1a;
+    }
+
+.action-btn {
+    background: #276470;
+    border: none;
+    border-radius: 14px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: filter 0.15s, transform 0.1s;
+}
+
+    .action-btn:hover {
+        filter: brightness(1.15);
+        transform: translateY(-2px);
+    }
+
+    .action-btn:active {
+        transform: translateY(0);
+        filter: brightness(0.88);
+    }
+
+    .action-btn img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+/* STORE PANEL */
+.store-panel {
+    background: #276470;
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: stretch;
+    min-height: 320px;
+}
+
+/* ITEM CARD */
+.item-card {
+    background: #7EACB5;
+    border: 4px solid #1a1a1a;
+    border-radius: 14px;
+    padding: 12px;
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+    .item-card img.item-img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 3px solid #1a1a1a;
+    }
+
+.item-name {
+    font-family: 'RushonGround', cursive;
+    font-size: 1.4rem;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+.item-type {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #1a1a1a;
+}
+
+.item-price {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #BF4646;
+}
+
+/* CHECKBOX */
+.item-checkbox {
+    width: 26px;
+    height: 26px;
+    border: 3px solid #1a1a1a;
+    border-radius: 4px;
+    background: #ffffff;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    margin-top: 4px;
+    transition: background 0.15s;
+    flex-shrink: 0;
+}
+
+    .item-checkbox:checked {
+        background: #5DDB44;
+    }
+
+/* ADD CARD */
+.add-card {
+    background: #7EACB5;
+    border: 4px solid #1a1a1a;
+    border-radius: 14px;
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: filter 0.15s, transform 0.1s;
+    min-height: 200px;
+}
+
+    .add-card:hover {
+        filter: brightness(1.08);
+        transform: translateY(-3px);
+    }
+
+    .add-card:active {
+        transform: translateY(0);
+        filter: brightness(0.92);
+    }
+
+    .add-card img.add-icon {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+    }
+
+    .add-card span {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #1a1a1a;
+    }
+
+/* ✅ FIXED MEDIA QUERY */
+@media (max-width: 768px) {
+    .navbar {
+        gap: 20px;
+    }
+
+    .page-title {
+        font-size: 2.4rem;
+    }
+
+    .page-header {
+        padding-right: 20px;
+    }
+
+    .store-panel {
+        justify-content: center;
+    }
+
+    .item-card,
+    .add-card {
+        width: 150px;
+    }
+}

@@ -1,1 +1,317 @@
-/* AdminAccount view styles */
+﻿@font-face {
+    font-family: 'RushonGround';
+    src: url('/Content/Font/Rushon%20Ground.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f4f4 url('/Content/images/paperbg.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar-container {
+    background: #BF4646;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    position: relative;
+}
+
+.nav-logo {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+    .nav-logo svg {
+        width: 44px;
+        height: 28px;
+    }
+
+.navbar {
+    display: flex;
+    gap: 50px;
+}
+
+    .navbar a {
+        color: rgba(0,0,0,0.75);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+        transition: color 0.2s;
+    }
+
+        .navbar a:hover {
+            color: rgba(0,0,0,0.95);
+        }
+
+        .navbar a.active {
+            color: #ffffff;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            text-decoration-thickness: 2px;
+        }
+
+.page-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 60px;
+}
+
+.account-card {
+    background-color: #276470;
+    border: 5px solid #1a3a40;
+    border-radius: 22px;
+    padding: 44px 48px;
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    position: relative;
+}
+
+.account-header {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.account-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #1a3a40;
+    object-fit: cover;
+    background-color: #aaa;
+    display: block;
+    transition: filter 0.2s;
+}
+
+.avatar-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.03em;
+    pointer-events: none;
+}
+
+.avatar-wrapper:hover .avatar-overlay {
+    display: flex;
+}
+
+.avatar-wrapper:hover .account-avatar {
+    filter: brightness(0.65);
+}
+
+#avatarInput {
+    display: none;
+}
+
+.account-name {
+    font-family: 'RushonGround', cursive;
+    font-size: 3.6rem;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.45);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s;
+    user-select: none;
+}
+
+    .account-name:hover {
+        border-bottom: 3px solid rgba(255,255,255,0.4);
+    }
+
+.username-input {
+    display: none;
+    font-family: 'RushonGround', cursive;
+    font-size: 3.6rem;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid rgba(255,255,255,0.7);
+    outline: none;
+    width: 100%;
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.45);
+}
+
+.card-actions {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .card-actions.visible {
+        display: flex;
+    }
+
+.btn-save {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    background-color: #5DDB44;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 10px 22px;
+    cursor: pointer;
+}
+
+.btn-cancel-edit {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #ffffff;
+    background-color: #BF4646;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 10px 22px;
+    cursor: pointer;
+}
+
+.account-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-action {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: rgba(26,26,26,0.5);
+    background-color: #7EACB5;
+    border: 5px solid #1a3a40;
+    border-radius: 16px;
+    padding: 22px 20px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.account-signout {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-signout {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #ffffff;
+    background-color: #BF4646;
+    border: 5px solid #1a1a1a;
+    border-radius: 16px;
+    padding: 18px 80px;
+    cursor: pointer;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+    .modal-overlay.active {
+        display: flex;
+    }
+
+.modal-box {
+    background-color: #276470;
+    border: 5px solid #1a1a1a;
+    border-radius: 22px;
+    padding: 50px 60px 40px;
+    text-align: center;
+}
+
+.modal-title {
+    font-family: 'RushonGround', cursive;
+    font-size: 3.2rem;
+    color: #ffffff;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.btn-confirm,
+.btn-cancel {
+    flex: 1;
+    padding: 14px 0;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* ✅ FIXED */
+@media (max-width: 768px) {
+    .account-name,
+    .username-input {
+        font-size: 2.2rem;
+    }
+
+    .account-actions {
+        flex-direction: column;
+    }
+
+    .account-card {
+        padding: 28px 20px;
+    }
+
+    .page-content {
+        padding: 24px 16px;
+    }
+
+    .modal-title {
+        font-size: 2.2rem;
+    }
+}
