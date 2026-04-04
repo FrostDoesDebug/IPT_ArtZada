@@ -2,6 +2,8 @@
 
 .auth-body {
     min-height: 100vh;
+    background: #EDDCC6 url('/Content/images/paperbg.png') no-repeat center center fixed;
+    background-size: cover;
 }
 
 .auth-page {
