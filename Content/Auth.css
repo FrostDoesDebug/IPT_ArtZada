@@ -1,18 +1,25 @@
 /* Auth + Landing screens (no navbar) */
 
 .auth-body {
+    margin: 0;
+    height: 100dvh;
     min-height: 100vh;
+    overflow: hidden;
     background: #EDDCC6 url('/Content/images/paperbg.png') no-repeat center center fixed;
     background-size: cover;
 }
 
 .auth-page {
+    width: 100%;
+    height: 100dvh;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: clamp(10px, 2.2vh, 24px) clamp(10px, 2.5vw, 20px);
+    box-sizing: border-box;
     position: relative;
+    overflow: hidden;
 }
 
 .signup-page {
@@ -21,8 +28,8 @@
 }
 
 .signup-page .auth-card {
-    max-height: calc(100vh - 26px);
-    overflow: auto;
+    max-height: none;
+    overflow: visible;
 }
 
 .admin-label {
@@ -71,17 +78,7 @@
 
 @media (max-width: 760px), (max-height: 460px) {
     .auth-page {
-        padding: 14px 12px;
-    }
-
-    .signup-page {
-        justify-content: flex-start;
-        overflow-y: auto;
-    }
-
-    .signup-page .auth-card {
-        max-height: none;
-        overflow: visible;
+        padding: clamp(8px, 1.8vh, 14px) 10px;
     }
 
     .admin-login-bg {
@@ -100,31 +97,28 @@
 
 /* Landing */
 .landing-page {
-    /* override base auth flex (row) and avoid 100vh + padding causing scroll */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    min-height: 100vh;
-    padding: 0;
-    overflow: hidden;
+    padding: clamp(8px, 1.8vh, 18px) clamp(10px, 2.5vw, 20px);
 }
 
 .landing-wrapper {
-    width: 100%;
+    width: min(1200px, 100%);
+    max-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: clamp(10px, 2vh, 20px);
     text-align: center;
-    padding: 24px 20px;
+    padding: 0;
     box-sizing: border-box;
-    transform: translateY(clamp(-44px, -4vh, -12px));
 }
 
 .landing-logo {
-    width: min(983px, 88vw);
+    width: min(983px, 90vw);
+    max-height: min(58vh, 560px);
     height: auto;
     display: block;
     margin: 0;
@@ -133,8 +127,8 @@
 }
 .landing-role-buttons {
     display: flex;
-    gap: 14px;
-    margin-top: 10px;
+    gap: clamp(8px, 1.8vh, 14px);
+    margin-top: clamp(2px, 0.8vh, 10px);
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -143,10 +137,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 132px;
-    margin-top: 8px;
-    padding: 12px 26px;
-    font-size: 22px;
+    min-width: clamp(90px, 18vw, 132px);
+    margin-top: 0;
+    padding: clamp(8px, 1.8vh, 12px) clamp(12px, 2.8vw, 26px);
+    font-size: clamp(16px, 3.2vh, 22px);
     font-weight: 900;
     color: #fff;
     text-decoration: none;
@@ -163,123 +157,44 @@
     color: #fff;
 }
 
-@media (max-width: 1366px) and (max-height: 768px) {
-    .landing-wrapper {
-        gap: 12px;
-        padding: 14px 14px 18px;
-        transform: translateY(-18px);
-    }
-
-    .landing-logo {
-        width: min(82vw, 760px);
-        max-height: 56vh;
-    }
-
-    .landing-role-buttons {
-        margin-top: 4px;
-        gap: 10px;
-    }
-
-    .landing-role-buttons .landing-cta,
-    .landing-cta {
-        min-width: 108px;
-        margin-top: 0;
-        padding: 10px 16px;
-        font-size: 18px;
-        border-width: 3px;
-    }
-}
-
-@media (max-width: 760px), (max-height: 460px) {
-    .landing-page {
-        justify-content: flex-start;
-        overflow-y: auto;
-    }
-
-    .landing-wrapper {
-        min-height: 100vh;
-        justify-content: flex-start;
-        gap: 12px;
-        padding: 12px 10px 18px;
-        transform: none;
-    }
-
-    .landing-logo {
-        width: min(96vw, 580px);
-        max-height: 56vh;
-        object-fit: contain;
-    }
-
-    .landing-role-buttons {
-        margin-top: 2px;
-        gap: 10px;
-    }
-
-    .landing-role-buttons .landing-cta {
-        min-width: 92px;
-        padding: 8px 12px;
-        font-size: 16px;
-        border-width: 3px;
-        margin-top: 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .landing-wrapper {
-        transform: translateY(clamp(-26px, -3.2vh, -6px));
-    }
-
-    .landing-logo {
-        width: min(94vw, 820px);
-    }
-
-    .landing-role-buttons {
-        margin-top: 8px;
-    }
-
-    .landing-role-buttons .landing-cta {
-        min-width: 104px;
-        font-size: 18px;
-        padding: 10px 16px;
-    }
-}
-
 /* Login / Signup */
 .auth-card {
     width: min(460px, 92vw);
     background: #7EACB5;
     border: 4px solid #111;
-    border-radius: 25px;
-    padding: 28px 34px 26px;
+    border-radius: clamp(16px, 3vh, 25px);
+    padding: clamp(12px, 2.8vh, 28px) clamp(14px, 4vw, 34px) clamp(10px, 2.4vh, 26px);
+    box-sizing: border-box;
 }
 
 .auth-title {
     font-family: 'RushonGround', sans-serif;
     text-align: center;
-    font-size: 54px;
-    margin-bottom: 15px;
+    font-size: clamp(34px, 7vh, 54px);
+    margin-bottom: clamp(8px, 1.6vh, 15px);
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .auth-form-group {
-    margin-bottom: 10px;
+    margin-bottom: clamp(5px, 1.1vh, 10px);
 }
 
 .auth-label {
     display: block;
-    font-size: 12px;
+    font-size: clamp(10px, 1.6vh, 12px);
     font-weight: 800;
     color: #fff;
-    margin-bottom: 4px;
+    margin-bottom: clamp(2px, 0.6vh, 4px);
 }
 
 .auth-input {
     width: 100%;
     border: 2px solid rgba(0,0,0,0.2);
     border-radius: 3px;
-    padding: 8px 10px;
+    padding: clamp(6px, 1.2vh, 8px) clamp(8px, 2vw, 10px);
+    font-size: clamp(13px, 1.9vh, 16px);
     outline: none;
 }
 
@@ -287,22 +202,22 @@
     position: relative;
 }
 
-    .auth-password-wrap .auth-input {
-        padding-right: 64px;
-    }
+.auth-password-wrap .auth-input {
+    padding-right: clamp(46px, 9vw, 64px);
+}
 
 .auth-toggle-password {
     position: absolute;
     top: 50%;
-    right: 6px;
+    right: clamp(4px, 1vw, 6px);
     transform: translateY(-50%);
     border: 2px solid #111;
     background: #EDDCC6;
     color: #111;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
+    width: clamp(24px, 4vh, 32px);
+    height: clamp(24px, 4vh, 32px);
+    font-size: clamp(12px, 2.4vh, 16px);
     font-weight: 800;
     line-height: 1;
     padding: 0;
@@ -312,16 +227,16 @@
     justify-content: center;
 }
 
-    .auth-toggle-password:hover {
-        filter: brightness(1.05);
-    }
+.auth-toggle-password:hover {
+    filter: brightness(1.05);
+}
 
 .auth-toggle-password.is-visible {
     background: #D88628;
 }
 
 .auth-validation {
-    margin: 0 0 12px;
+    margin: 0 0 clamp(8px, 1.6vh, 12px);
 }
 
 .auth-btn {
@@ -330,7 +245,8 @@
     border: 3px solid #000;
     border-radius: 4px;
     font-weight: 900;
-    padding: 10px 12px;
+    font-size: clamp(15px, 2.8vh, 22px);
+    padding: clamp(8px, 1.8vh, 10px) 12px;
     cursor: pointer;
 }
 
@@ -345,17 +261,17 @@
 }
 
 .auth-actions {
-    margin-top: 14px;
+    margin-top: clamp(8px, 1.8vh, 14px);
     display: grid;
-    gap: 10px;
+    gap: clamp(6px, 1.2vh, 10px);
     justify-items: center;
 }
 
 .auth-footer {
-    margin-top: 12px;
+    margin-top: clamp(8px, 1.4vh, 12px);
     text-align: center;
     color: #fff;
-    font-size: 12px;
+    font-size: clamp(11px, 1.6vh, 12px);
     font-weight: 700;
 }
 
@@ -365,36 +281,16 @@
 }
 
 @media (max-width: 760px), (max-height: 460px) {
+    .landing-logo {
+        width: min(96vw, 580px);
+    }
+
+    .landing-cta {
+        border-width: 3px;
+    }
+
     .auth-card {
         width: min(430px, 94vw);
-        border-radius: 18px;
         border-width: 3px;
-        padding: 16px 18px 14px;
-    }
-
-    .auth-title {
-        font-size: clamp(34px, 8.4vw, 42px);
-        margin-bottom: 10px;
-    }
-
-    .auth-form-group {
-        margin-bottom: 7px;
-    }
-
-    .auth-input {
-        padding: 7px 9px;
-    }
-
-    .auth-actions {
-        margin-top: 10px;
-        gap: 8px;
-    }
-
-    .auth-btn {
-        padding: 8px 10px;
-    }
-
-    .signup-page .auth-card {
-        margin-top: 2px;
     }
 }

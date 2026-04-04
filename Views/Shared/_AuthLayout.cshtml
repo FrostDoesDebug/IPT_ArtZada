@@ -87,6 +87,66 @@
                 clearTimer();
             });
         })();
+
+        (function () {
+            var page = document.querySelector('.auth-page');
+            if (!page) {
+                return;
+            }
+
+            var target = page.querySelector('.auth-card, .landing-wrapper');
+            if (!target) {
+                return;
+            }
+
+            var rafId = null;
+
+            function fitToViewport() {
+                target.style.transform = '';
+                target.style.transformOrigin = 'center center';
+
+                var rect = target.getBoundingClientRect();
+                if (!rect.width || !rect.height) {
+                    return;
+                }
+
+                var gutter = 12;
+                var availableWidth = Math.max(0, window.innerWidth - (gutter * 2));
+                var availableHeight = Math.max(0, window.innerHeight - (gutter * 2));
+                var scale = Math.min(1, availableWidth / rect.width, availableHeight / rect.height);
+
+                target.style.transform = 'scale(' + scale.toFixed(4) + ')';
+            }
+
+            function scheduleFit() {
+                if (rafId !== null) {
+                    window.cancelAnimationFrame(rafId);
+                }
+
+                rafId = window.requestAnimationFrame(function () {
+                    rafId = null;
+                    fitToViewport();
+                });
+            }
+
+            window.addEventListener('resize', scheduleFit);
+            window.addEventListener('orientationchange', scheduleFit);
+            window.addEventListener('load', scheduleFit);
+
+            var images = target.querySelectorAll('img');
+            for (var i = 0; i < images.length; i++) {
+                if (!images[i].complete) {
+                    images[i].addEventListener('load', scheduleFit);
+                }
+            }
+
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(scheduleFit);
+            }
+
+            scheduleFit();
+            setTimeout(scheduleFit, 100);
+        })();
     </script>
     @RenderSection("scripts", required: false)
 </body>
