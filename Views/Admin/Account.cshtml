@@ -16,6 +16,34 @@
             padding: 20px;
         }
 
+        .admin-page-wrap {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 50px);
+            padding: 8px clamp(8px, 1.2vw, 16px);
+        }
+
+        .admin-page-wrap .admin-users-wrap {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        .admin-header-actions {
+            display: none;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .admin-account-shell.editing .admin-header-actions {
+            display: flex;
+        }
+
         .admin-account-top {
             display: grid;
             grid-template-columns: 130px 1fr;
@@ -55,11 +83,22 @@
             margin-bottom: 10px;
         }
 
+        .admin-username-display {
+            color: #fff;
+            font-size: clamp(34px, 5.2vw, 76px);
+            line-height: 1;
+            font-weight: 900;
+            margin-bottom: 8px;
+            font-family: 'RushonGround', 'Poppins', sans-serif;
+            text-transform: uppercase;
+        }
+
         .admin-inline-edit {
+            display: none;
+        }
+
+        .admin-account-shell.editing .admin-inline-edit {
             display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
         }
 
         .admin-inline-edit input {
@@ -71,11 +110,16 @@
         }
 
         .admin-pass-panel {
+            display: none;
             margin-top: 10px;
             background: #8AB9C1;
             border: 3px solid #111;
             border-radius: 14px;
             padding: 14px;
+        }
+
+        .admin-account-shell.pass-edit .admin-pass-panel {
+            display: block;
         }
 
         .admin-pass-panel h3 {
@@ -88,6 +132,11 @@
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
+            align-items: start;
+        }
+
+        .admin-pass-item {
+            min-width: 0;
         }
 
         .admin-pass-item label {
@@ -104,6 +153,7 @@
 
         .admin-pass-wrap input {
             width: 100%;
+            box-sizing: border-box;
             border: 3px solid #111;
             border-radius: 10px;
             padding: 8px 56px 8px 10px;
@@ -128,10 +178,15 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            justify-content: center;
         }
 
         .admin-account-actions .admin-action-btn {
             min-width: 170px;
+        }
+
+        .admin-account-actions .admin-action-btn.ban {
+            min-width: 160px;
         }
 
         #adminAvatarInput {
@@ -148,12 +203,163 @@
                 justify-items: center;
                 text-align: center;
             }
+
+            .admin-header-actions {
+                justify-content: center;
+            }
+
+            .admin-account-actions {
+                justify-content: center;
+            }
+        }
+
+        @@media (max-width: 1024px) and (min-width: 760px) {
+            .admin-page-wrap {
+                overflow: hidden;
+                padding: 6px 8px;
+                height: calc(100vh - 50px);
+            }
+
+            .admin-account-shell {
+                border-width: 3px;
+                border-radius: 14px;
+                padding: 14px 12px;
+            }
+
+            .admin-account-actions .admin-action-btn {
+                min-width: 148px;
+                padding: 8px 10px;
+            }
+        }
+
+        @@media (max-width: 1366px) and (max-height: 768px) {
+            .admin-account-shell {
+                width: min(100%, 1020px);
+                padding: 14px;
+            }
+
+            .admin-account-top {
+                grid-template-columns: 104px 1fr;
+                gap: 14px;
+                margin-bottom: 10px;
+            }
+
+            .admin-avatar-wrap {
+                width: 104px;
+                height: 104px;
+                border-width: 3px;
+            }
+
+            .admin-account-title {
+                font-size: clamp(24px, 2.7vw, 34px);
+                margin-bottom: 2px;
+            }
+
+            .admin-account-subtitle {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .admin-username-display {
+                font-size: clamp(38px, 4.2vw, 56px);
+                margin-bottom: 5px;
+            }
+
+            .admin-pass-panel {
+                padding: 10px;
+            }
+
+            .admin-pass-panel h3 {
+                margin-bottom: 8px;
+                font-size: 34px;
+                line-height: 1;
+            }
+
+            .admin-pass-grid {
+                gap: 8px;
+            }
+
+            .admin-pass-item label {
+                font-size: 11px;
+                margin-bottom: 4px;
+            }
+
+            .admin-pass-wrap input {
+                height: 38px;
+                padding: 6px 50px 6px 10px;
+                font-size: 15px;
+            }
+
+            .admin-pass-wrap button {
+                padding: 1px 7px;
+                font-size: 10px;
+            }
+        }
+
+        @@media (max-width: 760px), (max-height: 460px) {
+            .admin-page-wrap {
+                overflow-y: auto;
+                height: auto;
+                min-height: calc(100vh - 44px);
+                padding: 10px 8px;
+            }
+
+            .admin-page-wrap .admin-users-wrap {
+                overflow: visible;
+                min-height: calc(100vh - 60px);
+            }
+
+            .admin-account-shell {
+                border-width: 3px;
+                border-radius: 16px;
+                padding: 12px;
+            }
+
+            .admin-avatar-wrap {
+                width: 92px;
+                height: 92px;
+                border-width: 3px;
+            }
+
+            .admin-account-title {
+                font-size: clamp(18px, 3.8vw, 26px);
+                margin-bottom: 2px;
+            }
+
+            .admin-account-subtitle {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .admin-username-display {
+                font-size: clamp(30px, 9.2vw, 54px);
+                margin-bottom: 4px;
+            }
+
+            .admin-account-actions {
+                margin-top: 10px;
+                gap: 8px;
+            }
+
+            .admin-account-actions .admin-action-btn {
+                min-width: 132px;
+                padding: 8px 10px;
+            }
+
+            .admin-account-actions .admin-action-btn.ban {
+                min-width: 128px;
+            }
         }
     </style>
 }
 
 <div class="admin-users-wrap">
-    <div class="admin-account-shell">
+    <div class="admin-account-shell" id="adminAccountShell">
+        <div class="admin-header-actions">
+            <button type="button" class="admin-action-btn accept" onclick="saveAdminProfile()">Save Changes</button>
+            <button type="button" class="admin-action-btn ban" onclick="cancelAdminEdit()">Cancel</button>
+        </div>
+
         <div class="admin-account-top">
             <label class="admin-avatar-wrap" for="adminAvatarInput">
                 <img id="adminAvatar" src="@Url.Content("~/Content/images/artzada_logo.png")" alt="Admin avatar" />
@@ -163,9 +369,9 @@
             <div>
                 <div class="admin-account-title">Admin Account</div>
                 <div class="admin-account-subtitle">Manage profile, password, and session settings</div>
+                <div class="admin-username-display" id="adminUsernameDisplay">@adminUser</div>
                 <div class="admin-inline-edit">
                     <input type="text" id="adminUsername" value="@adminUser" />
-                    <button type="button" class="admin-action-btn view" onclick="saveAdminProfile()">Save Profile</button>
                 </div>
             </div>
         </div>
@@ -198,7 +404,9 @@
         </div>
 
         <div class="admin-account-actions">
-            <button type="button" class="admin-action-btn accept" onclick="updateAdminPassword()">Update Password</button>
+            <button type="button" class="admin-action-btn view" onclick="startAdminEdit('username')">Edit Username</button>
+            <button type="button" class="admin-action-btn view" onclick="startAdminEdit('profile')">Change Profile</button>
+            <button type="button" class="admin-action-btn view" onclick="startAdminEdit('password')">Change Password</button>
             <button type="button" class="admin-action-btn ban" onclick="adminSignOut()">Sign Out</button>
         </div>
     </div>
@@ -208,9 +416,17 @@
     <script>
         (function () {
             var profileKey = 'artzadaAdminProfile';
+            var shell = document.getElementById('adminAccountShell');
             var usernameInput = document.getElementById('adminUsername');
+            var usernameDisplay = document.getElementById('adminUsernameDisplay');
             var avatarInput = document.getElementById('adminAvatarInput');
             var avatarImg = document.getElementById('adminAvatar');
+            var adminCurrentPassword = document.getElementById('adminCurrentPassword');
+            var adminNewPassword = document.getElementById('adminNewPassword');
+            var adminConfirmPassword = document.getElementById('adminConfirmPassword');
+
+            var originalName = (usernameInput && usernameInput.value) || '@adminUser';
+            var originalAvatar = avatarImg ? avatarImg.src : '';
 
             function readProfile() {
                 return JSON.parse(localStorage.getItem(profileKey) || '{}');
@@ -224,11 +440,50 @@
                 var profile = readProfile();
                 if (profile.userName) {
                     usernameInput.value = profile.userName;
+                    usernameDisplay.textContent = profile.userName;
+                    originalName = profile.userName;
                 }
                 if (profile.avatar) {
                     avatarImg.src = profile.avatar;
+                    originalAvatar = profile.avatar;
                 }
             }
+
+            function clearPasswordFields() {
+                adminCurrentPassword.value = '';
+                adminNewPassword.value = '';
+                adminConfirmPassword.value = '';
+            }
+
+            function setEditState(isEditing, showPasswordPanel) {
+                shell.classList.toggle('editing', !!isEditing);
+                shell.classList.toggle('pass-edit', !!showPasswordPanel);
+                if (!showPasswordPanel) {
+                    clearPasswordFields();
+                }
+            }
+
+            window.startAdminEdit = function (mode) {
+                if (mode === 'profile') {
+                    avatarInput.click();
+                    setEditState(true, false);
+                    return;
+                }
+
+                if (mode === 'password') {
+                    setEditState(true, true);
+                    return;
+                }
+
+                setEditState(true, false);
+            };
+
+            window.cancelAdminEdit = function () {
+                usernameInput.value = originalName;
+                usernameDisplay.textContent = originalName;
+                avatarImg.src = originalAvatar;
+                setEditState(false, false);
+            };
 
             window.saveAdminProfile = function () {
                 var profile = readProfile();
@@ -241,6 +496,28 @@
                 profile.userName = newName;
                 profile.avatar = avatarImg.src;
                 writeProfile(profile);
+                originalName = newName;
+                originalAvatar = avatarImg.src;
+                usernameDisplay.textContent = newName;
+
+                var shouldUpdatePassword = shell.classList.contains('pass-edit');
+                if (shouldUpdatePassword) {
+                    var currentPassword = adminCurrentPassword.value;
+                    var newPassword = adminNewPassword.value;
+                    var confirmPassword = adminConfirmPassword.value;
+
+                    if (!currentPassword || !newPassword || !confirmPassword) {
+                        if (window.themeToast) window.themeToast('Fill out all password fields.', 'warn');
+                        return;
+                    }
+
+                    if (newPassword !== confirmPassword) {
+                        if (window.themeToast) window.themeToast('New password and confirmation do not match.', 'warn');
+                        return;
+                    }
+                }
+
+                setEditState(false, false);
                 if (window.themeToast) window.themeToast('Admin profile updated.', 'success');
             };
 
@@ -253,7 +530,7 @@
                 var reader = new FileReader();
                 reader.onload = function (event) {
                     avatarImg.src = event.target.result;
-                    saveAdminProfile();
+                    setEditState(true, false);
                 };
                 reader.readAsDataURL(file);
             });
@@ -269,27 +546,6 @@
                 button.textContent = isVisible ? 'Show' : 'Hide';
             };
 
-            window.updateAdminPassword = function () {
-                var currentPassword = document.getElementById('adminCurrentPassword').value;
-                var newPassword = document.getElementById('adminNewPassword').value;
-                var confirmPassword = document.getElementById('adminConfirmPassword').value;
-
-                if (!currentPassword || !newPassword || !confirmPassword) {
-                    if (window.themeToast) window.themeToast('Fill out all password fields.', 'warn');
-                    return;
-                }
-
-                if (newPassword !== confirmPassword) {
-                    if (window.themeToast) window.themeToast('New password and confirmation do not match.', 'warn');
-                    return;
-                }
-
-                if (window.themeToast) window.themeToast('Password update saved (demo mode).', 'success');
-                document.getElementById('adminCurrentPassword').value = '';
-                document.getElementById('adminNewPassword').value = '';
-                document.getElementById('adminConfirmPassword').value = '';
-            };
-
             window.adminSignOut = function () {
                 if (window.themeConfirm) {
                     window.themeConfirm('Sign out from admin account?', function () {
@@ -298,6 +554,7 @@
                 }
             };
 
+            setEditState(false, false);
             loadProfile();
         })();
     </script>

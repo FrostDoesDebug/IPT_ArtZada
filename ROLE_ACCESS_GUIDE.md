@@ -21,7 +21,7 @@ This document explains how to access each role, which pages each role can use, a
 
 - Seller
   - Login as Client first, then switch role from Client Account page
-  - Direct switch URL: /Client/SwitchToSeller
+  - Direct switch URL:  
 
 - Admin
   - Login page: /Admin/Login

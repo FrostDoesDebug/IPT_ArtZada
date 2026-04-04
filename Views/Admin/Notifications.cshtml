@@ -1,0 +1,80 @@
+@{
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Content/CSS/Notification.css")" rel="stylesheet" />
+}
+
+<div class="notifications-page">
+
+    <div class="notif-title">NOTIFICATIONS</div>
+
+    <div class="notif-search-row">
+        <div class="notif-search-icon">
+            <img src="@Url.Content("~/Content/images/search.png")"
+                 alt="search"
+                 onerror="this.outerHTML='<span style=\'font-size:40px\'>?</span>'" />
+        </div>
+        <input type="text"
+               class="notif-search-input"
+               id="notifSearch"
+               placeholder="Search Notification"
+               oninput="filterNotifs(this.value)" />
+    </div>
+
+    <div class="notif-list" id="notifList">
+
+        <div class="notif-item warning" data-text="A pending report requires review.">
+            <div class="notif-icon">
+                <img src="@Url.Content("~/Content/images/warning.png")"
+                     alt="warning"
+                     onerror="this.outerHTML='<span style=\'font-size:40px\'>!</span>'" />
+            </div>
+            <span>A pending report requires review.</span>
+        </div>
+
+        <div class="notif-item message" data-text="A user submitted a new support request.">
+            <div class="notif-icon">
+                <img src="@Url.Content("~/Content/images/message.png")"
+                     alt="message"
+                     class="notif-message-icon"
+                     onerror="this.outerHTML='<span style=\'font-size:40px\'>i</span>'" />
+            </div>
+            <span>A user submitted a new support request.</span>
+        </div>
+
+        <div class="notif-item success" data-text="Daily moderation checks completed.">
+            <div class="notif-icon">
+                <img src="@Url.Content("~/Content/images/goods.png")"
+                     alt="done"
+                     onerror="this.outerHTML='<span style=\'font-size:40px\'>v</span>'" />
+            </div>
+            <span>Daily moderation checks completed.</span>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function filterNotifs(query) {
+            var q = (query || '').toLowerCase();
+            document.querySelectorAll('#notifList .notif-item').forEach(function (item) {
+                var text = (item.getAttribute('data-text') || '').toLowerCase();
+                item.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+            });
+        }
+
+        document.querySelectorAll('.notif-item').forEach(function (item) {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.notif-item').forEach(function (i) {
+                    i.classList.remove('active');
+                });
+                this.classList.add('active');
+                this.classList.add('read');
+            });
+        });
+    </script>
+}

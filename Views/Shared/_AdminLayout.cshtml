@@ -207,6 +207,39 @@
                 font-size: 11px;
             }
         }
+
+        @@media (max-width: 760px), (max-height: 460px) {
+            .admin-navbar-container {
+                height: 44px;
+            }
+
+            .admin-nav-logo {
+                left: 8px;
+            }
+
+            .admin-navbar {
+                gap: 10px;
+                margin-left: 34px;
+                margin-right: 88px;
+            }
+
+            .admin-navbar a {
+                font-size: 10px;
+                letter-spacing: .4px;
+            }
+
+            .admin-nav-logout {
+                right: 6px;
+                padding: 4px 7px;
+                font-size: 10px;
+                border-width: 2px;
+            }
+
+            .admin-page-wrap {
+                margin-top: 44px;
+                padding: 12px 8px;
+            }
+        }
     </style>
     @RenderSection("Styles", required: false)
 </head>
@@ -224,6 +257,7 @@
             <a href="@Url.Action("UserOverview", "Admin")" class="@(string.Equals(currentAction, "UserOverview", StringComparison.OrdinalIgnoreCase) ? "active" : "")">User Management</a>
             <a href="@Url.Action("Pending", "Admin")" class="@(string.Equals(currentAction, "Pending", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Pending</a>
             <a href="@Url.Action("BannedListed", "Admin")" class="@(string.Equals(currentAction, "BannedListed", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Banned Listed</a>
+            <a href="@Url.Action("Notifications", "Admin")" class="@(string.Equals(currentAction, "Notifications", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Notifications</a>
             <a href="@Url.Action("Account", "Admin")" class="@(string.Equals(currentAction, "Account", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Account</a>
         </nav>
 

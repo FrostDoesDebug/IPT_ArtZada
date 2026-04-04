@@ -214,7 +214,11 @@
     </style>
     @RenderSection("Styles", required: false)
 </head>
-<body data-page="@ViewBag.Page" data-nav-mode="@(((ViewBag.NavMode as string) ?? "client").ToLowerInvariant())">
+@{
+    var sessionRole = ((Session["UserRole"] as string) ?? "Client").ToLowerInvariant();
+    var isSellerSession = sessionRole == "seller";
+}
+<body data-page="@ViewBag.Page" data-nav-mode="@(isSellerSession ? "seller" : "client")">
 
     <!-- NAVBAR -->
     <div class="navbar-container">
@@ -231,8 +235,7 @@
 
         <!-- Nav links — black inactive, white active -->
         @{
-            var navMode = ((ViewBag.NavMode as string) ?? "default").ToLowerInvariant();
-            var isSellerNav = navMode == "seller";
+            var isSellerNav = isSellerSession;
             var navController = isSellerNav ? "Seller" : "Client";
         }
         <nav class="navbar">
@@ -254,14 +257,17 @@
             else
             {
                 <a href="@Url.Action("Index", navController)"
-                   class="@(ViewBag.Page=="store" ? "active" : "")"
-                   onclick="navigateTo('@Url.Action("Index", navController)'); return false;">Store</a>
+                         class="@((ViewBag.Page=="home" || ViewBag.Page=="index") ? "active" : "")"
+                         onclick="navigateTo('@Url.Action("Index", navController)'); return false;">Home</a>
+                     <a href="@Url.Action("Index", navController)#hotSales"
+                         class="@(ViewBag.Page=="store" ? "active" : "")"
+                         onclick="navigateTo('@Url.Action("Index", navController)#hotSales'); return false;">Shop</a>
                 <a href="@Url.Action("Message", navController)"
                    class="@(ViewBag.Page=="message" ? "active" : "")"
                    onclick="navigateTo('@Url.Action("Message", navController)'); return false;">Message</a>
-                <a href="@Url.Action("Analytics", navController)"
-                   class="@(ViewBag.Page=="analytics" ? "active" : "")"
-                   onclick="navigateTo('@Url.Action("Analytics", navController)'); return false;">Analytics</a>
+                     <a href="@Url.Action("Cart", navController)"
+                         class="@(ViewBag.Page=="cart" ? "active" : "")"
+                         onclick="navigateTo('@Url.Action("Cart", navController)'); return false;">Cart</a>
                 <a href="@Url.Action("Account", navController)"
                    class="@(ViewBag.Page=="account" ? "active" : "")"
                    onclick="navigateTo('@Url.Action("Account", navController)'); return false;">Account</a>

@@ -136,6 +136,16 @@ namespace ArtZada.Controllers
             return View();
         }
 
+        public ActionResult Notifications()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login");
+            }
+
+            return View();
+        }
+
         public ActionResult Logout()
         {
             Session.Remove(IsAdminSessionKey);

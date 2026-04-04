@@ -13,6 +13,16 @@
     position: relative;
 }
 
+.signup-page {
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-page .auth-card {
+    max-height: calc(100vh - 26px);
+    overflow: auto;
+}
+
 .admin-label {
     position: absolute;
     top: 16px;
@@ -55,6 +65,35 @@
 .admin-login-content {
     position: relative;
     z-index: 1;
+}
+
+@media (max-width: 760px), (max-height: 460px) {
+    .auth-page {
+        padding: 14px 12px;
+    }
+
+    .signup-page {
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+
+    .signup-page .auth-card {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .admin-login-bg {
+        width: min(760px, 130vw);
+        opacity: 0.14;
+    }
+
+    .admin-login-bg-admin {
+        top: 1vh;
+    }
+
+    .admin-login-bg-access {
+        bottom: 1vh;
+    }
 }
 
 /* Landing */
@@ -120,6 +159,67 @@
     transform: translateY(-2px);
     filter: brightness(1.06);
     color: #fff;
+}
+
+@media (max-width: 1366px) and (max-height: 768px) {
+    .landing-wrapper {
+        gap: 12px;
+        padding: 14px 14px 18px;
+        transform: translateY(-18px);
+    }
+
+    .landing-logo {
+        width: min(82vw, 760px);
+        max-height: 56vh;
+    }
+
+    .landing-role-buttons {
+        margin-top: 4px;
+        gap: 10px;
+    }
+
+    .landing-role-buttons .landing-cta,
+    .landing-cta {
+        min-width: 108px;
+        margin-top: 0;
+        padding: 10px 16px;
+        font-size: 18px;
+        border-width: 3px;
+    }
+}
+
+@media (max-width: 760px), (max-height: 460px) {
+    .landing-page {
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+
+    .landing-wrapper {
+        min-height: 100vh;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 12px 10px 18px;
+        transform: none;
+    }
+
+    .landing-logo {
+        width: min(96vw, 580px);
+        max-height: 56vh;
+        object-fit: contain;
+    }
+
+    .landing-role-buttons {
+        margin-top: 2px;
+        gap: 10px;
+    }
+
+    .landing-role-buttons .landing-cta {
+        min-width: 92px;
+        padding: 8px 12px;
+        font-size: 16px;
+        border-width: 3px;
+        margin-top: 0;
+    }
 }
 
 @media (max-width: 768px) {
@@ -260,4 +360,39 @@
 .auth-footer a {
     color: #1b2fbf;
     text-decoration: underline;
+}
+
+@media (max-width: 760px), (max-height: 460px) {
+    .auth-card {
+        width: min(430px, 94vw);
+        border-radius: 18px;
+        border-width: 3px;
+        padding: 16px 18px 14px;
+    }
+
+    .auth-title {
+        font-size: clamp(34px, 8.4vw, 42px);
+        margin-bottom: 10px;
+    }
+
+    .auth-form-group {
+        margin-bottom: 7px;
+    }
+
+    .auth-input {
+        padding: 7px 9px;
+    }
+
+    .auth-actions {
+        margin-top: 10px;
+        gap: 8px;
+    }
+
+    .auth-btn {
+        padding: 8px 10px;
+    }
+
+    .signup-page .auth-card {
+        margin-top: 2px;
+    }
 }
