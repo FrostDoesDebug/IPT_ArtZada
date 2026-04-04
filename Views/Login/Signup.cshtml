@@ -32,13 +32,19 @@
 
         <div class="auth-form-group">
             @Html.LabelFor(m => m.Password, new { @class = "auth-label" })
-            @Html.PasswordFor(m => m.Password, new { @class = "auth-input" })
+            <div class="auth-password-wrap">
+                @Html.PasswordFor(m => m.Password, new { @class = "auth-input", id = "signupPassword" })
+                <button type="button" class="auth-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('signupPassword', this)">&#128065;</button>
+            </div>
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
         </div>
 
         <div class="auth-form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "auth-label" })
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "auth-input" })
+            <div class="auth-password-wrap">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "auth-input", id = "signupConfirmPassword" })
+                <button type="button" class="auth-toggle-password" aria-label="Toggle password visibility" onclick="togglePassword('signupConfirmPassword', this)">&#128065;</button>
+            </div>
             @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
         </div>
 
@@ -52,3 +58,18 @@
         </div>
     }
 </div>
+
+@section scripts {
+    <script>
+        function togglePassword(inputId, button) {
+            var input = document.getElementById(inputId);
+            if (!input) {
+                return;
+            }
+
+            var visible = input.type === 'text';
+            input.type = visible ? 'password' : 'text';
+            button.classList.toggle('is-visible', !visible);
+        }
+    </script>
+}

@@ -5,3 +5,114 @@
         gap: 16px;
     }
 }
+
+/* BuyerMessage page */
+
+.buyer-message-layout {
+    width: min(100%, 1280px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    gap: 20px;
+}
+
+.buyer-left-panel,
+.buyer-chat-panel {
+    background: #7ea4a8;
+    border: 5px solid #000;
+    border-radius: 15px;
+    padding: 12px;
+}
+
+.buyer-contact-header,
+.buyer-chat-header {
+    background: #bf4646;
+    color: #1a1a1a;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: clamp(14px, 1.6vw, 22px);
+}
+
+.buyer-contact-card {
+    height: clamp(86px, 15vh, 140px);
+    border: 3px solid #000;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.buyer-chat-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+}
+
+.buyer-chat-body {
+    flex: 1;
+    overflow: auto;
+    padding-right: 6px;
+}
+
+.buyer-bubble {
+    width: fit-content;
+    max-width: min(82%, 520px);
+    background: #276470;
+    color: #1a1a1a;
+    padding: 10px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-size: clamp(14px, 1.4vw, 20px);
+    font-weight: 700;
+}
+
+.buyer-bubble-right {
+    margin-left: auto;
+}
+
+.buyer-input-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.buyer-input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 3px solid #000;
+    font-size: clamp(14px, 1.3vw, 18px);
+}
+
+.buyer-send-btn {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 3px solid #000;
+    background: #fff;
+    cursor: pointer;
+    font-size: clamp(14px, 1.2vw, 18px);
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .buyer-message-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .buyer-chat-panel {
+        min-height: 360px;
+    }
+}
+
+@media (max-height: 620px) {
+    .buyer-chat-panel {
+        min-height: 300px;
+    }
+
+    .buyer-contact-card {
+        height: 72px;
+    }
+
+    .buyer-bubble {
+        padding: 8px 12px;
+    }
+}

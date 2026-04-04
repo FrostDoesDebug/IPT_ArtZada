@@ -672,6 +672,7 @@
    ANALYTICS PAGE — FULL MANUAL CONTROLS
 ══════════════════════════════════════════════════════ */
 
+/*
 body[data-page="analytics"] .page-wrap {
     overflow: visible;
     height: auto;
@@ -1014,6 +1015,7 @@ body[data-page="analytics"] .stock-row {
         background: #EDDCC6; /* ← EMPTY SLOT COLOR HERE            */
         min-height: 34px; /* ← EMPTY SLOT HEIGHT HERE           */
     }
+*/
 
 
 /* ══════════════════════════════════════════════════════

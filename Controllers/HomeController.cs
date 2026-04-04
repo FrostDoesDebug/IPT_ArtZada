@@ -1,37 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 
 namespace ArtZada.Controllers
 {
     public class HomeController : Controller
     {
+        private const string UserNameSessionKey = "UserName";
+        private const string UserRoleSessionKey = "UserRole";
+        private const string ClientRole = "Client";
+        private const string SellerRole = "Seller";
+        private const string AdminRole = "Admin";
+
+        private bool IsLoggedIn()
+        {
+            return !string.IsNullOrWhiteSpace(Session[UserNameSessionKey] as string);
+        }
+
+        private string CurrentRole()
+        {
+            return (Session[UserRoleSessionKey] as string ?? ClientRole).Trim();
+        }
+
+        private bool IsSellerRole()
+        {
+            return string.Equals(CurrentRole(), SellerRole, System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsAdminRole()
+        {
+            return string.Equals(CurrentRole(), AdminRole, System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private ActionResult RedirectToRoleHome()
+        {
+            if (IsAdminRole())
+            {
+                return RedirectToAction("UserOverview", "Admin");
+            }
+
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Store", "Seller");
+            }
+
+            return RedirectToAction("Index", "Client");
+        }
+
         public ActionResult Index()
         {
-            ViewBag.Title = "Store";
-            ViewBag.Page = "store";
-            return View();
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            return RedirectToRoleHome();
         }
 
         public ActionResult BuyerMessage()
         {
-            return View();
+            return RedirectToAction("Message", "Client");
         }   
+
         public ActionResult Cart()
         {
-            ViewBag.Title = "Cart";
-            ViewBag.Page = "Cart";
-            return View();
+            return RedirectToAction("Cart", "Client");
         }
 
         public ActionResult Message(string withUserId = null)
         {
-            ViewBag.Title = "Messaging";
-            ViewBag.Page = "message";
-            ViewBag.WithUserId = withUserId;
-            return View();
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Message", "Seller", new { withUserId });
+            }
+
+            return RedirectToAction("Message", "Client", new { withUserId });
         }
 
         [HttpPost]
@@ -44,31 +86,42 @@ namespace ArtZada.Controllers
                 // TODO: persist chat messages to DB.
             }
 
-            return RedirectToAction("Message", new { withUserId = receiverId });
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Message", "Seller", new { withUserId = receiverId });
+            }
+
+            return RedirectToAction("Message", "Client", new { withUserId = receiverId });
         }
 
         public ActionResult Notifications()
         {
-            ViewBag.Title = "Notifications";
-            ViewBag.Page = "notifications";
-            return View();
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Notifications", "Seller");
+            }
+
+            return RedirectToAction("Notifications", "Client");
         }
 
         public ActionResult Analytics()
         {
-            ViewBag.Title = "Analytics";
-            ViewBag.Page = "analytics";
-            ViewBag.Revenue = "100.00";
-            return View();
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Analytics", "Seller");
+            }
+
+            return RedirectToAction("Analytics", "Client");
         }
 
         public ActionResult Account()
         {
-            ViewBag.Title = "Account";
-            ViewBag.Page = "account";
-            ViewBag.Username = "PAMILI IS LOVE";
-            ViewBag.IsSeller = true;
-            return View();
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Account", "Seller");
+            }
+
+            return RedirectToAction("Account", "Client");
         }
 
         [HttpPost]
@@ -80,14 +133,17 @@ namespace ArtZada.Controllers
                 // TODO: update username in DB.
             }
 
-            return RedirectToAction("Account");
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Account", "Seller");
+            }
+
+            return RedirectToAction("Account", "Client");
         }
 
         public ActionResult ChangeProfile()
         {
-            ViewBag.Title = "Change Profile";
-            ViewBag.Page = "account";
-            return View();
+            return RedirectToAction("Account");
         }
 
         [HttpPost]
@@ -99,17 +155,34 @@ namespace ArtZada.Controllers
                 // TODO: save avatar file and update user profile.
             }
 
-            return RedirectToAction("Account");
+            if (IsSellerRole())
+            {
+                return RedirectToAction("Account", "Seller");
+            }
+
+            return RedirectToAction("Account", "Client");
         }
 
         public ActionResult ToggleSeller()
         {
-            return RedirectToAction("Account");
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            Session[UserRoleSessionKey] = SellerRole;
+            return RedirectToAction("Store", "Seller");
         }
 
         public ActionResult SwitchToBuyer()
         {
-            return RedirectToAction("Account");
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            Session[UserRoleSessionKey] = ClientRole;
+            return RedirectToAction("Index", "Client");
         }
 
         [HttpPost]
@@ -119,57 +192,57 @@ namespace ArtZada.Controllers
             System.Web.Security.FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Landing", "Landing");
         }
 
         public ActionResult Product()
         {
-            return View();
+            return RedirectToAction("Product", "Client");
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return RedirectToAction("Landing", "Landing");
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-            return View();
+            return RedirectToAction("Landing", "Landing");
         }
 
         public ActionResult SellerProf()
         {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
         public ActionResult AdminAccount()
         {
-            ViewBag.AdminUsername = "";
-            ViewBag.ProfileImageUrl = "";
-            return View();
+            return RedirectToAction("Account", "Admin");
         }
 
         public ActionResult AdminEditAccount()
         {
-            return View();
+            return RedirectToAction("Account", "Admin");
         }
 
         public ActionResult SellerSideStore()
         {
-            return View();
+            return RedirectToAction("Store", "Seller");
         }
 
         public ActionResult SellerSideStoreAddItem()
         {
-            return View();
+            return RedirectToAction("AddItem", "Seller");
         }
 
         public ActionResult SellerSideEditItem()
         {
-            return View();
+            return RedirectToAction("EditItem", "Seller");
         }
         
     }

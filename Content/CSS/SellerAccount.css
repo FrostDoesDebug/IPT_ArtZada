@@ -1,0 +1,15 @@
+/* Seller-specific account page accents */
+.account-card {
+    background: #2c6a73;
+    border: 5px solid #1a1a1a;
+    border-radius: 22px;
+}
+
+.account-card .btn-action {
+    background: #D88628;
+    color: #1a1a1a;
+}
+
+.account-card .btn-signout {
+    background: #BF4646;
+}

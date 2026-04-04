@@ -21,7 +21,7 @@
                 <button class="btn-add-photo" type="button" onclick="document.getElementById('photoInput').click()">
                     Add Photo
                 </button>
-                <button class="btn-cancel-left" type="button" onclick="window.location.href='@Url.Action("SellerSideStore","Home")'">
+                <button class="btn-cancel-left" type="button" onclick="window.location.href='@Url.Action("Store","Seller")'">
                     Cancel
                 </button>
                 <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="previewPhoto(event)" />
@@ -66,7 +66,7 @@
                     </div>
                     <div class="right-actions">
                         <button class="btn-submit" type="button" onclick="submitItem()">Add Item</button>
-                        <button class="btn-cancel-right" type="button" onclick="window.location.href='@Url.Action("SellerSideStore","Home")'">
+                        <button class="btn-cancel-right" type="button" onclick="window.location.href='@Url.Action("Store","Seller")'">
                             Cancel
                         </button>
                     </div>
@@ -97,10 +97,10 @@
             var stocks = document.getElementById('itemStocks').value;
             var desc  = document.getElementById('itemDescription').value.trim();
 
-            if (!name)   { alert('Please enter a name.');         return; }
-            if (!type)   { alert('Please select a type.');        return; }
-            if (!price)  { alert('Please enter a price.');        return; }
-            if (!stocks) { alert('Please enter a stock amount.'); return; }
+            if (!name)   { if (window.themeToast) window.themeToast('Please enter a name.', 'warn'); return; }
+            if (!type)   { if (window.themeToast) window.themeToast('Please select a type.', 'warn'); return; }
+            if (!price)  { if (window.themeToast) window.themeToast('Please enter a price.', 'warn'); return; }
+            if (!stocks) { if (window.themeToast) window.themeToast('Please enter a stock amount.', 'warn'); return; }
 
             var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
             var newItem = {
@@ -114,8 +114,9 @@
             };
             items.push(newItem);
             localStorage.setItem('sellerItems', JSON.stringify(items));
+            if (window.themeToast) window.themeToast('Item added successfully.', 'success');
 
-            window.location.href = '@Url.Action("SellerSideStore","Home")';
+            window.location.href = '@Url.Action("Store","Seller")';
         }
     </script>
 }

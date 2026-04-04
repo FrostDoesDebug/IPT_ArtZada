@@ -29,7 +29,7 @@
         </div>
 
         <div class="store-panel" id="storePanel">
-            <div class="add-card" onclick="window.location.href='@Url.Action("SellerSideStoreAddItem","Home")'">
+            <div class="add-card" onclick="window.location.href='@Url.Action("AddItem","Seller")'">
                 <img class="add-icon" src="@Url.Content("~/Content/images/add_item.png")" alt="Add Items" />
                 <span>Add Items</span>
             </div>
@@ -65,25 +65,40 @@
 
         function editSelected() {
             var checked = document.querySelectorAll('.item-checkbox:checked');
-            if (checked.length === 0) { alert('Please select an item to edit.'); return; }
-            if (checked.length > 1) { alert('Please select only one item to edit at a time.'); return; }
+            if (checked.length === 0) {
+                if (window.themeToast) window.themeToast('Select one item to edit.', 'warn');
+                return;
+            }
+            if (checked.length > 1) {
+                if (window.themeToast) window.themeToast('Select only one item to edit.', 'warn');
+                return;
+            }
             var itemId = checked[0].closest('.item-card').dataset.id;
             localStorage.setItem('editItemId', itemId);
-            window.location.href = '@Url.Action("SellerSideEditItem","Home")';
+            window.location.href = '@Url.Action("EditItem","Seller")';
         }
 
         function deleteSelected() {
             var checked = document.querySelectorAll('.item-checkbox:checked');
-            if (checked.length === 0) { alert('Please select an item to delete.'); return; }
-            if (!confirm('Delete the selected item(s)? This cannot be undone.')) return;
+            if (checked.length === 0) {
+                if (window.themeToast) window.themeToast('Select item(s) to delete.', 'warn');
+                return;
+            }
 
-            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
-            checked.forEach(function (cb) {
-                var id = cb.closest('.item-card').dataset.id;
-                items = items.filter(function (i) { return i.id !== id; });
+            if (!window.themeConfirm) {
+                return;
+            }
+
+            window.themeConfirm('Delete selected item(s)? This cannot be undone.', function () {
+                var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
+                checked.forEach(function (cb) {
+                    var id = cb.closest('.item-card').dataset.id;
+                    items = items.filter(function (i) { return i.id !== id; });
+                });
+                localStorage.setItem('sellerItems', JSON.stringify(items));
+                loadItems();
+                if (window.themeToast) window.themeToast('Item(s) deleted.', 'success');
             });
-            localStorage.setItem('sellerItems', JSON.stringify(items));
-            loadItems();
         }
 
         loadItems();

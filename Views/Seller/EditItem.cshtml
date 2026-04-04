@@ -1,17 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Add Item";
+    ViewBag.Title = "Edit Item";
     ViewBag.Page = "store";
     ViewBag.NavMode = "seller";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
-    <link href="@Url.Content("~/Content/CSS/SellerSideStoreAddItem.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/CSS/SellerSideEditItem.css")" rel="stylesheet" />
 }
 
     <div class="page-content">
         <div class="title-wrap">
-            <div class="page-title">Add Item</div>
+            <div class="page-title">Edit Item</div>
         </div>
         <div class="form-panel">
             <div class="photo-col">
@@ -19,9 +19,9 @@
                     <img id="photoPreview" src="@Url.Content("~/Content/images/artzada_logo.png")" alt="Item Photo" />
                 </div>
                 <button class="btn-add-photo" type="button" onclick="document.getElementById('photoInput').click()">
-                    Add Photo
+                    Change Photo
                 </button>
-                <button class="btn-cancel-left" type="button" onclick="window.location.href='@Url.Action("SellerSideStore","Home")'">
+                <button class="btn-cancel-left" type="button" onclick="window.location.href='@Url.Action("Store","Seller")'">
                     Cancel
                 </button>
                 <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="previewPhoto(event)" />
@@ -65,8 +65,8 @@
                         </div>
                     </div>
                     <div class="right-actions">
-                        <button class="btn-submit" type="button" onclick="submitItem()">Add Item</button>
-                        <button class="btn-cancel-right" type="button" onclick="window.location.href='@Url.Action("SellerSideStore","Home")'">
+                        <button class="btn-submit" type="button" onclick="saveChanges()">Save Changes</button>
+                        <button class="btn-cancel-right" type="button" onclick="window.location.href='@Url.Action("Store","Seller")'">
                             Cancel
                         </button>
                     </div>
@@ -77,7 +77,26 @@
 
 @section Scripts {
     <script>
-        var currentPhotoData = '/Content/images/artzada_logo.png';
+        var currentPhotoData = '';
+        var editId = localStorage.getItem('editItemId');
+
+        function loadItemForEdit() {
+            if (!editId) { window.location.href = '@Url.Action("Store","Seller")'; return; }
+            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
+            var item = null;
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].id === editId) { item = items[i]; break; }
+            }
+            if (!item) { window.location.href = '@Url.Action("Store","Seller")'; return; }
+
+            document.getElementById('itemName').value = item.name;
+            document.getElementById('itemType').value = item.type;
+            document.getElementById('itemPrice').value = item.price;
+            document.getElementById('itemStocks').value = item.stocks;
+            document.getElementById('itemDescription').value = item.description || '';
+            document.getElementById('photoPreview').src = item.photo;
+            currentPhotoData = item.photo;
+        }
 
         function previewPhoto(event) {
             var file = event.target.files[0];
@@ -90,32 +109,48 @@
             reader.readAsDataURL(file);
         }
 
-        function submitItem() {
-            var name  = document.getElementById('itemName').value.trim();
-            var type  = document.getElementById('itemType').value;
-            var price = document.getElementById('itemPrice').value;
-            var stocks = document.getElementById('itemStocks').value;
-            var desc  = document.getElementById('itemDescription').value.trim();
+        function saveChanges() {
+            var name = document.getElementById('itemName').value.trim();
+            var type = document.getElementById('itemType').value;
+            var priceStr = document.getElementById('itemPrice').value;
+            var stocksStr = document.getElementById('itemStocks').value;
+            var desc = document.getElementById('itemDescription').value.trim();
 
-            if (!name)   { alert('Please enter a name.');         return; }
-            if (!type)   { alert('Please select a type.');        return; }
-            if (!price)  { alert('Please enter a price.');        return; }
-            if (!stocks) { alert('Please enter a stock amount.'); return; }
+            if (!name) { if (window.themeToast) window.themeToast('Please enter a name.', 'warn'); return; }
+            if (!type) { if (window.themeToast) window.themeToast('Please select a type.', 'warn'); return; }
+            if (priceStr === '') { if (window.themeToast) window.themeToast('Please enter a price.', 'warn'); return; }
+            if (stocksStr === '') { if (window.themeToast) window.themeToast('Please enter a stock amount.', 'warn'); return; }
+
+            var price = parseFloat(priceStr);
+            var stocks = parseInt(stocksStr, 10);
+
+            if (isNaN(price) || price < 0) {
+                if (window.themeToast) window.themeToast('Please enter a valid price.', 'warn');
+                return;
+            }
+            if (isNaN(stocks) || stocks < 0) {
+                if (window.themeToast) window.themeToast('Please enter a valid stock amount.', 'warn');
+                return;
+            }
 
             var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
-            var newItem = {
-                id: Date.now().toString(),
-                name: name,
-                type: type,
-                price: price,
-                stocks: stocks,
-                description: desc,
-                photo: currentPhotoData
-            };
-            items.push(newItem);
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].id === editId) {
+                    items[i].name = name;
+                    items[i].type = type;
+                    items[i].price = price;
+                    items[i].stocks = stocks;
+                    items[i].description = desc;
+                    items[i].photo = currentPhotoData;
+                    break;
+                }
+            }
             localStorage.setItem('sellerItems', JSON.stringify(items));
-
-            window.location.href = '@Url.Action("SellerSideStore","Home")';
+            localStorage.removeItem('editItemId');
+            if (window.themeToast) window.themeToast('Item updated successfully.', 'success');
+            window.location.href = '@Url.Action("Store", "Seller")';
         }
+
+        loadItemForEdit();
     </script>
 }

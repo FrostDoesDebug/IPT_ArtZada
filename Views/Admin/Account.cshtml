@@ -5,13 +5,300 @@
     var adminUser = (Session["AdminUserName"] as string) ?? "admin";
 }
 
+@section Styles {
+    <style>
+        .admin-account-shell {
+            width: min(100%, 980px);
+            margin: 0 auto;
+            background: #2C6A73;
+            border: 4px solid #111;
+            border-radius: 22px;
+            padding: 20px;
+        }
+
+        .admin-account-top {
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 18px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .admin-avatar-wrap {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid #111;
+            overflow: hidden;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .admin-avatar-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .admin-account-title {
+            color: #fff;
+            font-size: clamp(28px, 3vw, 46px);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .admin-account-subtitle {
+            color: #f1f1f1;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .admin-inline-edit {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .admin-inline-edit input {
+            border: 3px solid #111;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-weight: 700;
+            width: min(100%, 320px);
+        }
+
+        .admin-pass-panel {
+            margin-top: 10px;
+            background: #8AB9C1;
+            border: 3px solid #111;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .admin-pass-panel h3 {
+            margin: 0 0 10px;
+            color: #111;
+            font-weight: 900;
+        }
+
+        .admin-pass-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .admin-pass-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #111;
+        }
+
+        .admin-pass-wrap {
+            position: relative;
+        }
+
+        .admin-pass-wrap input {
+            width: 100%;
+            border: 3px solid #111;
+            border-radius: 10px;
+            padding: 8px 56px 8px 10px;
+            font-weight: 700;
+        }
+
+        .admin-pass-wrap button {
+            position: absolute;
+            top: 50%;
+            right: 6px;
+            transform: translateY(-50%);
+            border: 2px solid #111;
+            border-radius: 8px;
+            background: #EDDCC6;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .admin-account-actions {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .admin-account-actions .admin-action-btn {
+            min-width: 170px;
+        }
+
+        #adminAvatarInput {
+            display: none;
+        }
+
+        @@media (max-width: 860px) {
+            .admin-pass-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-account-top {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+}
+
 <div class="admin-users-wrap">
-    <div class="admin-users-panel">
-        <h2 class="admin-panel-title">Account</h2>
-        <p class="admin-panel-subtitle">Logged in as <strong>@adminUser</strong></p>
+    <div class="admin-account-shell">
+        <div class="admin-account-top">
+            <label class="admin-avatar-wrap" for="adminAvatarInput">
+                <img id="adminAvatar" src="@Url.Content("~/Content/images/artzada_logo.png")" alt="Admin avatar" />
+            </label>
+            <input type="file" id="adminAvatarInput" accept="image/*" />
+
+            <div>
+                <div class="admin-account-title">Admin Account</div>
+                <div class="admin-account-subtitle">Manage profile, password, and session settings</div>
+                <div class="admin-inline-edit">
+                    <input type="text" id="adminUsername" value="@adminUser" />
+                    <button type="button" class="admin-action-btn view" onclick="saveAdminProfile()">Save Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-pass-panel">
+            <h3>Change Password</h3>
+            <div class="admin-pass-grid">
+                <div class="admin-pass-item">
+                    <label for="adminCurrentPassword">Current password</label>
+                    <div class="admin-pass-wrap">
+                        <input id="adminCurrentPassword" type="password" />
+                        <button type="button" onclick="toggleAdminPassword('adminCurrentPassword', this)">Show</button>
+                    </div>
+                </div>
+                <div class="admin-pass-item">
+                    <label for="adminNewPassword">New password</label>
+                    <div class="admin-pass-wrap">
+                        <input id="adminNewPassword" type="password" />
+                        <button type="button" onclick="toggleAdminPassword('adminNewPassword', this)">Show</button>
+                    </div>
+                </div>
+                <div class="admin-pass-item">
+                    <label for="adminConfirmPassword">Confirm password</label>
+                    <div class="admin-pass-wrap">
+                        <input id="adminConfirmPassword" type="password" />
+                        <button type="button" onclick="toggleAdminPassword('adminConfirmPassword', this)">Show</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="admin-account-actions">
-            <a class="admin-action-btn ban" href="@Url.Action("Logout", "Admin")">Logout</a>
+            <button type="button" class="admin-action-btn accept" onclick="updateAdminPassword()">Update Password</button>
+            <button type="button" class="admin-action-btn ban" onclick="adminSignOut()">Sign Out</button>
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        (function () {
+            var profileKey = 'artzadaAdminProfile';
+            var usernameInput = document.getElementById('adminUsername');
+            var avatarInput = document.getElementById('adminAvatarInput');
+            var avatarImg = document.getElementById('adminAvatar');
+
+            function readProfile() {
+                return JSON.parse(localStorage.getItem(profileKey) || '{}');
+            }
+
+            function writeProfile(data) {
+                localStorage.setItem(profileKey, JSON.stringify(data));
+            }
+
+            function loadProfile() {
+                var profile = readProfile();
+                if (profile.userName) {
+                    usernameInput.value = profile.userName;
+                }
+                if (profile.avatar) {
+                    avatarImg.src = profile.avatar;
+                }
+            }
+
+            window.saveAdminProfile = function () {
+                var profile = readProfile();
+                var newName = (usernameInput.value || '').trim();
+                if (!newName) {
+                    if (window.themeToast) window.themeToast('Username cannot be empty.', 'warn');
+                    return;
+                }
+
+                profile.userName = newName;
+                profile.avatar = avatarImg.src;
+                writeProfile(profile);
+                if (window.themeToast) window.themeToast('Admin profile updated.', 'success');
+            };
+
+            avatarInput.addEventListener('change', function () {
+                var file = avatarInput.files && avatarInput.files[0];
+                if (!file) {
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    avatarImg.src = event.target.result;
+                    saveAdminProfile();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            window.toggleAdminPassword = function (id, button) {
+                var input = document.getElementById(id);
+                if (!input) {
+                    return;
+                }
+
+                var isVisible = input.type === 'text';
+                input.type = isVisible ? 'password' : 'text';
+                button.textContent = isVisible ? 'Show' : 'Hide';
+            };
+
+            window.updateAdminPassword = function () {
+                var currentPassword = document.getElementById('adminCurrentPassword').value;
+                var newPassword = document.getElementById('adminNewPassword').value;
+                var confirmPassword = document.getElementById('adminConfirmPassword').value;
+
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    if (window.themeToast) window.themeToast('Fill out all password fields.', 'warn');
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    if (window.themeToast) window.themeToast('New password and confirmation do not match.', 'warn');
+                    return;
+                }
+
+                if (window.themeToast) window.themeToast('Password update saved (demo mode).', 'success');
+                document.getElementById('adminCurrentPassword').value = '';
+                document.getElementById('adminNewPassword').value = '';
+                document.getElementById('adminConfirmPassword').value = '';
+            };
+
+            window.adminSignOut = function () {
+                if (window.themeConfirm) {
+                    window.themeConfirm('Sign out from admin account?', function () {
+                        window.location.href = '@Url.Action("Logout", "Admin")';
+                    });
+                }
+            };
+
+            loadProfile();
+        })();
+    </script>
+}

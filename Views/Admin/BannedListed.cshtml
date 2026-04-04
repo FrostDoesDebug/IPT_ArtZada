@@ -6,6 +6,89 @@
 <div class="admin-users-wrap">
     <div class="admin-users-panel">
         <h2 class="admin-panel-title">Banned Listed</h2>
-        <p class="admin-panel-subtitle">Demo page (no data yet).</p>
+        <p class="admin-panel-subtitle" id="bannedSubtitle">Users moved to banned list will appear here.</p>
+        <div id="bannedUsersList"></div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        (function () {
+            var listEl = document.getElementById('bannedUsersList');
+            var subtitleEl = document.getElementById('bannedSubtitle');
+
+            function getBannedUsers() {
+                return JSON.parse(localStorage.getItem('artzadaBannedUsers') || '[]');
+            }
+
+            function saveBannedUsers(items) {
+                localStorage.setItem('artzadaBannedUsers', JSON.stringify(items));
+            }
+
+            function formatDate(isoText) {
+                if (!isoText) {
+                    return 'Unknown date';
+                }
+                var date = new Date(isoText);
+                return date.toLocaleString();
+            }
+
+            function render() {
+                var users = getBannedUsers();
+                listEl.innerHTML = '';
+
+                if (!users.length) {
+                    subtitleEl.textContent = 'No banned users yet.';
+                    return;
+                }
+
+                subtitleEl.textContent = users.length + ' banned user(s).';
+
+                users.forEach(function (user, index) {
+                    var card = document.createElement('div');
+                    card.className = 'admin-user-card';
+                    card.innerHTML =
+                        '<div class="admin-user-left">' +
+                        '  <img class="admin-user-avatar" src="' + (user.avatar || '@Url.Content("~/Content/images/artzada_logo.png")') + '" alt="' + (user.name || 'User') + '" />' +
+                        '  <div class="admin-user-info" style="display:block;">' +
+                        '    <div class="admin-user-name">' + (user.name || 'Unknown User') + '</div>' +
+                        '    <div class="admin-user-role">' + (user.role || 'User') + '</div>' +
+                        '    <div style="font-size:13px;font-weight:700;margin-top:4px;">Reason: ' + (user.reason || 'Not specified') + '</div>' +
+                        '    <div style="font-size:12px;color:#333;margin-top:2px;">Banned at: ' + formatDate(user.bannedAt) + '</div>' +
+                        '  </div>' +
+                        '</div>' +
+                        '<div class="admin-user-actions">' +
+                        '  <button type="button" class="admin-action-btn accept" data-index="' + index + '">Unban</button>' +
+                        '</div>';
+
+                    listEl.appendChild(card);
+                });
+
+                listEl.querySelectorAll('.admin-action-btn.accept[data-index]').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var idx = parseInt(btn.getAttribute('data-index'), 10);
+                        var usersList = getBannedUsers();
+                        if (isNaN(idx) || idx < 0 || idx >= usersList.length) {
+                            return;
+                        }
+
+                        var userName = usersList[idx].name || 'User';
+
+                        if (window.themeConfirm) {
+                            window.themeConfirm('Unban ' + userName + '?', function () {
+                                usersList.splice(idx, 1);
+                                saveBannedUsers(usersList);
+                                render();
+                                if (window.themeToast) {
+                                    window.themeToast(userName + ' has been unbanned.', 'success');
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            render();
+        })();
+    </script>
+}

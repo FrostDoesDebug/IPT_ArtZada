@@ -1,235 +1,299 @@
-/* Analytics view specific overrides extracted from inline styles */
+/* Analytics view responsive overrides */
+
+body[data-page="analytics"] .page-wrap {
+    overflow: hidden;
+    padding: 8px clamp(8px, 1.2vw, 16px);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 50px);
+}
 
 body[data-page="analytics"] .analytics-layout {
     position: relative;
     top: 0;
     left: 0;
-    width: min(100%, 1400px);
-    height: auto;
-    min-height: calc(100vh - 180px);
+    width: min(100%, 1280px);
     margin: 0 auto;
-}
-
-body[data-page="analytics"] .analytics-grid {
-    grid-template-columns: minmax(260px, 0.95fr) minmax(340px, 1.4fr) minmax(240px, 0.85fr);
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
     min-height: 0;
 }
 
-.analytics-month-nav {
+body[data-page="analytics"] .analytics-month-nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 8px;
     flex-shrink: 0;
-    height: 36px;
+    min-height: 34px;
 }
 
-.month-arrow {
+body[data-page="analytics"] .month-arrow {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: clamp(22px, 2.2vw, 42px);
     cursor: pointer;
     font-weight: 900;
     color: #1a1a1a;
     transition: transform 0.15s;
-    padding: 4px 8px;
+    padding: 2px 6px;
+    line-height: 1;
 }
 
-.month-arrow:hover {
-    transform: scale(1.3);
+body[data-page="analytics"] .month-arrow:hover {
+    transform: scale(1.2);
 }
 
-.month-label-text {
+body[data-page="analytics"] .month-label-text {
     font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: clamp(20px, 2.4vw, 34px);
+    font-size: clamp(28px, 3.2vw, 52px);
     font-weight: 900;
     color: #1a1a1a;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    min-width: 200px;
+    min-width: clamp(160px, 22vw, 260px);
     text-align: center;
+    line-height: 1;
 }
 
-.analytics-left {
+body[data-page="analytics"] .analytics-grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.95fr) minmax(360px, 1.4fr) minmax(200px, 0.85fr);
+    gap: 10px;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+body[data-page="analytics"] .analytics-left {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    overflow: hidden;
+    min-height: 0;
 }
 
-.revenue-box {
+body[data-page="analytics"] .revenue-box,
+body[data-page="analytics"] .duedates-box,
+body[data-page="analytics"] .chart-box,
+body[data-page="analytics"] .stocks-box {
     background: #7EACB5;
-    border: 5px solid #1a1a1a;
+    border: 4px solid #1a1a1a;
     border-radius: 14px;
-    padding: 16px 14px;
+}
+
+body[data-page="analytics"] .revenue-box {
+    padding: clamp(12px, 1.6vw, 20px) clamp(14px, 1.8vw, 24px);
     flex-shrink: 0;
 }
 
-.revenue-label {
+body[data-page="analytics"] .revenue-label {
     font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 15px;
+    font-size: clamp(34px, 4.2vw, 72px);
     font-weight: 900;
     color: #1a1a1a;
     letter-spacing: 1px;
     text-transform: uppercase;
+    line-height: 0.9;
 }
 
-.revenue-amount {
+body[data-page="analytics"] .revenue-amount {
     font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: clamp(32px, 3.8vw, 66px);
+    font-size: clamp(56px, 5.4vw, 108px);
     font-weight: 900;
     color: #BF4646;
-    margin-top: 3px;
+    margin-top: clamp(8px, 1.2vw, 14px);
+    line-height: 0.9;
 }
 
-.duedates-box {
-    background: #7EACB5;
-    border: 5px solid #1a1a1a;
-    border-radius: 14px;
+body[data-page="analytics"] .duedates-box {
     padding: 10px 12px;
     flex: 1;
+    min-height: 0;
     overflow: hidden;
 }
 
-.duedates-label {
+body[data-page="analytics"] .duedates-label,
+body[data-page="analytics"] .stocks-label {
     font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 13px;
+    font-size: clamp(24px, 2.8vw, 46px);
     font-weight: 900;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 8px;
     color: #1a1a1a;
+    line-height: 0.9;
 }
 
-.duedate-row {
-    background: #EDDCC6;
+body[data-page="analytics"] .duedate-row,
+body[data-page="analytics"] .stock-row {
     border: 3px solid #1a1a1a;
     border-radius: 10px;
-    padding: 7px 11px;
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    align-items: center;
+    font-size: clamp(16px, 1.8vw, 22px);
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 }
 
-.duedate-empty {
+body[data-page="analytics"] .duedate-row {
+    background: #EDDCC6;
+    padding: clamp(8px, 1vw, 14px) clamp(10px, 1.2vw, 16px);
+}
+
+body[data-page="analytics"] .duedate-empty {
     background: #EDDCC6;
     border: 3px solid #1a1a1a;
     border-radius: 10px;
-    height: 34px;
-    margin-bottom: 7px;
+    min-height: clamp(34px, 5vh, 58px);
 }
 
-.chart-box {
-    background: #7EACB5;
-    border: 5px solid #1a1a1a;
-    border-radius: 14px;
-    padding: 12px 14px 10px;
-    position: relative;
-    overflow: hidden;
+body[data-page="analytics"] .chart-box {
+    padding: 12px 14px;
     min-height: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
-.chart-box canvas {
-    flex: 1;
+body[data-page="analytics"] .chart-box canvas {
     width: 100% !important;
     height: 100% !important;
     min-height: 0;
 }
 
-.stocks-box {
-    background: #7EACB5;
-    border: 5px solid #1a1a1a;
-    border-radius: 14px;
+body[data-page="analytics"] .stocks-box {
     padding: 10px;
     display: flex;
     flex-direction: column;
+    min-height: 0;
     overflow: hidden;
 }
 
-.stocks-label {
-    font-family: 'Rushon Ground', 'Poppins', sans-serif;
-    font-size: 13px;
-    font-weight: 900;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    color: #1a1a1a;
-    flex-shrink: 0;
-}
-
-.stock-row {
-    border: 3px solid #1a1a1a;
-    border-radius: 10px;
-    padding: 8px 11px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    margin-bottom: 7px;
+body[data-page="analytics"] .stock-row {
+    padding: clamp(8px, 1vw, 12px) clamp(12px, 1.2vw, 18px);
     transition: transform 0.15s;
     flex-shrink: 0;
 }
 
-.stock-row:hover {
-    transform: translateX(3px);
+body[data-page="analytics"] .stock-row:hover {
+    transform: translateX(2px);
 }
 
-.stock-row.red {
+body[data-page="analytics"] .stock-row.red {
     background: #BF4646;
     color: white;
 }
 
-.stock-row.green {
+body[data-page="analytics"] .stock-row.green {
     background: #5DDB44;
     color: #1a1a1a;
 }
 
-.stock-row.lime {
+body[data-page="analytics"] .stock-row.lime {
     background: #DDFA36;
     color: #1a1a1a;
 }
 
-.stock-row.empty {
+body[data-page="analytics"] .stock-row.empty {
     background: #EDDCC6;
-    min-height: 34px;
+    min-height: clamp(30px, 4.2vh, 48px);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
+    body[data-page="analytics"] .analytics-layout {
+    }
+
+    body[data-page="analytics"] .analytics-grid {
+        grid-template-columns: minmax(190px, 0.9fr) minmax(300px, 1.25fr) minmax(180px, 0.85fr);
+        gap: 8px;
+    }
+
+    body[data-page="analytics"] .revenue-label {
+        font-size: clamp(28px, 3.4vw, 52px);
+    }
+
+    body[data-page="analytics"] .revenue-amount {
+        font-size: clamp(44px, 4.6vw, 84px);
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 760px) {
+    body[data-page="analytics"] .page-wrap {
+        overflow: hidden;
+        padding: 6px 8px;
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 50px);
+    }
+
+    body[data-page="analytics"] .analytics-layout {
+        gap: 6px;
+        flex: 1;
+        min-height: 0;
+    }
+
+    body[data-page="analytics"] .analytics-grid {
+        grid-template-columns: minmax(160px, 0.92fr) minmax(250px, 1.28fr) minmax(150px, 0.8fr);
+        gap: 6px;
+    }
+
+    body[data-page="analytics"] .revenue-box,
+    body[data-page="analytics"] .duedates-box,
+    body[data-page="analytics"] .chart-box,
+    body[data-page="analytics"] .stocks-box {
+        border-width: 3px;
+        border-radius: 12px;
+    }
+
+    body[data-page="analytics"] .revenue-label {
+        font-size: clamp(24px, 2.8vw, 38px);
+    }
+
+    body[data-page="analytics"] .revenue-amount {
+        font-size: clamp(38px, 4vw, 62px);
+        margin-top: 6px;
+    }
+
+    body[data-page="analytics"] .duedates-label,
+    body[data-page="analytics"] .stocks-label {
+        font-size: clamp(18px, 2.2vw, 30px);
+        margin-bottom: 6px;
+    }
+
+    body[data-page="analytics"] .duedate-row,
+    body[data-page="analytics"] .stock-row {
+        font-size: clamp(14px, 1.55vw, 18px);
+        margin-bottom: 6px;
+    }
+
+    body[data-page="analytics"] .chart-box {
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 779px) {
+    body[data-page="analytics"] .page-wrap {
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    body[data-page="analytics"] .analytics-layout {
+        height: auto;
+        min-height: calc(100vh - 68px);
+    }
+
     body[data-page="analytics"] .analytics-grid {
         grid-template-columns: 1fr;
         gap: 10px;
     }
 
-    .chart-box {
-        min-height: 280px;
-    }
-}
-
-@media (max-width: 768px) {
-    .month-arrow {
-        font-size: 16px;
-        padding: 2px 6px;
-    }
-
-    .revenue-box,
-    .duedates-box,
-    .chart-box,
-    .stocks-box {
-        border-width: 3px;
-    }
-
-    .stock-row,
-    .duedate-row {
-        font-size: 12px;
+    body[data-page="analytics"] .chart-box {
+        min-height: 320px;
     }
 }

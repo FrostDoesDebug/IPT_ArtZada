@@ -7,6 +7,10 @@
 
 <div class="landing-wrapper">
     <img class="landing-logo" src="@Url.Content("~/Content/images/artzada_logo.png")" alt="ArtZada" />
-    <a class="landing-cta" href="@Url.Action("Login", "Login")">Shop now!</a>
+    <div class="landing-role-buttons">
+        <a class="landing-cta" href="@Url.Content("~/client/index")">Client</a>
+        <a class="landing-cta" href="@Url.Content("~/seller/store")">Seller</a>
+        <a class="landing-cta" href="@Url.Content("~/admin/landing")">Admin</a>
+    </div>
 </div>
 

@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Notifications";
+    ViewBag.Page = "notifications";
+    ViewBag.PageLabel = "Notifications";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Content/CSS/Notification.css")" rel="stylesheet" />
+}
+
+<div class="notifications-page">
+
+    <div class="notif-title">NOTIFICATIONS</div>
+
+    <div class="notif-search-row">
+        <div class="notif-search-icon">
+            <img src="@Url.Content("~/Content/images/search.png")"
+                 alt="search"
+                 onerror="this.outerHTML='<span style=\'font-size:40px\'>🔍</span>'" />
+        </div>
+        <input type="text"
+               class="notif-search-input"
+               id="notifSearch"
+               placeholder="Search Notification"
+               oninput="filterNotifs(this.value)" />
+    </div>
+
+    <div class="notif-list" id="notifList">
+
+        <div class="notif-item warning"
+             data-text="Warning: Only 3 pieces of Chubb remaining!">
+            <div class="notif-icon">
+                <img src="@Url.Content("~/Content/images/warning.png")"
+                     alt="warning"
+                     onerror="this.outerHTML='<span style=\'font-size:40px\'>⚠</span>'" />
+            </div>
+            <span>Warning: Only 3 pieces of Chubb remaining!</span>
+        </div>
+
+        <div class="notif-item message"
+             data-text="Client#1 has replied to your message">
+            <div class="notif-icon">
+                <img src="@Url.Content("~/Content/images/message.png")"
+                     alt="message"
+                     class="notif-message-icon"
+                     onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'#333\' width=\'60\' height=\'60\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
+            </div>
+            <span>Client#1 has replied to your message</span>
+        </div>
+
+        <div class="notif-item success"
+             data-text="Chubb has been sold successfully!">
+            <div class="notif-icon">
+                <img src="@Url.Content("~/Content/images/goods.png")"
+                     alt="sold"
+                     onerror="this.outerHTML='<span style=\'font-size:40px;font-weight:900\'>✔</span>'" />
+            </div>
+            <span>Chubb has been sold successfully!</span>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        /* ── Search filter ── */
+        function filterNotifs(query) {
+            var q = query.toLowerCase();
+            document.querySelectorAll('#notifList .notif-item').forEach(function (item) {
+                var text = item.getAttribute('data-text').toLowerCase();
+                item.style.display = text.includes(q) ? '' : 'none';
+            });
+        }
+
+        /* ── Click to mark as read / active ── */
+        document.querySelectorAll('.notif-item').forEach(function (item) {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.notif-item').forEach(function (i) {
+                    i.classList.remove('active');
+                });
+                this.classList.add('active');
+                this.classList.add('read');
+            });
+        });
+    </script>
+}

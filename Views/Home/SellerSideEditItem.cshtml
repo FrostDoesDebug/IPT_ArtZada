@@ -1,33 +1,13 @@
 ﻿@{
-    ViewBag.Title = "EditItem";
-    Layout = null;
+    ViewBag.Title = "Edit Item";
+    ViewBag.Page = "store";
+    ViewBag.NavMode = "seller";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Item - Seller</title>
+
+@section Styles {
     <link href="@Url.Content("~/Content/CSS/SellerSideEditItem.css")" rel="stylesheet" />
-</head>
-<body>
-    <div class="navbar-container">
-        <div class="nav-logo">
-            <svg viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="2,14  18,4  18,24" fill="white"></polygon>
-                <polygon points="26,4  42,14  26,24" fill="white"></polygon>
-            </svg>
-        </div>
-        <nav class="navbar">
-            <a href="@Url.Action("SellerSideStore","Home")" class="active">Store</a>
-            <a href="@Url.Action("SellerSideMessage","Home")">Message</a>
-            <a href="@Url.Action("SellerSideAnalytics","Home")">Analytics</a>
-            <a href="@Url.Action("SellerSideAccount","Home")">Account</a>
-        </nav>
-        <div class="nav-bell" onclick="window.location.href='@Url.Action("Notifications","Home")'">
-            <img src="@Url.Content("~/Content/images/notification.png")" alt="Notifications" />
-        </div>
-    </div>
+}
 
     <div class="page-content">
         <div class="title-wrap">
@@ -95,6 +75,7 @@
         </div>
     </div>
 
+@section Scripts {
     <script>
         var currentPhotoData = '';
         var editId = localStorage.getItem('editItemId');
@@ -129,35 +110,46 @@
         }
 
         function saveChanges() {
-            var name   = document.getElementById('itemName').value.trim();
-            var type   = document.getElementById('itemType').value;
-            var price  = document.getElementById('itemPrice').value;
-            var stocks = document.getElementById('itemStocks').value;
-            var desc   = document.getElementById('itemDescription').value.trim();
+            var name = document.getElementById('itemName').value.trim();
+            var type = document.getElementById('itemType').value;
+            var priceStr = document.getElementById('itemPrice').value;
+            var stocksStr = document.getElementById('itemStocks').value;
+            var desc = document.getElementById('itemDescription').value.trim();
 
-            if (!name)   { alert('Please enter a name.');         return; }
-            if (!type)   { alert('Please select a type.');        return; }
-            if (!price)  { alert('Please enter a price.');        return; }
-            if (!stocks) { alert('Please enter a stock amount.'); return; }
+            if (!name) { alert('Please enter a name.'); return; }
+            if (!type) { alert('Please select a type.'); return; }
+            if (priceStr === '') { alert('Please enter a price.'); return; }
+            if (stocksStr === '') { alert('Please enter a stock amount.'); return; }
+
+            var price = parseFloat(priceStr);
+            var stocks = parseInt(stocksStr, 10);
+
+            if (isNaN(price) || price < 0) {
+                alert('Please enter a valid price.');
+                return;
+            }
+            if (isNaN(stocks) || stocks < 0) {
+                alert('Please enter a valid stock amount.');
+                return;
+            }
 
             var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
             for (var i = 0; i < items.length; i++) {
                 if (items[i].id === editId) {
-                    items[i].name        = name;
-                    items[i].type        = type;
-                    items[i].price       = price;
-                    items[i].stocks      = stocks;
+                    items[i].name = name;
+                    items[i].type = type;
+                    items[i].price = price;
+                    items[i].stocks = stocks;
                     items[i].description = desc;
-                    items[i].photo       = currentPhotoData;
+                    items[i].photo = currentPhotoData;
                     break;
                 }
             }
             localStorage.setItem('sellerItems', JSON.stringify(items));
             localStorage.removeItem('editItemId');
-            window.location.href = '@Url.Action("SellerSideStore","Home")';
+            window.location.href = '@Url.Action("SellerSideStore", "Home")';
         }
 
         loadItemForEdit();
     </script>
-</body>
-</html>
+}

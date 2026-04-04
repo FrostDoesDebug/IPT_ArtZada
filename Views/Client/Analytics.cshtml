@@ -21,19 +21,23 @@
     <!-- 3-COLUMN GRID -->
     <div class="analytics-grid">
 
-        <!-- LEFT: Revenue + Due Dates -->
+        <!-- LEFT: Spending + Delivery -->
         <div class="analytics-left">
 
             <div class="revenue-box">
-                <div class="revenue-label">TOTAL REVENUE</div>
-                <div class="revenue-amount">&#8369;@(ViewBag.TotalRevenue ?? "100.00")</div>
+                <div class="revenue-label">TOTAL SPENDING</div>
+                <div class="revenue-amount">&#8369;@(ViewBag.TotalSpent ?? "0.00")</div>
             </div>
 
             <div class="duedates-box">
-                <div class="duedates-label">DUEDATES</div>
+                <div class="duedates-label">UPCOMING DELIVERY</div>
                 <div class="duedate-row">
-                    <span>Client #1</span>
+                    <span>Order #A102</span>
                     <span>January 13</span>
+                </div>
+                <div class="duedate-row">
+                    <span>Order #A118</span>
+                    <span>January 22</span>
                 </div>
                 <div class="duedate-empty"></div>
             </div>
@@ -45,12 +49,12 @@
             <canvas id="revenueChart"></canvas>
         </div>
 
-        <!-- RIGHT: Stocks -->
+        <!-- RIGHT: Buyer order status -->
         <div class="stocks-box">
-            <div class="stocks-label">STOCKS</div>
-            <div class="stock-row red">   <span>Chubb</span>   <span>x3</span>  </div>
-            <div class="stock-row green"> <span>Boss</span>    <span>x10</span> </div>
-            <div class="stock-row lime">  <span>Drawing</span> <span>x5</span>  </div>
+            <div class="stocks-label">ORDER STATUS</div>
+            <div class="stock-row red">   <span>To Pay</span>      <span>x1</span> </div>
+            <div class="stock-row green"> <span>To Ship</span>     <span>x2</span> </div>
+            <div class="stock-row lime">  <span>To Receive</span>  <span>x3</span> </div>
             <div class="stock-row empty"></div>
             <div class="stock-row empty"></div>
             <div class="stock-row empty"></div>
@@ -70,20 +74,20 @@
         ];
         var currentMonth = 0;
 
-        // Sample weekly revenue data per month
+        // Sample weekly spending data per month
         var weekData = [
-            [9, 17, 21, 33],  // January
-            [5, 12, 18, 25],  // February
-            [8, 14, 22, 30],  // March
-            [6, 11, 19, 28],  // April
-            [10, 16, 24, 35], // May
-            [7, 13, 20, 29],  // June
-            [4, 9, 15, 22],   // July
-            [8, 12, 18, 26],  // August
-            [11, 17, 23, 31], // September
-            [6, 10, 16, 24],  // October
-            [9, 15, 21, 32],  // November
-            [12, 20, 28, 38]  // December
+            [600, 420, 780, 650], // January
+            [520, 310, 640, 590], // February
+            [390, 700, 510, 820], // March
+            [460, 480, 530, 600], // April
+            [780, 650, 710, 690], // May
+            [550, 470, 620, 660], // June
+            [430, 500, 580, 610], // July
+            [620, 690, 540, 700], // August
+            [740, 710, 680, 760], // September
+            [520, 560, 610, 640], // October
+            [680, 730, 690, 820], // November
+            [820, 910, 870, 980]  // December
         ];
 
         document.getElementById('prevMonth').addEventListener('click', function () {
@@ -121,7 +125,7 @@
             data: {
                 labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
                 datasets: [{
-                    label: 'Revenue',
+                    label: 'Spending',
                     data: weekData[0],
                     borderColor: '#BF4646',
                     backgroundColor: 'rgba(191,70,70,0.08)',
@@ -161,7 +165,7 @@
                     y: {
                         title: {
                             display: true,
-                            text: 'Sales',
+                            text: 'Amount (PHP)',
                             font: { family: 'Poppins', weight: 'bold', size: chartSizing.titleSize },
                             color: '#1a1a1a'
                         },

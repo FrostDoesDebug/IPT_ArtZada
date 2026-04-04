@@ -5,7 +5,7 @@
 
 <div class="admin-users-wrap admin-pending-page">
     <div class="admin-users-panel">
-        <div class="admin-user-card">
+        <div class="admin-user-card" data-user-name="BugoynaKuykoy" data-user-role="Seller/Buyer">
             <div class="admin-user-left">
                 <img class="admin-user-avatar" src="~/Content/images/KwekKweksaStix (1).png" alt="BugoynaKuykoy" />
                 <div class="admin-user-info">
@@ -18,5 +18,58 @@
                 <button type="button" class="admin-action-btn decline">Decline</button>
             </div>
         </div>
+
+        <p id="pendingEmpty" class="admin-panel-subtitle" style="display:none; margin-top:8px;">No pending requests.</p>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        (function () {
+            var panel = document.querySelector('.admin-pending-page .admin-users-panel');
+            var emptyLabel = document.getElementById('pendingEmpty');
+
+            function refreshEmptyState() {
+                var cards = panel ? panel.querySelectorAll('.admin-user-card') : [];
+                if (emptyLabel) {
+                    emptyLabel.style.display = cards.length ? 'none' : 'block';
+                }
+            }
+
+            document.querySelectorAll('.admin-action-btn.accept').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var card = button.closest('.admin-user-card');
+                    var userName = card ? (card.getAttribute('data-user-name') || 'User') : 'User';
+                    if (card && card.parentNode) {
+                        card.parentNode.removeChild(card);
+                    }
+                    refreshEmptyState();
+                    if (window.themeToast) {
+                        window.themeToast(userName + ' has been approved.', 'success');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.admin-action-btn.decline').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var card = button.closest('.admin-user-card');
+                    var userName = card ? (card.getAttribute('data-user-name') || 'User') : 'User';
+
+                    if (window.themeConfirm) {
+                        window.themeConfirm('Decline pending request for ' + userName + '?', function () {
+                            if (card && card.parentNode) {
+                                card.parentNode.removeChild(card);
+                            }
+                            refreshEmptyState();
+                            if (window.themeToast) {
+                                window.themeToast(userName + ' has been declined.', 'warn');
+                            }
+                        });
+                    }
+                });
+            });
+
+            refreshEmptyState();
+        })();
+    </script>
+}

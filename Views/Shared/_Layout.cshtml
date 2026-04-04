@@ -55,8 +55,10 @@
             justify-content: center;
             align-items: center;
             height: 50px;
-            position: relative;
-            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9998;
             width: 100%;
         }
 
@@ -74,26 +76,27 @@
 
         .navbar {
             display: flex;
-            gap: 60px;
+            gap: 50px;
         }
 
             .navbar a {
-                color: rgba(0,0,0,0.75);
+                color: rgba(255,255,255,0.8);
                 font-family: 'Poppins', sans-serif;
-                font-weight: 700;
+                font-weight: 600;
                 text-decoration: none;
+                text-transform: uppercase;
                 font-size: 14px;
-                letter-spacing: 0.5px;
-                transition: color 0.2s;
+                letter-spacing: 1px;
+                transition: 0.3s;
                 cursor: pointer;
             }
 
                 .navbar a:hover {
-                    color: rgba(0,0,0,0.95);
+                    color: white;
                 }
 
                 .navbar a.active {
-                    color: #fff;
+                    color: white;
                     border-bottom: 3px solid white;
                     padding-bottom: 2px;
                 }
@@ -177,7 +180,7 @@
         .page-wrap {
             margin-top: 50px;
             width: 100%;
-            min-height: calc(100vh - 50px);
+            height: calc(100vh - 50px);
             padding: 24px clamp(12px, 2.2vw, 36px);
             overflow: visible;
             display: flex;
@@ -186,7 +189,7 @@
 
         @@media (max-width: 900px) {
             .navbar {
-                gap: 20px;
+                gap: 18px;
             }
 
             .navbar a {
@@ -211,7 +214,7 @@
     </style>
     @RenderSection("Styles", required: false)
 </head>
-<body data-page="@ViewBag.Page">
+<body data-page="@ViewBag.Page" data-nav-mode="@(((ViewBag.NavMode as string) ?? "client").ToLowerInvariant())">
 
     <!-- NAVBAR -->
     <div class="navbar-container">
@@ -227,19 +230,42 @@
         </div>
 
         <!-- Nav links — black inactive, white active -->
+        @{
+            var navMode = ((ViewBag.NavMode as string) ?? "default").ToLowerInvariant();
+            var isSellerNav = navMode == "seller";
+            var navController = isSellerNav ? "Seller" : "Client";
+        }
         <nav class="navbar">
-            <a href="/Home/Index"
-               class="@(ViewBag.Page=="store"     ? "active" : "")"
-               onclick="navigateTo('/Home/Index'); return false;">Store</a>
-            <a href="/Home/Message"
-               class="@(ViewBag.Page=="message"   ? "active" : "")"
-               onclick="navigateTo('/Home/Message'); return false;">Message</a>
-            <a href="/Home/Analytics"
-               class="@(ViewBag.Page=="analytics" ? "active" : "")"
-               onclick="navigateTo('/Home/Analytics'); return false;">Analytics</a>
-            <a href="/Home/Account"
-               class="@(ViewBag.Page=="account"   ? "active" : "")"
-               onclick="navigateTo('/Home/Account'); return false;">Account</a>
+            @if (isSellerNav)
+            {
+                <a href="@Url.Action("Store", navController)"
+                   class="@(ViewBag.Page=="store" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Store", navController)'); return false;">Store</a>
+                <a href="@Url.Action("Message", navController)"
+                   class="@(ViewBag.Page=="message" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Message", navController)'); return false;">Message</a>
+                <a href="@Url.Action("Analytics", navController)"
+                   class="@(ViewBag.Page=="analytics" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Analytics", navController)'); return false;">Analytics</a>
+                <a href="@Url.Action("Account", navController)"
+                   class="@(ViewBag.Page=="account" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Account", navController)'); return false;">Account</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", navController)"
+                   class="@(ViewBag.Page=="store" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Index", navController)'); return false;">Store</a>
+                <a href="@Url.Action("Message", navController)"
+                   class="@(ViewBag.Page=="message" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Message", navController)'); return false;">Message</a>
+                <a href="@Url.Action("Analytics", navController)"
+                   class="@(ViewBag.Page=="analytics" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Analytics", navController)'); return false;">Analytics</a>
+                <a href="@Url.Action("Account", navController)"
+                   class="@(ViewBag.Page=="account" ? "active" : "")"
+                   onclick="navigateTo('@Url.Action("Account", navController)'); return false;">Account</a>
+            }
         </nav>
 
         <!-- ──────────────────────────────────────
@@ -257,7 +283,7 @@
                onclick="npToggle(); navigateTo('/Home/Notifications'); return false;"
              ────────────────────────────────────── -->
         <a class="nav-bell" href="#"
-           onclick="npToggle(); navigateTo('/Home/Notifications'); return false;">
+           onclick="npToggle(); navigateTo('@Url.Action("Notifications", navController)'); return false;">
             <img src="/Content/images/notification.png" alt="Notifications"
                  onerror="this.outerHTML='<span style=\'font-size:28px;margin-top:20px\'>&#128276;</span>'" />
             <span class="bdg">3</span>
@@ -296,6 +322,7 @@
             transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .3s;
             pointer-events: none;
             overflow: hidden;
+            max-height: calc(100vh - 82px);
         }
 
             #np.show {
@@ -408,6 +435,128 @@
             background: rgba(0,0,0,.15);
             border-color: rgba(255,255,255,.4);
         }
+
+        @@media (max-width: 900px) {
+            #np {
+                top: 60px;
+                right: 8px;
+                width: min(92vw, 340px);
+                border-right: var(--bw) solid var(--border);
+                border-radius: 12px;
+                transform: translateY(-12px);
+                max-height: calc(100vh - 78px);
+                overflow-y: auto;
+            }
+
+                #np.show {
+                    transform: translateY(0);
+                }
+
+            .np-item {
+                height: auto;
+                min-height: 64px;
+                padding: 10px;
+            }
+        }
+
+        .theme-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%) translateY(12px);
+            min-width: 220px;
+            max-width: min(92vw, 560px);
+            padding: 11px 16px;
+            border: 3px solid #1a1a1a;
+            border-radius: 10px;
+            background: #276470;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            box-shadow: 0 8px 22px rgba(0,0,0,.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .18s ease, transform .18s ease;
+            z-index: 9000;
+            text-align: center;
+        }
+
+            .theme-toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            .theme-toast.success {
+                background: #2c8f48;
+            }
+
+            .theme-toast.warn {
+                background: #BF4646;
+            }
+
+        .theme-confirm-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9500;
+            padding: 18px;
+        }
+
+            .theme-confirm-backdrop.show {
+                display: flex;
+            }
+
+        .theme-confirm-card {
+            width: min(92vw, 420px);
+            background: #7EACB5;
+            border: 4px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 18px 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.3);
+            text-align: center;
+        }
+
+        .theme-confirm-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #111;
+            font-weight: 900;
+        }
+
+        .theme-confirm-message {
+            font-size: 14px;
+            color: #111;
+            margin-bottom: 14px;
+        }
+
+        .theme-confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+            .theme-confirm-actions button {
+                min-width: 120px;
+                border: 3px solid #111;
+                border-radius: 10px;
+                padding: 8px 10px;
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+        .theme-confirm-ok {
+            background: #69d84d;
+            color: #111;
+        }
+
+        .theme-confirm-cancel {
+            background: #BF4646;
+            color: #fff;
+        }
     </style>
 
     <div id="np">
@@ -446,21 +595,127 @@
         </div>
     </div>
 
+    <div id="themeToast" class="theme-toast" role="status" aria-live="polite"></div>
+
+    <div id="themeConfirm" class="theme-confirm-backdrop" aria-hidden="true">
+        <div class="theme-confirm-card" role="dialog" aria-modal="true" aria-labelledby="themeConfirmTitle">
+            <div id="themeConfirmTitle" class="theme-confirm-title">Confirm action</div>
+            <div id="themeConfirmMessage" class="theme-confirm-message">Are you sure?</div>
+            <div class="theme-confirm-actions">
+                <button type="button" id="themeConfirmOk" class="theme-confirm-ok">Confirm</button>
+                <button type="button" id="themeConfirmCancel" class="theme-confirm-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         (function () {
-            var el = document.getElementById('np'), t;
-            function show() { el.classList.add('show'); t = setTimeout(npClose, 7000); }
-            window.npClose = function () { clearTimeout(t); el.classList.remove('show'); };
-            setTimeout(show, 900);
+            var el = document.getElementById('np');
+            var t;
+            var body = document.body;
+            var currentPage = (body.getAttribute('data-page') || '').toLowerCase();
+            var navMode = (body.getAttribute('data-nav-mode') || '').toLowerCase();
+            var isSellerStorePage = navMode === 'seller' && currentPage === 'store';
+            var onceKey = 'artzada-seller-store-popup-shown';
+
+            function show() {
+                if (!el) {
+                    return;
+                }
+                el.classList.add('show');
+                t = setTimeout(npClose, 7000);
+            }
+
+            window.npClose = function () {
+                clearTimeout(t);
+                if (el) {
+                    el.classList.remove('show');
+                }
+            };
+
+            if (isSellerStorePage && !localStorage.getItem(onceKey)) {
+                setTimeout(show, 900);
+                localStorage.setItem(onceKey, '1');
+            }
         })();
+
         function npToggle() {
             var el = document.getElementById('np');
             el.classList.contains('show') ? npClose() : el.classList.add('show');
         }
+
         function navigateTo(url) {
             if (url && url !== '#' && url !== '')
                 window.location.href = url;
         }
+
+        (function () {
+            var toastEl = document.getElementById('themeToast');
+            var toastTimer = null;
+
+            window.themeToast = function (message, kind) {
+                if (!toastEl) {
+                    return;
+                }
+
+                toastEl.textContent = message || '';
+                toastEl.className = 'theme-toast ' + (kind || '');
+                toastEl.classList.add('show');
+
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () {
+                    toastEl.classList.remove('show');
+                }, 2400);
+            };
+
+            var confirmEl = document.getElementById('themeConfirm');
+            var confirmMsgEl = document.getElementById('themeConfirmMessage');
+            var confirmOkEl = document.getElementById('themeConfirmOk');
+            var confirmCancelEl = document.getElementById('themeConfirmCancel');
+            var onConfirm = null;
+
+            function closeConfirm() {
+                if (!confirmEl) {
+                    return;
+                }
+                confirmEl.classList.remove('show');
+                confirmEl.setAttribute('aria-hidden', 'true');
+                onConfirm = null;
+            }
+
+            window.themeConfirm = function (message, confirmCallback) {
+                if (!confirmEl || !confirmMsgEl) {
+                    return;
+                }
+
+                confirmMsgEl.textContent = message || 'Are you sure?';
+                onConfirm = typeof confirmCallback === 'function' ? confirmCallback : null;
+                confirmEl.classList.add('show');
+                confirmEl.setAttribute('aria-hidden', 'false');
+            };
+
+            if (confirmOkEl) {
+                confirmOkEl.addEventListener('click', function () {
+                    var cb = onConfirm;
+                    closeConfirm();
+                    if (cb) {
+                        cb();
+                    }
+                });
+            }
+
+            if (confirmCancelEl) {
+                confirmCancelEl.addEventListener('click', closeConfirm);
+            }
+
+            if (confirmEl) {
+                confirmEl.addEventListener('click', function (ev) {
+                    if (ev.target === confirmEl) {
+                        closeConfirm();
+                    }
+                });
+            }
+        })();
     </script>
 
     @RenderSection("Scripts", required: false)

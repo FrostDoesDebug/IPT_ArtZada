@@ -1,10 +1,11 @@
 @font-face {
     font-family: 'RushonGround';
-    src: url('@Url.Content("~/Content/Font/Rushon Ground.ttf")') format('truetype');
+    src: url('/Content/Font/Rushon Ground.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
+/* Admin edit password page */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,16 +14,14 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #f4f4f4 url('@Url.Content("~/Content/images/paperbg.png")') no-repeat center center fixed;
+    background: #f4f4f4 url('/Content/images/paperbg.png') no-repeat center center fixed;
     background-size: cover;
     color: #333;
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
 }
 
 .page-content {
-    flex: 1;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,19 +45,147 @@ body {
     transition: filter 0.15s, transform 0.1s;
 }
 
-    .btn-back:hover {
-        filter: brightness(1.15);
-        transform: translateY(-2px);
-    }
+.btn-back:hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
+}
 
-    .btn-back:active {
-        transform: translateY(0);
-        filter: brightness(0.9);
-    }
+.btn-back:active {
+    transform: translateY(0);
+    filter: brightness(0.9);
+}
 
-/* KEEP EVERYTHING ELSE SAME... */
+.edit-card {
+    background-color: #7EACB5;
+    border: 5px solid #1a1a1a;
+    border-radius: 22px;
+    padding: 36px 44px;
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
 
-/* FIXED KEYFRAMES */
+.edit-title {
+    font-family: 'RushonGround', cursive;
+    font-size: 4rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    -webkit-text-stroke: 3px #1a1a1a;
+}
+
+.edit-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 12px 44px 12px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    background: #fff;
+}
+
+.input-wrapper input:focus {
+    box-shadow: 0 0 0 3px rgba(39,100,112,0.3);
+}
+
+.toggle-eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #1a1a1a;
+}
+
+.error-msg {
+    display: none;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #BF4646;
+}
+
+.error-msg.visible {
+    display: block;
+}
+
+.btn-confirm {
+    width: 100%;
+    background: #5DDB44;
+    border: 4px solid #1a1a1a;
+    border-radius: 10px;
+    color: #1a1a1a;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    width: 60%;
+    background: #BF4646;
+    border: 4px solid #1a1a1a;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.btn-confirm:hover,
+.btn-cancel:hover {
+    filter: brightness(1.08);
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: #276470;
+    color: #fff;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toast.visible {
+    animation: fadeInOut 2.5s ease;
+}
+
 @keyframes fadeInOut {
     0% {
         opacity: 0;
@@ -79,29 +206,28 @@ body {
     }
 }
 
-/* FIXED MEDIA QUERY */
 @media (max-width: 768px) {
     .page-content {
-        padding: 24px 16px;
+        padding: 18px 14px;
     }
 
     .edit-card {
-        padding: 30px 28px;
+        padding: 24px 18px;
         max-width: 100%;
     }
 
     .edit-title {
-        font-size: 3rem;
+        font-size: 2.7rem;
     }
 
     .btn-back {
         width: 54px;
         height: 54px;
-        top: 16px;
-        left: 16px;
+        top: 14px;
+        left: 14px;
     }
 
     .btn-cancel {
-        width: 70%;
+        width: 100%;
     }
 }

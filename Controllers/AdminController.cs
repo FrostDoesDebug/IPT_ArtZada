@@ -8,22 +8,21 @@ namespace ArtZada.Controllers
 {
     public class AdminController : Controller
     {
-        private const string AdminModeSessionKey = "AdminMode";
         private const string IsAdminSessionKey = "IsAdmin";
         private const string AdminUserNameSessionKey = "AdminUserName";
+        private const string UserNameSessionKey = "UserName";
+        private const string UserRoleSessionKey = "UserRole";
+        private const string AdminRole = "Admin";
 
         // Demo credentials
         private const string DemoAdminUsername = "admin";
         private const string DemoAdminPassword = "admin123";
 
-        private bool IsAdminModeEnabled()
-        {
-            return Session[AdminModeSessionKey] is bool enabled && enabled;
-        }
-
         private bool IsAdminLoggedIn()
         {
-            return Session[IsAdminSessionKey] is bool isAdmin && isAdmin;
+            return Session[IsAdminSessionKey] is bool isAdmin
+                && isAdmin
+                && string.Equals(Session[UserRoleSessionKey] as string, AdminRole, StringComparison.OrdinalIgnoreCase);
         }
 
         private ActionResult RedirectToPublicLanding()
@@ -39,16 +38,20 @@ namespace ArtZada.Controllers
         [HttpGet]
         public ActionResult Enable()
         {
-            Session[AdminModeSessionKey] = true;
+            if (IsAdminLoggedIn())
+            {
+                return RedirectToAction("UserOverview");
+            }
+
             return RedirectToAction("Landing");
         }
 
         [HttpGet]
         public ActionResult Landing()
         {
-            if (!IsAdminModeEnabled())
+            if (IsAdminLoggedIn())
             {
-                return RedirectToPublicLanding();
+                return RedirectToAction("UserOverview");
             }
 
             return View();
@@ -57,9 +60,9 @@ namespace ArtZada.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if (!IsAdminModeEnabled())
+            if (IsAdminLoggedIn())
             {
-                return RedirectToPublicLanding();
+                return RedirectToAction("UserOverview");
             }
 
             return View(new LoginViewModel());
@@ -69,11 +72,6 @@ namespace ArtZada.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
-            if (!IsAdminModeEnabled())
-            {
-                return RedirectToPublicLanding();
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -87,17 +85,14 @@ namespace ArtZada.Controllers
 
             Session[IsAdminSessionKey] = true;
             Session[AdminUserNameSessionKey] = DemoAdminUsername;
+            Session[UserNameSessionKey] = DemoAdminUsername;
+            Session[UserRoleSessionKey] = AdminRole;
 
             return RedirectToAction("UserOverview");
         }
 
         public ActionResult UserOverview()
         {
-            if (!IsAdminModeEnabled())
-            {
-                return RedirectToPublicLanding();
-            }
-
             if (!IsAdminLoggedIn())
             {
                 return RedirectToAction("Login");
@@ -108,11 +103,6 @@ namespace ArtZada.Controllers
 
         public ActionResult Pending()
         {
-            if (!IsAdminModeEnabled())
-            {
-                return RedirectToPublicLanding();
-            }
-
             if (!IsAdminLoggedIn())
             {
                 return RedirectToAction("Login");
@@ -123,11 +113,6 @@ namespace ArtZada.Controllers
 
         public ActionResult BannedListed()
         {
-            if (!IsAdminModeEnabled())
-            {
-                return RedirectToPublicLanding();
-            }
-
             if (!IsAdminLoggedIn())
             {
                 return RedirectToAction("Login");
@@ -136,13 +121,13 @@ namespace ArtZada.Controllers
             return View();
         }
 
+        public ActionResult BanList()
+        {
+            return RedirectToAction("BannedListed");
+        }
+
         public ActionResult Account()
         {
-            if (!IsAdminModeEnabled())
-            {
-                return RedirectToPublicLanding();
-            }
-
             if (!IsAdminLoggedIn())
             {
                 return RedirectToAction("Login");
@@ -155,6 +140,8 @@ namespace ArtZada.Controllers
         {
             Session.Remove(IsAdminSessionKey);
             Session.Remove(AdminUserNameSessionKey);
+            Session.Remove(UserNameSessionKey);
+            Session.Remove(UserRoleSessionKey);
             return RedirectToPublicLanding();
         }
     }

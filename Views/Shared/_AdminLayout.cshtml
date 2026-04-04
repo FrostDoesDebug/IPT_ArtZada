@@ -1,57 +1,323 @@
 @{
-    var adminUser = (Session["AdminUserName"] as string) ?? "admin";
     var currentAction = (ViewContext.RouteData.Values["action"] as string) ?? string.Empty;
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ArtZada Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <style>
+        body.admin-shell {
+            margin: 0;
+            background: #EDDCC6 url('/Content/images/paperbg.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .admin-navbar-container {
+            background: #BF4646;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            width: 100%;
+        }
+
+        .admin-nav-logo {
+            position: absolute;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+            .admin-nav-logo svg {
+                width: 44px;
+                height: 28px;
+            }
+
+        .admin-navbar {
+            display: flex;
+            gap: 50px;
+        }
+
+            .admin-navbar a {
+                color: rgba(255,255,255,0.85);
+                font-weight: 700;
+                text-decoration: none;
+                text-transform: uppercase;
+                font-size: 14px;
+                letter-spacing: 1px;
+                transition: .2s;
+            }
+
+                .admin-navbar a.active,
+                .admin-navbar a:hover {
+                    color: #fff;
+                    border-bottom: 3px solid #fff;
+                    padding-bottom: 2px;
+                }
+
+        .admin-nav-logout {
+            position: absolute;
+            right: 16px;
+            border: 3px solid #111;
+            border-radius: 10px;
+            background: #D88628;
+            color: #111;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 6px 12px;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+            .admin-nav-logout:hover {
+                filter: brightness(1.06);
+                color: #111;
+            }
+
+        .admin-page-wrap {
+            margin-top: 50px;
+            padding: 24px clamp(12px, 2.2vw, 36px);
+        }
+
+        .admin-page-wrap .admin-users-wrap {
+            margin: 0;
+            padding: 0;
+        }
+
+        .theme-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 18px;
+            transform: translateX(-50%) translateY(12px);
+            min-width: 220px;
+            max-width: min(92vw, 560px);
+            padding: 11px 16px;
+            border: 3px solid #1a1a1a;
+            border-radius: 10px;
+            background: #276470;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            box-shadow: 0 8px 22px rgba(0,0,0,.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .18s ease, transform .18s ease;
+            z-index: 9000;
+            text-align: center;
+        }
+
+            .theme-toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            .theme-toast.success {
+                background: #2c8f48;
+            }
+
+            .theme-toast.warn {
+                background: #BF4646;
+            }
+
+        .theme-confirm-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9500;
+            padding: 18px;
+        }
+
+            .theme-confirm-backdrop.show {
+                display: flex;
+            }
+
+        .theme-confirm-card {
+            width: min(92vw, 420px);
+            background: #7EACB5;
+            border: 4px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 18px 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.3);
+            text-align: center;
+        }
+
+        .theme-confirm-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #111;
+            font-weight: 900;
+        }
+
+        .theme-confirm-message {
+            font-size: 14px;
+            color: #111;
+            margin-bottom: 14px;
+        }
+
+        .theme-confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+            .theme-confirm-actions button {
+                min-width: 120px;
+                border: 3px solid #111;
+                border-radius: 10px;
+                padding: 8px 10px;
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+        .theme-confirm-ok {
+            background: #69d84d;
+            color: #111;
+        }
+
+        .theme-confirm-cancel {
+            background: #BF4646;
+            color: #fff;
+        }
+
+        @@media (max-width: 900px) {
+            .admin-navbar {
+                gap: 16px;
+            }
+
+                .admin-navbar a {
+                    font-size: 12px;
+                }
+
+            .admin-nav-logout {
+                right: 8px;
+                padding: 5px 9px;
+                font-size: 11px;
+            }
+        }
+    </style>
+    @RenderSection("Styles", required: false)
 </head>
 <body class="admin-shell">
 
-    <div class="top-bar">
-        <div class="header">
-            <div class="logo">
-                <a href="@Url.Action("UserOverview", "Admin")"><img src="~/Content/images/artzada_logo.png" alt="Artzada Logo" /></a>
-            </div>
-
-            <div class="search-panel">
-                <div class="search-container">
-                    <button class="search-btn" type="button">
-                        <img src="~/Content/images/search.png" alt="Search" />
-                    </button>
-                    <input type="text" placeholder="Search Users" />
-                </div>
-            </div>
+    <div class="admin-navbar-container">
+        <div class="admin-nav-logo">
+            <svg viewBox="0 0 44 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="2,14  18,4  18,24" fill="white" style="cursor:pointer" onclick="history.back()" />
+                <polygon points="26,4  42,14  26,24" fill="white" style="cursor:pointer" onclick="history.forward()" />
+            </svg>
         </div>
 
-        <div class="navbar-container">
-            <div class="nav-arrows">
-                <button class="nav-btn" type="button">&#9664;</button>
-                <button class="nav-btn" type="button">&#9654;</button>
-            </div>
+        <nav class="admin-navbar">
+            <a href="@Url.Action("UserOverview", "Admin")" class="@(string.Equals(currentAction, "UserOverview", StringComparison.OrdinalIgnoreCase) ? "active" : "")">User Management</a>
+            <a href="@Url.Action("Pending", "Admin")" class="@(string.Equals(currentAction, "Pending", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Pending</a>
+            <a href="@Url.Action("BannedListed", "Admin")" class="@(string.Equals(currentAction, "BannedListed", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Banned Listed</a>
+            <a href="@Url.Action("Account", "Admin")" class="@(string.Equals(currentAction, "Account", StringComparison.OrdinalIgnoreCase) ? "active" : "")">Account</a>
+        </nav>
 
-            <div class="navbar">
-                <a href="@Url.Action("UserOverview", "Admin")" class="@(string.Equals(currentAction, "UserOverview") ? "active" : "")">User Management</a>
-                <a href="@Url.Action("Pending", "Admin")" class="@(string.Equals(currentAction, "Pending") ? "active" : "")">Pending</a>
-                <a href="@Url.Action("BannedListed", "Admin")" class="@(string.Equals(currentAction, "BannedListed") ? "active" : "")">Banned Listed</a>
-                <a href="@Url.Action("Account", "Admin")" class="@(string.Equals(currentAction, "Account") ? "active" : "")">Account</a>
+        <a class="admin-nav-logout" href="#" onclick="themeConfirm('Sign out from admin account?', function () { window.location.href='@Url.Action("Logout","Admin")'; }); return false;">Logout</a>
+    </div>
+
+    <div class="admin-page-wrap">
+        @RenderBody()
+    </div>
+
+    <div id="themeToast" class="theme-toast" role="status" aria-live="polite"></div>
+
+    <div id="themeConfirm" class="theme-confirm-backdrop" aria-hidden="true">
+        <div class="theme-confirm-card" role="dialog" aria-modal="true" aria-labelledby="themeConfirmTitle">
+            <div id="themeConfirmTitle" class="theme-confirm-title">Confirm action</div>
+            <div id="themeConfirmMessage" class="theme-confirm-message">Are you sure?</div>
+            <div class="theme-confirm-actions">
+                <button type="button" id="themeConfirmOk" class="theme-confirm-ok">Confirm</button>
+                <button type="button" id="themeConfirmCancel" class="theme-confirm-cancel">Cancel</button>
             </div>
         </div>
     </div>
 
-    <div class="admin-shell-spacer"></div>
-
-    @RenderBody()
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        (function () {
+            var toastEl = document.getElementById('themeToast');
+            var toastTimer = null;
+
+            window.themeToast = function (message, kind) {
+                if (!toastEl) {
+                    return;
+                }
+
+                toastEl.textContent = message || '';
+                toastEl.className = 'theme-toast ' + (kind || '');
+                toastEl.classList.add('show');
+
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () {
+                    toastEl.classList.remove('show');
+                }, 2400);
+            };
+
+            var confirmEl = document.getElementById('themeConfirm');
+            var confirmMsgEl = document.getElementById('themeConfirmMessage');
+            var confirmOkEl = document.getElementById('themeConfirmOk');
+            var confirmCancelEl = document.getElementById('themeConfirmCancel');
+            var onConfirm = null;
+
+            function closeConfirm() {
+                if (!confirmEl) {
+                    return;
+                }
+                confirmEl.classList.remove('show');
+                confirmEl.setAttribute('aria-hidden', 'true');
+                onConfirm = null;
+            }
+
+            window.themeConfirm = function (message, confirmCallback) {
+                if (!confirmEl || !confirmMsgEl) {
+                    return;
+                }
+
+                confirmMsgEl.textContent = message || 'Are you sure?';
+                onConfirm = typeof confirmCallback === 'function' ? confirmCallback : null;
+                confirmEl.classList.add('show');
+                confirmEl.setAttribute('aria-hidden', 'false');
+            };
+
+            if (confirmOkEl) {
+                confirmOkEl.addEventListener('click', function () {
+                    var cb = onConfirm;
+                    closeConfirm();
+                    if (cb) {
+                        cb();
+                    }
+                });
+            }
+
+            if (confirmCancelEl) {
+                confirmCancelEl.addEventListener('click', closeConfirm);
+            }
+
+            if (confirmEl) {
+                confirmEl.addEventListener('click', function (ev) {
+                    if (ev.target === confirmEl) {
+                        closeConfirm();
+                    }
+                });
+            }
+        })();
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

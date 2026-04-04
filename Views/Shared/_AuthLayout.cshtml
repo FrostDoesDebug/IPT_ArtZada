@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ArtZada</title>
     @Styles.Render("~/Content/css")
+    @RenderSection("Styles", required: false)
 </head>
 <body class="auth-body">
     <div class="auth-page @(ViewBag.PageClass ?? "")">

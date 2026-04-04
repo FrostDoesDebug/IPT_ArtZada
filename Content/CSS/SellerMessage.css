@@ -1,0 +1,19 @@
+/* Seller-specific message page accents */
+body[data-page="message"] .chat-window {
+    border: 4px solid #1a1a1a;
+    border-radius: 16px;
+    background: #8ab9c1;
+}
+
+body[data-page="message"] .chat-contact.selected {
+    outline: 3px solid #d88628;
+}
+
+body[data-page="message"] .chat-row.sent .bubble {
+    background: #d88628;
+    color: #1a1a1a;
+}
+
+body[data-page="message"] .send-btn {
+    background: #d88628;
+}

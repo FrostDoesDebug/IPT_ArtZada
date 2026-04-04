@@ -110,9 +110,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LandingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -135,20 +137,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\CSS\AdminAccount.css" />
-    <Content Include="Content\CSS\AdminEditAccount.css" />
-    <Content Include="Content\CSS\Analytics.css" />
-    <Content Include="Content\CSS\BanList.css" />
-    <Content Include="Content\CSS\BuyerMessage.css" />
-    <Content Include="Content\CSS\Cart.css" />
-    <Content Include="Content\CSS\Index.css" />
-    <Content Include="Content\CSS\Message.css" />
-    <Content Include="Content\CSS\Notification.css" />
-    <Content Include="Content\CSS\Product.css" />
-    <Content Include="Content\CSS\SellerProf.css" />
-    <Content Include="Content\CSS\SellerSideEditItem.css" />
-    <Content Include="Content\CSS\SellerSideStore.css" />
-    <Content Include="Content\CSS\SellerSideStoreAddItem.css" />
     <Content Include="Content\images\add_item.png" />
     <Content Include="Content\images\add_quantity.png" />
     <Content Include="Content\images\ACCESS.png" />
@@ -161,7 +149,7 @@
     <Content Include="Content\images\delete_item.png" />
     <Content Include="Content\images\edit_items.png" />
     <Content Include="Content\images\goods.png" />
-    <Content Include="Content\images\KwekKweksaStix %281%29.png" />
+    <Content Include="Content\images\KwekKweksaStix (1).png" />
     <Content Include="Content\images\message.png" />
     <Content Include="Content\images\notification.png" />
     <Content Include="Content\images\paperbg.png" />
@@ -175,6 +163,14 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Auth.css" />
+    <Content Include="Content\CSS\Account.css" />
+    <Content Include="Content\CSS\Analytics.css" />
+    <Content Include="Content\CSS\ClientAccount.css" />
+    <Content Include="Content\CSS\ClientMessage.css" />
+    <Content Include="Content\CSS\Message.css" />
+    <Content Include="Content\CSS\Notification.css" />
+    <Content Include="Content\CSS\SellerAccount.css" />
+    <Content Include="Content\CSS\SellerMessage.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\images\rushon_ground.zip" />
     <Content Include="Content\Font\Rushon Ground.ttf" />
@@ -194,7 +190,6 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include=".github\copilot-instructions.md" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -231,7 +226,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\BuyerMessage.cshtml" />
     <Content Include="Views\Home\Message.cshtml" />
     <Content Include="Views\Home\Notifications.cshtml" />
     <Content Include="Views\Home\Analytics.cshtml" />
@@ -248,6 +246,20 @@
     <Content Include="Views\Landing\Landing.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Signup.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Client\Product.cshtml" />
+    <Content Include="Views\Client\Message.cshtml" />
+    <Content Include="Views\Client\Notifications.cshtml" />
+    <Content Include="Views\Client\Analytics.cshtml" />
+    <Content Include="Views\Client\Account.cshtml" />
+    <Content Include="Views\Client\Cart.cshtml" />
+    <Content Include="Views\Seller\Store.cshtml" />
+    <Content Include="Views\Seller\AddItem.cshtml" />
+    <Content Include="Views\Seller\EditItem.cshtml" />
+    <Content Include="Views\Seller\Message.cshtml" />
+    <Content Include="Views\Seller\Notifications.cshtml" />
+    <Content Include="Views\Seller\Analytics.cshtml" />
+    <Content Include="Views\Seller\Account.cshtml" />
     <Content Include="Views\Admin\Landing.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\UserOverview.cshtml" />
@@ -256,7 +268,6 @@
     <Content Include="Views\Admin\Account.cshtml" />
     <Content Include="Views\Shared\_AuthLayout.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Home\BuyerMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -279,8 +290,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>59509</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>44357</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44357/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

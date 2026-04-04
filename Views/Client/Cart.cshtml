@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "Cart";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/CSS/Cart.css")" rel="stylesheet" />
+</head>
+
+<body>
+
+    @{
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    }
+
+    <!-- NAVBAR -->
+    <div class="navbar-container">
+        <div class="navbar">
+            <a href="/Client/Index" class="@(currentAction == "Index" ? "active" : "")">Home</a>
+            <a href="#">Shop</a>
+            <a href="/Client/Message" class="@(currentAction == "Message" ? "active" : "")">Message</a>
+            <a href="/Client/Cart" class="@(currentAction == "Cart" ? "active" : "")">Cart</a>
+            <a href="/Client/Account" class="@(currentAction == "Account" ? "active" : "")">Account</a>
+        </div>
+    </div>
+
+    <!-- CART -->
+    <div class="cart-wrapper">
+        <h1 class="cart-title">ART BY KWEKKWEKSASTIX</h1>
+
+        <div class="cart-item">
+            <input type="checkbox" class="cart-checkbox" />
+
+            <img src="~/images/sample-art.png" class="cart-img" />
+
+            <div class="cart-info">
+                <div class="cart-name">CHUBB</div>
+                <div class="cart-type">Digital Print</div>
+            </div>
+
+            <div class="cart-price">₱100</div>
+        </div>
+
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- CHECKOUT BAR -->
+    <div class="checkout-bar" id="checkoutBar">
+
+        <!-- COLLAPSED -->
+        <div class="checkout-inner">
+            <h2>Total <span>₱100.00</span></h2>
+            <button class="checkout-btn" onclick="openCheckout()">Check out</button>
+        </div>
+
+        <!-- EXPANDED -->
+        <div class="checkout-expanded">
+
+            <div class="form-row">
+                <label>Full Name:</label>
+                <input type="text">
+            </div>
+
+            <div class="form-row">
+                <label>Address:</label>
+                <input type="text">
+            </div>
+
+            <div class="form-row">
+                <label>Payment:</label>
+                <select>
+                    <option>Cash on Delivery</option>
+                    <option>GCash</option>
+                </select>
+            </div>
+
+            <div class="checkout-bottom">
+                <h3>Total: <span>₱100.00</span></h3>
+                <button class="place-order-btn">Place Order</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        function openCheckout() {
+            document.getElementById("checkoutBar").classList.add("expanded");
+            document.getElementById("overlay").classList.add("active");
+        }
+
+        function closeCheckout() {
+            document.getElementById("checkoutBar").classList.remove("expanded");
+            document.getElementById("overlay").classList.remove("active");
+        }
+
+        document.addEventListener("click", function (e) {
+            var checkout = document.getElementById("checkoutBar");
+
+            if (checkout.classList.contains("expanded")) {
+                if (!checkout.contains(e.target)) {
+                    closeCheckout();
+                }
+            }
+        });
+
+        document.getElementById("checkoutBar").addEventListener("click", function (e) {
+            e.stopPropagation();
+        });
+
+        document.getElementById("overlay").addEventListener("click", closeCheckout);
+    </script>
+
+</body>
+</html>

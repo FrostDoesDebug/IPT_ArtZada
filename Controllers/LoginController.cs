@@ -1,9 +1,6 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ArtZada.Controllers
@@ -125,11 +122,45 @@ namespace ArtZada.Controllers
     {
         // Temporary bypass switch for development/demo.
         // Set to false once you implement real authentication (DB + hashed passwords, etc.).
-        private const bool BYPASS_AUTH = true;
+        private const bool BYPASS_AUTH = false;
+
+        private const string UserNameSessionKey = "UserName";
+        private const string UserRoleSessionKey = "UserRole";
+        private const string ClientRole = "Client";
+        private const string SellerRole = "Seller";
+        private const string AdminRole = "Admin";
+
+        private bool IsUserLoggedIn()
+        {
+            return !string.IsNullOrWhiteSpace(Session[UserNameSessionKey] as string)
+                || (Session["IsAdmin"] is bool isAdmin && isAdmin);
+        }
+
+        private ActionResult RedirectToRoleHome()
+        {
+            var role = (Session[UserRoleSessionKey] as string ?? ClientRole).Trim();
+
+            if (role.Equals(SellerRole, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("Store", "Seller");
+            }
+
+            if (role.Equals(AdminRole, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("UserOverview", "Admin");
+            }
+
+            return RedirectToAction("Index", "Client");
+        }
 
         [HttpGet]
         public ActionResult Login()
         {
+            if (IsUserLoggedIn())
+            {
+                return RedirectToRoleHome();
+            }
+
             return View(new LoginViewModel());
         }
 
@@ -146,8 +177,9 @@ namespace ArtZada.Controllers
             // Remove/disable this block later.
             if (BYPASS_AUTH)
             {
-                Session["UserName"] = string.IsNullOrWhiteSpace(model.Username) ? "demo" : model.Username;
-                return RedirectToAction("Index", "Home");
+                Session[UserNameSessionKey] = string.IsNullOrWhiteSpace(model.Username) ? "demo" : model.Username;
+                Session[UserRoleSessionKey] = ClientRole;
+                return RedirectToRoleHome();
             }
 
             if (!InMemoryUserStore.ValidateCredentials(model.Username, model.Password))
@@ -156,13 +188,19 @@ namespace ArtZada.Controllers
                 return View(model);
             }
 
-            Session["UserName"] = model.Username;
-            return RedirectToAction("Index", "Home");
+            Session[UserNameSessionKey] = model.Username;
+            Session[UserRoleSessionKey] = ClientRole;
+            return RedirectToRoleHome();
         }
 
         [HttpGet]
         public ActionResult Signup()
         {
+            if (IsUserLoggedIn())
+            {
+                return RedirectToRoleHome();
+            }
+
             return View(new SignupViewModel());
         }
 
@@ -182,8 +220,9 @@ namespace ArtZada.Controllers
                 return View(model);
             }
 
-            Session["UserName"] = model.Username;
-            return RedirectToAction("Index", "Home");
+            Session[UserNameSessionKey] = model.Username;
+            Session[UserRoleSessionKey] = ClientRole;
+            return RedirectToRoleHome();
         }
 
         public ActionResult Logout()
