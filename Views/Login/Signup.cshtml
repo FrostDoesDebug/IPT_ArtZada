@@ -32,6 +32,12 @@
         </div>
 
         <div class="auth-form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "auth-label" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "auth-input", type = "email" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="auth-form-group">
             @Html.LabelFor(m => m.Password, new { @class = "auth-label" })
             <div class="auth-password-wrap">
                 @Html.PasswordFor(m => m.Password, new { @class = "auth-input", id = "signupPassword" })

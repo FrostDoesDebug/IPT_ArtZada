@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using System.Configuration;
+using System.Data.SqlClient;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ArtZada.Controllers
@@ -6,6 +8,7 @@ namespace ArtZada.Controllers
     public class HomeController : Controller
     {
         private const string UserNameSessionKey = "UserName";
+        private const string UserIdSessionKey = "UserId";
         private const string UserRoleSessionKey = "UserRole";
         private const string ClientRole = "Client";
         private const string SellerRole = "Seller";
@@ -141,6 +144,74 @@ namespace ArtZada.Controllers
             return RedirectToAction("Account", "Client");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult UpdateUsername(string username)
+        {
+            var currentUsername = Session[UserNameSessionKey] as string;
+            var currentUserId = Session[UserIdSessionKey] as int?;
+            var nextUsername = (username ?? string.Empty).Trim();
+
+            if (string.IsNullOrWhiteSpace(currentUsername) || !currentUserId.HasValue)
+            {
+                Response.StatusCode = 401;
+                return Json(new { ok = false, message = "Not logged in." });
+            }
+
+            if (string.IsNullOrWhiteSpace(nextUsername))
+            {
+                Response.StatusCode = 400;
+                return Json(new { ok = false, message = "Username is required." });
+            }
+
+            if (string.Equals(currentUsername, nextUsername, System.StringComparison.OrdinalIgnoreCase))
+            {
+                return Json(new { ok = true, username = currentUsername, message = "No changes needed." });
+            }
+
+            var connectionString = ConfigurationManager.ConnectionStrings["ArtZadaDb"]?.ConnectionString;
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                Response.StatusCode = 500;
+                return Json(new { ok = false, message = "Missing ArtZadaDb connection string." });
+            }
+
+            try
+            {
+                using (var conn = new SqlConnection(connectionString))
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+UPDATE dbo.Users
+SET Username = @NewUsername, UpdatedAt = GETDATE()
+WHERE UserId = @UserId;
+SELECT @@ROWCOUNT;";
+                    cmd.Parameters.AddWithValue("@NewUsername", nextUsername);
+                    cmd.Parameters.AddWithValue("@UserId", currentUserId.Value);
+
+                    conn.Open();
+                    var affected = (int)cmd.ExecuteScalar();
+                    if (affected == 0)
+                    {
+                        Response.StatusCode = 404;
+                        return Json(new { ok = false, message = "User not found in database." });
+                    }
+                }
+
+                Session[UserNameSessionKey] = nextUsername;
+                return Json(new { ok = true, username = nextUsername, message = "Username updated." });
+            }
+            catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+            {
+                Response.StatusCode = 409;
+                return Json(new { ok = false, message = "Username already exists." });
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+                return Json(new { ok = false, message = "Failed to update username." });
+            }
+        }
         public ActionResult ChangeProfile()
         {
             return RedirectToAction("Account");
@@ -247,3 +318,6 @@ namespace ArtZada.Controllers
         
     }
 }
+
+
+

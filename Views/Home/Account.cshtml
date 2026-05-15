@@ -12,6 +12,7 @@
 }
 
 <div class="account-card">
+    @Html.AntiForgeryToken()
     <div class="save-cancel-group hidden" id="editControls">
         <button class="btn-save" onclick="saveChanges()">Save Changes</button>
         <button class="btn-cancel-sm" onclick="cancelEdit()">Cancel</button>
@@ -47,7 +48,8 @@
             @(isSeller ? "Switch to Buyer' Account" : "Switch to Seller' Account")
         </button>
     </div>
-    <a href="/Account/Logout" class="btn-signout"
+    <div id="accountStatus" style="margin-top:10px;font-size:13px;color:#666;"></div>
+    <a href="/Login/Logout" class="btn-signout"
        onclick="return confirm('Are you sure you want to sign out?')">Sign Out</a>
 </div>
 
@@ -72,16 +74,53 @@
         }
 
         /* ── Save Changes ── */
-        function saveChanges() {
+        async function saveChanges() {
             editing = false;
             var nameEl = document.getElementById('profileName');
+            var statusEl = document.getElementById('accountStatus');
+            var nextUsername = nameEl.textContent.trim();
             nameEl.contentEditable = 'false';
             document.getElementById('editControls').classList.add('hidden');
-            fetch('/Home/UpdateUsername', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: nameEl.textContent.trim() })
-            });
+
+            if (!nextUsername) {
+                nameEl.textContent = originalName;
+                statusEl.textContent = 'Username cannot be empty.';
+                statusEl.style.color = '#b3261e';
+                return;
+            }
+
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var form = new URLSearchParams();
+            form.append('__RequestVerificationToken', token);
+            form.append('username', nextUsername);
+
+            statusEl.textContent = 'Saving...';
+            statusEl.style.color = '#666';
+
+            try {
+                var response = await fetch('/Home/UpdateUsername', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                    body: form.toString()
+                });
+
+                var data = await response.json();
+                if (!response.ok || !data.ok) {
+                    nameEl.textContent = originalName;
+                    statusEl.textContent = data.message || 'Failed to save username.';
+                    statusEl.style.color = '#b3261e';
+                    return;
+                }
+
+                nameEl.textContent = data.username || nextUsername;
+                originalName = nameEl.textContent;
+                statusEl.textContent = data.message || 'Saved.';
+                statusEl.style.color = '#1b7f3b';
+            } catch (e) {
+                nameEl.textContent = originalName;
+                statusEl.textContent = 'Network error while saving username.';
+                statusEl.style.color = '#b3261e';
+            }
         }
 
         /* ── Cancel Edit — restores original name ── */
