@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 
@@ -234,6 +235,53 @@ SELECT @@ROWCOUNT;";
             return RedirectToAction("Account", "Client");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult UploadProfileImage(HttpPostedFileBase profileImage)
+        {
+            var currentUserId = Session[UserIdSessionKey] as int?;
+            if (!currentUserId.HasValue || currentUserId.Value <= 0)
+            {
+                Response.StatusCode = 401;
+                return Json(new { ok = false, message = "Not logged in." });
+            }
+
+            if (profileImage == null || profileImage.ContentLength <= 0)
+            {
+                Response.StatusCode = 400;
+                return Json(new { ok = false, message = "No image selected." });
+            }
+
+            var ext = Path.GetExtension(profileImage.FileName)?.ToLowerInvariant();
+            if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".webp")
+            {
+                Response.StatusCode = 400;
+                return Json(new { ok = false, message = "Unsupported image format." });
+            }
+
+            var uploadsDir = Server.MapPath("~/Content/uploads/profiles");
+            Directory.CreateDirectory(uploadsDir);
+            var fileName = $"profile_{currentUserId.Value}_{System.Guid.NewGuid():N}{ext}";
+            var absPath = Path.Combine(uploadsDir, fileName);
+            profileImage.SaveAs(absPath);
+            var relPath = "/Content/uploads/profiles/" + fileName;
+
+            var connectionString = ConfigurationManager.ConnectionStrings["ArtZadaDb"]?.ConnectionString;
+            using (var conn = new SqlConnection(connectionString))
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+UPDATE dbo.Users
+SET ProfileImage = @ProfileImage, UpdatedAt = GETDATE()
+WHERE UserId = @UserId;";
+                cmd.Parameters.AddWithValue("@ProfileImage", relPath);
+                cmd.Parameters.AddWithValue("@UserId", currentUserId.Value);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            return Json(new { ok = true, imageUrl = relPath });
+        }
         public ActionResult ToggleSeller()
         {
             if (!IsLoggedIn())
@@ -318,6 +366,7 @@ SELECT @@ROWCOUNT;";
         
     }
 }
+
 
 
 

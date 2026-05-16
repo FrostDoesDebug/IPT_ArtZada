@@ -10,6 +10,7 @@
 }
 
 <div class="product-shell">
+    @Html.AntiForgeryToken()
     <div class="product-image-wrap">
         <img src="@Url.Content("~/Content/images/artzada_logo.png")" class="product-image" alt="Product" />
     </div>
@@ -28,18 +29,56 @@
         <p><strong>Medium:</strong> Digital Art</p>
 
         <div class="qty-row">
-            <button type="button" class="qty-btn">-</button>
-            <span class="qty-value">1</span>
-            <button type="button" class="qty-btn">+</button>
+            <button type="button" class="qty-btn" id="qtyMinus">-</button>
+            <span class="qty-value" id="qtyValue">1</span>
+            <button type="button" class="qty-btn" id="qtyPlus">+</button>
         </div>
 
         <div class="product-actions">
-            <button class="cart-btn" type="button">Add to Cart</button>
-            <button class="buy-btn" type="button">BUY NOW!</button>
+            <button class="cart-btn" type="button" id="addToCartBtn">Add to Cart</button>
+            <button class="buy-btn" type="button" id="buyNowBtn">BUY NOW!</button>
         </div>
     </div>
 </div>
 
 @section Scripts {
     <script src="@Url.Content("~/Scripts/site.js")"></script>
+    <script>
+        (function () {
+            var qty = 1;
+            var productId = @((ViewBag.ProductId ?? 0));
+            var qtyEl = document.getElementById('qtyValue');
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            function renderQty() { qtyEl.textContent = qty; }
+            document.getElementById('qtyMinus').addEventListener('click', function () { qty = Math.max(1, qty - 1); renderQty(); });
+            document.getElementById('qtyPlus').addEventListener('click', function () { qty += 1; renderQty(); });
+
+            function addToCart(next) {
+                var form = new URLSearchParams();
+                form.append('__RequestVerificationToken', token);
+                form.append('productId', productId);
+                form.append('quantity', qty);
+                fetch('@Url.Action("AddToCart", "Client")', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                    body: form.toString()
+                }).then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.ok) {
+                        if (window.themeToast) window.themeToast(data.message || 'Failed to add to cart.', 'warn');
+                        return;
+                    }
+                    if (next === 'cart') {
+                        window.location.href = '@Url.Action("Cart","Client")';
+                        return;
+                    }
+                    if (window.themeToast) window.themeToast('Added to cart.', 'success');
+                });
+            }
+
+            document.getElementById('addToCartBtn').addEventListener('click', function () { addToCart(); });
+            document.getElementById('buyNowBtn').addEventListener('click', function () { addToCart('cart'); });
+        })();
+    </script>
 }

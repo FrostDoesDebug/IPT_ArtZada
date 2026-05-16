@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    @Html.AntiForgeryToken()
     <!-- TOP BAR -->
     <div class="top-bar">
         <div class="header">
@@ -58,7 +59,7 @@
             <div class="icons">
                 <a href="@Url.Action("Cart", "Client")" class="icon cart-icon">
                     <img src="~/Content/images/cart.png" alt="Cart" />
-                    <span class="badge">3</span>
+                    <span class="badge" id="cartBadge">0</span>
                 </a>
 
                 <a href="@Url.Action("Notifications", "Client")" class="icon">
@@ -108,33 +109,11 @@
 
     <!-- HOT SALES -->
     <h2 class="section-title" id="hotSales">HOT SALES</h2>
-    <div class="grid">
-        @for (int i = 0; i < 7; i++)
-        {
-            <div class="card clickable-card" data-url="@Url.Action("Product", "Client", new { id = i })">
-                <img src="~/Content/images/artzada_logo.png" />
-                <h2 class="product-name">CHUBB @i</h2>
-                <p>Digital Print</p>
-                <span class="price">₱100.00</span>
-                <div class="buttons">
-                    <button class="cart-btn">Add to cart</button>
-                    <button class="buy-btn">Buy now</button>
-                </div>
-            </div>
-        }
-    </div>
+    <div class="grid" id="hotSalesGrid"></div>
 
     <!-- FLASH SALES -->
     <h2 class="section-title">FLASH SALES</h2>
-    <div class="grid">
-        @for (int i = 0; i < 3; i++)
-        {
-            <div class="card large clickable-card" data-url="@Url.Action("Product", "Client", new { id = i + 10 })">
-                <h2>Product @i</h2>
-                <p>Flash Sale Item</p>
-            </div>
-        }
-    </div>
+    <div class="grid" id="flashSalesGrid"></div>
 
     <!-- SERVICES -->
     <h2 class="section-title">SERVICES</h2>
@@ -168,14 +147,106 @@
     <!-- Javascript -->
     <script src="~/Scripts/site.js"></script>
     <script>
-        // Make the entire card clickable
-        document.querySelectorAll('.clickable-card').forEach(card => {
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+        const hotSalesGrid = document.getElementById('hotSalesGrid');
+        const flashSalesGrid = document.getElementById('flashSalesGrid');
+
+        function addToCart(productId, goCart) {
+            var form = new URLSearchParams();
+            form.append('__RequestVerificationToken', token);
+            form.append('productId', productId);
+            form.append('quantity', 1);
+            fetch('@Url.Action("AddToCart","Client")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: form.toString()
+            }).then(function (r) { return r.json(); }).then(function (data) {
+                if (!data.ok) { return; }
+                loadCartCount();
+                if (goCart) { window.location.href = '@Url.Action("Cart","Client")'; }
+            });
+        }
+
+        function loadCartCount() {
+            fetch('@Url.Action("CartCount","Client")')
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('cartBadge').textContent = data.count || 0;
+                });
+        }
+
+        function bindCard(card) {
+            const productId = parseInt(card.getAttribute('data-product-id') || '0', 10);
+            const isOutOfStock = card.getAttribute('data-out-of-stock') === '1';
+            const cartBtn = card.querySelector('.cart-btn');
+            const buyBtn = card.querySelector('.buy-btn');
+            if (isOutOfStock) {
+                if (cartBtn) cartBtn.disabled = true;
+                if (buyBtn) buyBtn.disabled = true;
+            }
+            if (cartBtn) {
+                cartBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (isOutOfStock) return;
+                    addToCart(productId, false);
+                });
+            }
+            if (buyBtn) {
+                buyBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (isOutOfStock) return;
+                    addToCart(productId, true);
+                });
+            }
             card.addEventListener('click', function (e) {
                 if (e.target.tagName.toLowerCase() === 'button') return;
+                if (isOutOfStock) return;
                 const url = card.getAttribute('data-url');
                 if (url) window.location.href = url;
             });
-        });
+        }
+
+        function renderCatalog(list, host, isFlash) {
+            host.innerHTML = '';
+            list.forEach(p => {
+                const card = document.createElement('div');
+                const isOutOfStock = Number(p.stock || 0) <= 0 || p.isAvailable === false;
+                card.className = 'card clickable-card' + (isOutOfStock ? ' out-of-stock' : '');
+                if (!isOutOfStock) {
+                    card.setAttribute('data-url', '@Url.Action("Product", "Client")' + '/' + p.id);
+                }
+                card.setAttribute('data-product-id', p.id);
+                card.setAttribute('data-out-of-stock', isOutOfStock ? '1' : '0');
+                const priceHtml = isFlash
+                    ? ('<span class="price"><s>₱' + Number(p.price).toFixed(2) + '</s> ₱' + Number(p.salePrice).toFixed(2) + '</span>')
+                    : ('<span class="price">₱' + Number(p.price).toFixed(2) + '</span>');
+                const stockHtml = isOutOfStock
+                    ? '<span class="stock-badge out">Out of Stock</span>'
+                    : '<span class="stock-badge in">In Stock</span>';
+
+                card.innerHTML =
+                    '<img src=\"' + p.image + '\" />' +
+                    '<h2 class=\"product-name\">' + p.name + '</h2>' +
+                    '<p>' + p.medium + '</p>' +
+                    priceHtml +
+                    stockHtml +
+                    '<div class=\"buttons\"><button class=\"cart-btn\" type=\"button\">Add to cart</button><button class=\"buy-btn\" type=\"button\">Buy now</button></div>';
+                host.appendChild(card);
+                bindCard(card);
+            });
+        }
+
+        function loadCatalog() {
+            fetch('@Url.Action("Catalog","Client")')
+                .then(r => r.json())
+                .then(data => {
+                    renderCatalog(data.hotSales || [], hotSalesGrid, false);
+                    renderCatalog(data.flashSales || [], flashSalesGrid, true);
+                });
+        }
+
+        loadCartCount();
+        loadCatalog();
 
         // Filter button functionality
         const filterBtn = document.querySelector('.dropdown-header');

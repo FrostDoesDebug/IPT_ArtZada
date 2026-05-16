@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    @Html.AntiForgeryToken()
 
     @{
         var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
@@ -32,22 +33,8 @@
     </div>
 
     <!-- CART -->
-    <div class="cart-wrapper">
-        <h1 class="cart-title">ART BY KWEKKWEKSASTIX</h1>
-
-        <div class="cart-item">
-            <input type="checkbox" class="cart-checkbox" />
-
-            <img src="~/images/sample-art.png" class="cart-img" />
-
-            <div class="cart-info">
-                <div class="cart-name">CHUBB</div>
-                <div class="cart-type">Digital Print</div>
-            </div>
-
-            <div class="cart-price">₱100</div>
-        </div>
-
+    <div class="cart-wrapper" id="cartWrapper">
+        <h1 class="cart-title" id="cartArtistTitle" style="display:none;"></h1>
     </div>
 
     <!-- OVERLAY -->
@@ -58,7 +45,7 @@
 
         <!-- COLLAPSED -->
         <div class="checkout-inner">
-            <h2>Total <span>₱100.00</span></h2>
+            <h2>Total <span id="totalTop">₱0.00</span></h2>
             <button class="checkout-btn" onclick="openCheckout()">Check out</button>
         </div>
 
@@ -67,25 +54,25 @@
 
             <div class="form-row">
                 <label>Full Name:</label>
-                <input type="text">
+                <input type="text" id="fullNameInput">
             </div>
 
             <div class="form-row">
                 <label>Address:</label>
-                <input type="text">
+                <input type="text" id="addressInput">
             </div>
 
             <div class="form-row">
                 <label>Payment:</label>
-                <select>
-                    <option>Cash on Delivery</option>
+                <select id="paymentInput">
+                    <option>COD</option>
                     <option>GCash</option>
                 </select>
             </div>
 
             <div class="checkout-bottom">
-                <h3>Total: <span>₱100.00</span></h3>
-                <button class="place-order-btn">Place Order</button>
+                <h3>Total: <span id="totalBottom">₱0.00</span></h3>
+                <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
             </div>
 
         </div>
@@ -93,6 +80,66 @@
 
     <!-- SCRIPT -->
     <script>
+        var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        function money(v) { return '₱' + Number(v || 0).toFixed(2); }
+
+        function renderCart(items, total) {
+            var wrapper = document.getElementById('cartWrapper');
+            var title = document.getElementById('cartArtistTitle');
+            wrapper.querySelectorAll('.cart-item').forEach(function (n) { n.remove(); });
+            title.style.display = 'none';
+            title.textContent = '';
+
+            var artists = [];
+
+            items.forEach(function (item) {
+                if (item.artistName && artists.indexOf(item.artistName) === -1) {
+                    artists.push(item.artistName);
+                }
+                var row = document.createElement('div');
+                row.className = 'cart-item';
+                var imageSrc = item.image ? item.image : '/Content/images/artzada_logo.png';
+                row.innerHTML =
+                    '<input type=\"checkbox\" class=\"cart-checkbox\" checked />' +
+                    '<img src=\"' + imageSrc + '\" class=\"cart-img\" />' +
+                    '<div class=\"cart-info\"><div class=\"cart-name\">' + item.name + '</div><div class=\"cart-type\">Qty: ' + item.quantity + '</div></div>' +
+                    '<div class=\"cart-price\">' + money(item.lineTotal) + '</div>' +
+                    '<button type=\"button\" class=\"checkout-btn\" style=\"margin-left:8px\" data-remove-id=\"' + item.productId + '\">Remove</button>';
+                wrapper.appendChild(row);
+            });
+
+            if (artists.length > 0) {
+                title.textContent = 'ART BY ' + artists.join(', ').toUpperCase();
+                title.style.display = '';
+            }
+
+            wrapper.querySelectorAll('[data-remove-id]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var form = new URLSearchParams();
+                    form.append('__RequestVerificationToken', token);
+                    form.append('productId', btn.getAttribute('data-remove-id'));
+                    fetch('@Url.Action("RemoveCartItem","Client")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        body: form.toString()
+                    }).then(function () { loadCart(); });
+                });
+            });
+
+            document.getElementById('totalTop').textContent = money(total);
+            document.getElementById('totalBottom').textContent = money(total);
+        }
+
+        function loadCart() {
+            fetch('@Url.Action("GetCart","Client")')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.ok) { return; }
+                    renderCart(data.items || [], data.total || 0);
+                });
+        }
+
         function openCheckout() {
             document.getElementById("checkoutBar").classList.add("expanded");
             document.getElementById("overlay").classList.add("active");
@@ -118,6 +165,35 @@
         });
 
         document.getElementById("overlay").addEventListener("click", closeCheckout);
+
+        document.getElementById('placeOrderBtn').addEventListener('click', function () {
+            var fullName = document.getElementById('fullNameInput').value.trim();
+            var address = document.getElementById('addressInput').value.trim();
+            var payment = document.getElementById('paymentInput').value;
+
+            var form = new URLSearchParams();
+            form.append('__RequestVerificationToken', token);
+            form.append('fullName', fullName);
+            form.append('address', address);
+            form.append('paymentMethod', payment);
+
+            fetch('@Url.Action("PlaceOrder","Client")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: form.toString()
+            }).then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.ok) {
+                    if (window.themeToast) window.themeToast(data.message || 'Failed to place order.', 'warn');
+                    return;
+                }
+                if (window.themeToast) window.themeToast('Order placed successfully.', 'success');
+                closeCheckout();
+                loadCart();
+            });
+        });
+
+        loadCart();
     </script>
 
 </body>

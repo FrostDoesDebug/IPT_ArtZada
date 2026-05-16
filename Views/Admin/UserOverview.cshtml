@@ -4,34 +4,9 @@
 }
 
 <div class="admin-users-wrap admin-user-overview-page">
+    @Html.AntiForgeryToken()
     <div class="admin-users-panel">
-        <div class="admin-user-card" data-user-name="KwekKweksaStix" data-user-role="Seller/Buyer" data-avatar-url="@Url.Content("~/Content/images/KwekKweksaStix (1).png")">
-            <div class="admin-user-left">
-                <img class="admin-user-avatar" src="~/Content/images/KwekKweksaStix (1).png" alt="KwekKweksaStix" />
-                <div class="admin-user-info">
-                    <div class="admin-user-name">KwekKweksaStix</div>
-                    <div class="admin-user-role">Seller/Buyer</div>
-                </div>
-            </div>
-            <div class="admin-user-actions">
-                <button type="button" class="admin-action-btn view">View</button>
-                <button type="button" class="admin-action-btn ban" data-user-name="KwekKweksaStix">Ban</button>
-            </div>
-        </div>
-
-        <div class="admin-user-card" data-user-name="Pamili is Love" data-user-role="Buyer" data-avatar-url="@Url.Content("~/Content/images/artzada_logo.png")">
-            <div class="admin-user-left">
-                <img class="admin-user-avatar" src="~/Content/images/artzada_logo.png" alt="Pamili is Love" />
-                <div class="admin-user-info">
-                    <div class="admin-user-name">Pamili is Love</div>
-                    <div class="admin-user-role">Buyer</div>
-                </div>
-            </div>
-            <div class="admin-user-actions">
-                <button type="button" class="admin-action-btn view">View</button>
-                <button type="button" class="admin-action-btn ban" data-user-name="Pamili is Love">Ban</button>
-            </div>
-        </div>
+        <div id="activeUsersList"></div>
     </div>
 </div>
 
@@ -74,6 +49,8 @@
 @section scripts {
     <script>
         (function () {
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var listEl = document.getElementById('activeUsersList');
             var modal = document.getElementById('banUserModal');
             var viewModal = document.getElementById('viewUserModal');
             var reasonSelect = document.getElementById('banReason');
@@ -83,12 +60,13 @@
             var activeUserName = '';
             var activeCard = null;
 
-            function getBannedUsers() {
-                return JSON.parse(localStorage.getItem('artzadaBannedUsers') || '[]');
-            }
-
-            function saveBannedUsers(items) {
-                localStorage.setItem('artzadaBannedUsers', JSON.stringify(items));
+            function post(url, payload, done) {
+                var form = new URLSearchParams();
+                form.append('__RequestVerificationToken', token);
+                Object.keys(payload || {}).forEach(function (k) { form.append(k, payload[k]); });
+                fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: form.toString() })
+                    .then(function (r) { return r.json(); })
+                    .then(done);
             }
 
             function openViewModal(card) {
@@ -128,17 +106,48 @@
                 modal.setAttribute('aria-hidden', 'true');
             }
 
-            document.querySelectorAll('.admin-action-btn.ban[data-user-name]').forEach(function (button) {
-                button.addEventListener('click', function () {
-                    openModal(button.getAttribute('data-user-name'), button.closest('.admin-user-card'));
+            function bindRowActions() {
+                listEl.querySelectorAll('.admin-action-btn.ban[data-user-name]').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        openModal(button.getAttribute('data-user-name'), button.closest('.admin-user-card'));
+                    });
                 });
-            });
 
-            document.querySelectorAll('.admin-action-btn.view').forEach(function (button) {
-                button.addEventListener('click', function () {
-                    openViewModal(button.closest('.admin-user-card'));
+                listEl.querySelectorAll('.admin-action-btn.view').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        openViewModal(button.closest('.admin-user-card'));
+                    });
                 });
-            });
+            }
+
+            function render(users) {
+                listEl.innerHTML = '';
+                users.forEach(function (u) {
+                    var card = document.createElement('div');
+                    card.className = 'admin-user-card';
+                    card.setAttribute('data-user-name', u.username);
+                    card.setAttribute('data-user-role', u.role);
+                    card.setAttribute('data-avatar-url', u.avatar);
+                    card.setAttribute('data-user-id', u.userId);
+                    card.innerHTML =
+                        '<div class=\"admin-user-left\">' +
+                        '  <img class=\"admin-user-avatar\" src=\"' + u.avatar + '\" alt=\"' + u.username + '\" />' +
+                        '  <div class=\"admin-user-info\"><div class=\"admin-user-name\">' + u.username + '</div><div class=\"admin-user-role\">' + u.role + '</div></div>' +
+                        '</div>' +
+                        '<div class=\"admin-user-actions\">' +
+                        '  <button type=\"button\" class=\"admin-action-btn view\">View</button>' +
+                        '  <button type=\"button\" class=\"admin-action-btn ban\" data-user-name=\"' + u.username + '\">Ban</button>' +
+                        '</div>';
+                    listEl.appendChild(card);
+                });
+                bindRowActions();
+            }
+
+            function refresh() {
+                fetch('@Url.Action("GetActiveUsers","Admin")')
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) { render(data.users || []); });
+            }
 
             cancelBtn.addEventListener('click', closeModal);
             if (viewCloseBtn) {
@@ -169,31 +178,19 @@
                     return;
                 }
 
-                var role = activeCard ? (activeCard.getAttribute('data-user-role') || 'User') : 'User';
-                var avatar = activeCard ? (activeCard.getAttribute('data-avatar-url') || '') : '';
-                var bannedUsers = getBannedUsers();
-                var existing = bannedUsers.some(function (u) { return u.name === activeUserName; });
-
-                if (!existing) {
-                    bannedUsers.unshift({
-                        name: activeUserName,
-                        role: role,
-                        reason: reason,
-                        avatar: avatar,
-                        bannedAt: new Date().toISOString()
-                    });
-                    saveBannedUsers(bannedUsers);
-                }
-
-                if (activeCard && activeCard.parentNode) {
-                    activeCard.parentNode.removeChild(activeCard);
-                }
-
-                closeModal();
-                if (window.themeToast) {
-                    window.themeToast(activeUserName + ' moved to banned list.', 'success');
-                }
+                var userId = activeCard ? activeCard.getAttribute('data-user-id') : '';
+                post('@Url.Action("BanUser","Admin")', { userId: userId, reason: reason }, function (res) {
+                    if (!res.ok) {
+                        if (window.themeToast) window.themeToast(res.message || 'Failed to ban user.', 'warn');
+                        return;
+                    }
+                    closeModal();
+                    if (window.themeToast) window.themeToast(activeUserName + ' moved to banned list.', 'success');
+                    refresh();
+                });
             });
+
+            refresh();
         })();
     </script>
 }

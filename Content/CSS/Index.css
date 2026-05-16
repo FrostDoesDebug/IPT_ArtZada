@@ -347,6 +347,42 @@ h2.section-title {
     margin-bottom: 15px;
 }
 
+.stock-badge {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stock-badge.in {
+    background: #e6f7ea;
+    color: #1f7a3a;
+}
+
+.stock-badge.out {
+    background: #ececec;
+    color: #666;
+}
+
+.card.out-of-stock {
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.card.out-of-stock:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.card.out-of-stock .cart-btn,
+.card.out-of-stock .buy-btn {
+    background: #b8b8b8;
+    color: #f5f5f5;
+    cursor: not-allowed;
+}
+
 /* BUTTONS */
 .buttons {
     display: flex;

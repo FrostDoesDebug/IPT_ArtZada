@@ -10,6 +10,7 @@
 }
 
     <div class="page-content">
+        @Html.AntiForgeryToken()
         <div class="title-wrap">
             <div class="page-title">Edit Item</div>
         </div>
@@ -18,13 +19,17 @@
                 <div class="photo-box">
                     <img id="photoPreview" src="@Url.Content("~/Content/images/artzada_logo.png")" alt="Item Photo" />
                 </div>
-                <button class="btn-add-photo" type="button" onclick="document.getElementById('photoInput').click()">
+                <input type="file"
+                       id="productPhotoInput"
+                       accept="image/*"
+                       style="display:none"
+                       onchange="handleProductPhoto(this)" />
+                <button class="btn-add-photo" type="button" onclick="changeProductPhoto()">
                     Change Photo
                 </button>
                 <button class="btn-cancel-left" type="button" onclick="window.location.href='@Url.Action("Store","Seller")'">
                     Cancel
                 </button>
-                <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="previewPhoto(event)" />
             </div>
             <div class="fields-col">
                 <div class="fields-row">
@@ -78,35 +83,59 @@
 @section Scripts {
     <script>
         var currentPhotoData = '';
-        var editId = localStorage.getItem('editItemId');
+        var editId = new URLSearchParams(window.location.search).get('id');
 
         function loadItemForEdit() {
             if (!editId) { window.location.href = '@Url.Action("Store","Seller")'; return; }
-            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
-            var item = null;
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].id === editId) { item = items[i]; break; }
-            }
-            if (!item) { window.location.href = '@Url.Action("Store","Seller")'; return; }
-
-            document.getElementById('itemName').value = item.name;
-            document.getElementById('itemType').value = item.type;
-            document.getElementById('itemPrice').value = item.price;
-            document.getElementById('itemStocks').value = item.stocks;
-            document.getElementById('itemDescription').value = item.description || '';
-            document.getElementById('photoPreview').src = item.photo;
-            currentPhotoData = item.photo;
+            fetch('@Url.Action("GetMyItem","Seller")?id=' + encodeURIComponent(editId))
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.ok || !data.item) {
+                        window.location.href = '@Url.Action("Store","Seller")';
+                        return;
+                    }
+                    var item = data.item;
+                    document.getElementById('itemName').value = item.name;
+                    document.getElementById('itemType').value = item.type;
+                    document.getElementById('itemPrice').value = item.price;
+                    document.getElementById('itemStocks').value = item.stocks;
+                    document.getElementById('itemDescription').value = item.description || '';
+                    document.getElementById('photoPreview').src = item.photo;
+                    currentPhotoData = item.photo;
+                });
         }
 
-        function previewPhoto(event) {
-            var file = event.target.files[0];
-            if (!file) return;
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                currentPhotoData = e.target.result;
-                document.getElementById('photoPreview').src = currentPhotoData;
-            };
-            reader.readAsDataURL(file);
+        function changeProductPhoto() {
+            document.getElementById('productPhotoInput').click();
+        }
+
+        function handleProductPhoto(input) {
+            if (!input.files || !input.files[0]) return;
+
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var formData = new FormData();
+            formData.append('__RequestVerificationToken', token);
+            formData.append('productImage', input.files[0]);
+
+            fetch('@Url.Action("UploadProductImage","Seller")', {
+                method: 'POST',
+                body: formData
+            }).then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.ok || !data.imageUrl) {
+                    if (window.themeToast) window.themeToast(data.message || 'Failed to upload image.', 'warn');
+                    return;
+                }
+
+                currentPhotoData = data.imageUrl;
+                document.getElementById('photoPreview').src = data.imageUrl;
+            })
+            .catch(function () {
+                if (window.themeToast) window.themeToast('Failed to upload image.', 'warn');
+            })
+            .finally(function () {
+                input.value = '';
+            });
         }
 
         function saveChanges() {
@@ -133,22 +162,30 @@
                 return;
             }
 
-            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].id === editId) {
-                    items[i].name = name;
-                    items[i].type = type;
-                    items[i].price = price;
-                    items[i].stocks = stocks;
-                    items[i].description = desc;
-                    items[i].photo = currentPhotoData;
-                    break;
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var form = new URLSearchParams();
+            form.append('__RequestVerificationToken', token);
+            form.append('id', editId);
+            form.append('name', name);
+            form.append('type', type);
+            form.append('price', price);
+            form.append('stocks', stocks);
+            form.append('description', desc);
+            form.append('photo', currentPhotoData);
+
+            fetch('@Url.Action("UpdateItemAjax","Seller")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: form.toString()
+            }).then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.ok) {
+                    if (window.themeToast) window.themeToast(data.message || 'Failed to update item.', 'warn');
+                    return;
                 }
-            }
-            localStorage.setItem('sellerItems', JSON.stringify(items));
-            localStorage.removeItem('editItemId');
-            if (window.themeToast) window.themeToast('Item updated successfully.', 'success');
-            window.location.href = '@Url.Action("Store", "Seller")';
+                if (window.themeToast) window.themeToast('Item updated successfully.', 'success');
+                window.location.href = '@Url.Action("Store", "Seller")';
+            });
         }
 
         loadItemForEdit();

@@ -7,9 +7,30 @@
 
 @section Styles {
     <link href="@Url.Content("~/Content/CSS/Notification.css")" rel="stylesheet" />
+    <style>
+        .mark-read-btn {
+            border: 3px solid #111;
+            border-radius: 10px;
+            background: #D88628;
+            color: #111;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 6px 10px;
+            cursor: pointer;
+            min-width: 120px;
+        }
+        .mark-read-btn:disabled {
+            background: #7EACB5;
+            color: #fff;
+            cursor: default;
+            opacity: .9;
+        }
+    </style>
 }
 
 <div class="notifications-page">
+    @Html.AntiForgeryToken()
 
     <div class="notif-title">NOTIFICATIONS</div>
 
@@ -26,40 +47,7 @@
                oninput="filterNotifs(this.value)" />
     </div>
 
-    <div class="notif-list" id="notifList">
-
-        <div class="notif-item warning"
-             data-text="Warning: Only 3 pieces of Chubb remaining!">
-            <div class="notif-icon">
-                <img src="@Url.Content("~/Content/images/warning.png")"
-                     alt="warning"
-                     onerror="this.outerHTML='<span style=\'font-size:40px\'>⚠</span>'" />
-            </div>
-            <span>Warning: Only 3 pieces of Chubb remaining!</span>
-        </div>
-
-        <div class="notif-item message"
-             data-text="Client#1 has replied to your message">
-            <div class="notif-icon">
-                <img src="@Url.Content("~/Content/images/message.png")"
-                     alt="message"
-                     class="notif-message-icon"
-                     onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'#333\' width=\'60\' height=\'60\'><circle cx=\'16\' cy=\'11\' r=\'7\'/><path d=\'M4 28c0-7 24-7 24 0\'/></svg>'" />
-            </div>
-            <span>Client#1 has replied to your message</span>
-        </div>
-
-        <div class="notif-item success"
-             data-text="Chubb has been sold successfully!">
-            <div class="notif-icon">
-                <img src="@Url.Content("~/Content/images/goods.png")"
-                     alt="sold"
-                     onerror="this.outerHTML='<span style=\'font-size:40px;font-weight:900\'>✔</span>'" />
-            </div>
-            <span>Chubb has been sold successfully!</span>
-        </div>
-
-    </div>
+    <div class="notif-list" id="notifList"></div>
 </div>
 
 @section Scripts {
@@ -73,15 +61,69 @@
             });
         }
 
-        /* ── Click to mark as read / active ── */
-        document.querySelectorAll('.notif-item').forEach(function (item) {
-            item.addEventListener('click', function () {
-                document.querySelectorAll('.notif-item').forEach(function (i) {
-                    i.classList.remove('active');
+        function bindNotifs() {
+            document.querySelectorAll('.notif-item').forEach(function (item) {
+                item.addEventListener('click', function () {
+                    document.querySelectorAll('.notif-item').forEach(function (i) {
+                        i.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    this.classList.add('read');
                 });
-                this.classList.add('active');
-                this.classList.add('read');
             });
-        });
+        }
+
+        function iconByType(type) {
+            if (type === 'warning') return '@Url.Content("~/Content/images/warning.png")';
+            if (type === 'success') return '@Url.Content("~/Content/images/goods.png")';
+            return '@Url.Content("~/Content/images/message.png")';
+        }
+
+        fetch('@Url.Action("GetNotifications","Client")')
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                var list = document.getElementById('notifList');
+                list.innerHTML = '';
+                (data.items || []).forEach(function (n) {
+                    var type = (n.type || 'message');
+                    var el = document.createElement('div');
+                    el.className = 'notif-item ' + type + (n.isRead ? ' read' : '');
+                    el.setAttribute('data-text', n.text);
+                    el.innerHTML =
+                        '<div class=\"notif-icon\"><img src=\"' + iconByType(type) + '\" alt=\"notif\" class=\"notif-message-icon\" /></div>' +
+                        '<span style=\"flex:1\">' + n.text + '</span>' +
+                        '<button type=\"button\" class=\"mark-read-btn\" data-id=\"' + n.notificationId + '\" ' + (n.isRead ? 'disabled' : '') + '>Mark as Read</button>';
+                    list.appendChild(el);
+                });
+                if (!list.children.length) {
+                    list.innerHTML = '<div class=\"notif-item\"><span>No notifications yet.</span></div>';
+                }
+                bindNotifs();
+                bindReadButtons();
+            });
+
+        function bindReadButtons() {
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            document.querySelectorAll('.mark-read-btn').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (btn.disabled) return;
+                    var form = new URLSearchParams();
+                    form.append('__RequestVerificationToken', token);
+                    form.append('notificationId', btn.getAttribute('data-id'));
+                    fetch('@Url.Action("MarkNotificationRead","Client")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        body: form.toString()
+                    }).then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (!res.ok) return;
+                        btn.disabled = true;
+                        var row = btn.closest('.notif-item');
+                        if (row) row.classList.add('read');
+                    });
+                });
+            });
+        }
     </script>
 }

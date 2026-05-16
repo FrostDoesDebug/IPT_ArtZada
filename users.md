@@ -6,6 +6,12 @@
 - Login route: `/Admin/Login`
 - Source: `Controllers/AdminController.cs` (`DemoAdminUsername`, `DemoAdminPassword`)
 
+## Admin (database login)
+- Username: `admin`
+- Password: `Admin@1234`
+- Login route: `/Login/Login` (main login)
+- Note: `/Admin/Login` now accepts DB admin credentials too.
+
 ## SQL Seed Accounts (from setup script)
 These are defined in `App_Data/ArtZada_Setup.sql`:
 

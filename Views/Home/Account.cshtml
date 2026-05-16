@@ -18,8 +18,6 @@
         <button class="btn-cancel-sm" onclick="cancelEdit()">Cancel</button>
     </div>
     <div class="account-header">
-
-        <!-- Hidden file input for Change Profile -->
         <input type="file"
                id="profileFileInput"
                accept="image/*"
@@ -132,25 +130,34 @@
             document.getElementById('editControls').classList.add('hidden');
         }
 
-        /* ── Change Profile — opens file picker ── */
+        /* ── Change Profile — file picker ── */
         function changeProfile() {
             document.getElementById('profileFileInput').click();
         }
-
-        /* ── Handle selected profile image ── */
         function handleProfileImage(input) {
-            var file = input.files[0];
+            var file = input.files && input.files[0];
             if (!file) return;
 
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                /* Replace avatar content with selected image */
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var formData = new FormData();
+            formData.append('__RequestVerificationToken', token);
+            formData.append('profileImage', file);
+
+            fetch('@Url.Action("UploadProfileImage","Home")', {
+                method: 'POST',
+                body: formData
+            }).then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.ok) {
+                    if (window.themeToast) window.themeToast(data.message || 'Failed to upload image.', 'warn');
+                    return;
+                }
                 var avatar = document.querySelector('.profile-avatar');
-                avatar.innerHTML = '<img src="' + e.target.result +
-                    '" alt="Profile" class="profile-avatar-img" />';
-            };
-            reader.readAsDataURL(file);
-            input.value = ''; /* reset so same image can be picked again */
+                avatar.innerHTML = '<img src="' + data.imageUrl + '?v=' + Date.now() + '" alt="Profile" class="profile-avatar-img" />';
+                if (window.themeToast) window.themeToast('Profile image updated.', 'success');
+            });
+            input.value = '';
+        }
         }
 
         /* ── Switch Account ── */

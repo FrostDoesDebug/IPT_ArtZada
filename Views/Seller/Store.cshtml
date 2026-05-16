@@ -10,6 +10,7 @@
 }
 
     <div class="page-content">
+        @Html.AntiForgeryToken()
         <div class="page-header">
             <div class="page-title">Store</div>
             <div class="header-actions">
@@ -41,26 +42,30 @@
         var ADD_CARD_HTML = document.querySelector('.add-card').outerHTML;
 
         function loadItems() {
-            var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
-            var panel = document.getElementById('storePanel');
-            panel.innerHTML = '';
+            fetch('@Url.Action("GetMyItems","Seller")')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    var items = data.items || [];
+                    var panel = document.getElementById('storePanel');
+                    panel.innerHTML = '';
 
-            items.forEach(function (item) {
-                var card = document.createElement('div');
-                card.className = 'item-card';
-                card.dataset.id = item.id;
-                card.innerHTML =
-                    '<img class="item-img" src="' + item.photo + '" alt="' + item.name + '" />' +
-                    '<div class="item-name">' + item.name + '</div>' +
-                    '<div class="item-type">' + item.type + '</div>' +
-                    '<div class="item-price">&#8369;' + parseFloat(item.price).toFixed(2) + '</div>' +
-                    '<input type="checkbox" class="item-checkbox" />';
-                panel.appendChild(card);
-            });
+                    items.forEach(function (item) {
+                        var card = document.createElement('div');
+                        card.className = 'item-card';
+                        card.dataset.id = item.id;
+                        card.innerHTML =
+                            '<img class=\"item-img\" src=\"' + item.photo + '\" alt=\"' + item.name + '\" />' +
+                            '<div class=\"item-name\">' + item.name + '</div>' +
+                            '<div class=\"item-type\">' + (item.type || '') + '</div>' +
+                            '<div class=\"item-price\">&#8369;' + parseFloat(item.price).toFixed(2) + '</div>' +
+                            '<input type=\"checkbox\" class=\"item-checkbox\" />';
+                        panel.appendChild(card);
+                    });
 
-            var addCard = document.createElement('div');
-            addCard.innerHTML = ADD_CARD_HTML;
-            panel.appendChild(addCard.firstChild);
+                    var addCard = document.createElement('div');
+                    addCard.innerHTML = ADD_CARD_HTML;
+                    panel.appendChild(addCard.firstChild);
+                });
         }
 
         function editSelected() {
@@ -74,8 +79,7 @@
                 return;
             }
             var itemId = checked[0].closest('.item-card').dataset.id;
-            localStorage.setItem('editItemId', itemId);
-            window.location.href = '@Url.Action("EditItem","Seller")';
+            window.location.href = '@Url.Action("EditItem","Seller")' + '?id=' + encodeURIComponent(itemId);
         }
 
         function deleteSelected() {
@@ -90,14 +94,23 @@
             }
 
             window.themeConfirm('Delete selected item(s)? This cannot be undone.', function () {
-                var items = JSON.parse(localStorage.getItem('sellerItems') || '[]');
+                var token = document.querySelector('input[name=\"__RequestVerificationToken\"]').value;
+                var ids = [];
                 checked.forEach(function (cb) {
                     var id = cb.closest('.item-card').dataset.id;
-                    items = items.filter(function (i) { return i.id !== id; });
+                    ids.push(parseInt(id, 10));
                 });
-                localStorage.setItem('sellerItems', JSON.stringify(items));
-                loadItems();
-                if (window.themeToast) window.themeToast('Item(s) deleted.', 'success');
+                var form = new URLSearchParams();
+                form.append('__RequestVerificationToken', token);
+                ids.forEach(function (id) { form.append('ids', id); });
+                fetch('@Url.Action("DeleteItemsAjax","Seller")', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                    body: form.toString()
+                }).then(function () {
+                    loadItems();
+                    if (window.themeToast) window.themeToast('Item(s) deleted.', 'success');
+                });
             });
         }
 

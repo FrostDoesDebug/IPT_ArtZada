@@ -292,7 +292,7 @@
            onclick="npToggle(); navigateTo('@Url.Action("Notifications", navController)'); return false;">
             <img src="/Content/images/notification.png" alt="Notifications"
                  onerror="this.outerHTML='<span style=\'font-size:28px;margin-top:20px\'>&#128276;</span>'" />
-            <span class="bdg">3</span>
+            <span class="bdg" id="clientCartBadge">0</span>
         </a>
 
     </div>
@@ -654,6 +654,21 @@
             if (url && url !== '#' && url !== '')
                 window.location.href = url;
         }
+
+        (function () {
+            var body = document.body;
+            var navMode = (body.getAttribute('data-nav-mode') || '').toLowerCase();
+            if (navMode !== 'client') return;
+
+            var badge = document.getElementById('clientCartBadge');
+            if (!badge) return;
+
+            fetch('@Url.Action("CartCount", "Client")')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    badge.textContent = data.count || 0;
+                });
+        })();
 
         (function () {
             var toastEl = document.getElementById('themeToast');

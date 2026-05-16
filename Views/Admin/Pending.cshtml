@@ -4,21 +4,9 @@
 }
 
 <div class="admin-users-wrap admin-pending-page">
+    @Html.AntiForgeryToken()
     <div class="admin-users-panel">
-        <div class="admin-user-card" data-user-name="BugoynaKuykoy" data-user-role="Seller/Buyer">
-            <div class="admin-user-left">
-                <img class="admin-user-avatar" src="~/Content/images/KwekKweksaStix (1).png" alt="BugoynaKuykoy" />
-                <div class="admin-user-info">
-                    <div class="admin-user-name">BugoynaKuykoy</div>
-                    <div class="admin-user-role">Seller/Buyer</div>
-                </div>
-            </div>
-            <div class="admin-user-actions">
-                <button type="button" class="admin-action-btn accept">Accept</button>
-                <button type="button" class="admin-action-btn decline">Decline</button>
-            </div>
-        </div>
-
+        <div id="pendingUsersList"></div>
         <p id="pendingEmpty" class="admin-panel-subtitle" style="display:none; margin-top:8px;">No pending requests.</p>
     </div>
 </div>
@@ -26,8 +14,18 @@
 @section scripts {
     <script>
         (function () {
-            var panel = document.querySelector('.admin-pending-page .admin-users-panel');
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var panel = document.getElementById('pendingUsersList');
             var emptyLabel = document.getElementById('pendingEmpty');
+
+            function post(url, payload, done) {
+                var form = new URLSearchParams();
+                form.append('__RequestVerificationToken', token);
+                Object.keys(payload || {}).forEach(function (k) { form.append(k, payload[k]); });
+                fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: form.toString() })
+                    .then(function (r) { return r.json(); })
+                    .then(done);
+            }
 
             function refreshEmptyState() {
                 var cards = panel ? panel.querySelectorAll('.admin-user-card') : [];
@@ -36,40 +34,66 @@
                 }
             }
 
-            document.querySelectorAll('.admin-action-btn.accept').forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var card = button.closest('.admin-user-card');
-                    var userName = card ? (card.getAttribute('data-user-name') || 'User') : 'User';
-                    if (card && card.parentNode) {
-                        card.parentNode.removeChild(card);
-                    }
-                    refreshEmptyState();
-                    if (window.themeToast) {
-                        window.themeToast(userName + ' has been approved.', 'success');
-                    }
-                });
-            });
-
-            document.querySelectorAll('.admin-action-btn.decline').forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var card = button.closest('.admin-user-card');
-                    var userName = card ? (card.getAttribute('data-user-name') || 'User') : 'User';
-
-                    if (window.themeConfirm) {
-                        window.themeConfirm('Decline pending request for ' + userName + '?', function () {
-                            if (card && card.parentNode) {
-                                card.parentNode.removeChild(card);
-                            }
-                            refreshEmptyState();
-                            if (window.themeToast) {
-                                window.themeToast(userName + ' has been declined.', 'warn');
-                            }
+            function bindActions() {
+                panel.querySelectorAll('.admin-action-btn.accept').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        var card = button.closest('.admin-user-card');
+                        var userName = card ? (card.getAttribute('data-user-name') || 'User') : 'User';
+                        var userId = card ? card.getAttribute('data-user-id') : '';
+                        post('@Url.Action("ApproveUser","Admin")', { userId: userId }, function (res) {
+                            if (!res.ok) return;
+                            refresh();
+                            if (window.themeToast) window.themeToast(userName + ' has been approved.', 'success');
                         });
-                    }
+                    });
                 });
-            });
 
-            refreshEmptyState();
+                panel.querySelectorAll('.admin-action-btn.decline').forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        var card = button.closest('.admin-user-card');
+                        var userName = card ? (card.getAttribute('data-user-name') || 'User') : 'User';
+                        var userId = card ? card.getAttribute('data-user-id') : '';
+
+                        if (window.themeConfirm) {
+                            window.themeConfirm('Decline pending request for ' + userName + '?', function () {
+                                post('@Url.Action("DeclineUser","Admin")', { userId: userId }, function (res) {
+                                    if (!res.ok) return;
+                                    refresh();
+                                    if (window.themeToast) window.themeToast(userName + ' has been declined.', 'warn');
+                                });
+                            });
+                        }
+                    });
+                });
+            }
+
+            function refresh() {
+                fetch('@Url.Action("GetPendingUsers","Admin")')
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        panel.innerHTML = '';
+                        (data.users || []).forEach(function (u) {
+                            var card = document.createElement('div');
+                            card.className = 'admin-user-card';
+                            card.setAttribute('data-user-name', u.username);
+                            card.setAttribute('data-user-id', u.userId);
+                            card.innerHTML =
+                                '<div class=\"admin-user-left\">' +
+                                '<img class=\"admin-user-avatar\" src=\"' + u.avatar + '\" alt=\"' + u.username + '\" />' +
+                                '<div class=\"admin-user-info\"><div class=\"admin-user-name\">' + u.username + '</div><div class=\"admin-user-role\">' + u.role + '</div></div>' +
+                                '</div>' +
+                                '<div class=\"admin-user-actions\">' +
+                                '<button type=\"button\" class=\"admin-action-btn accept\">Accept</button>' +
+                                '<button type=\"button\" class=\"admin-action-btn decline\">Decline</button>' +
+                                '</div>';
+                            panel.appendChild(card);
+                        });
+                        bindActions();
+                        refreshEmptyState();
+                    });
+                });
+
+            refresh();
         })();
     </script>
 }

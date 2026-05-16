@@ -350,6 +350,33 @@ INSERT INTO dbo.Users (
 GO
 
 -- ------------------------------------------------------------
+-- Sample Pending User (for admin pending queue testing)
+--
+-- Username: pending_artist
+-- Password: Test@1234
+-- ------------------------------------------------------------
+INSERT INTO dbo.Users (
+    Username,
+    Email,
+    PasswordHash,
+    FullName,
+    Role,
+    AccountStatus,
+    IsSeller,
+    IsActive
+) VALUES (
+    'pending_artist',
+    'pending@qcu.edu.ph',
+    'AAyq6fJqiO4ZDDGpTrpj6Q3eJ149i7V0Dg/XmvYkOj/dqQLtwFQYPiQhSaroJGYF4w==',
+    'Pending Artist',
+    'Seller',
+    'Pending',
+    1,
+    1
+);
+GO
+
+-- ------------------------------------------------------------
 -- Sample Seller Account (for testing)
 --
 -- Username: kwekkweksastix
@@ -413,16 +440,24 @@ INSERT INTO dbo.Products (
     Price, Stock, Medium, Dimensions, IsFlashSale, IsAvailable
 ) VALUES
 (2, 1, 'Chubb ang Matabang Aso',
- 'A digital illustration of a chubby Shiba Inu in a cool pose.',
- 100.00, 10, 'Digital Art', '763x763 cm', 0, 1),
+ 'Limited edition digital poster featuring a neon city skyline at night.',
+ 799.00, 10, 'Digital Art', '18x24 in', 0, 1),
 
-(2, 1, 'Boss',
- 'A bold digital concept art piece.',
- 250.00, 10, 'Digital Art', '1024x1024 px', 0, 1),
+(2, 10, 'Soft Pastel Landscape Set',
+ 'Handmade pastel landscape prints, signed by the artist.',
+ 1499.00, 8, 'Pastel', 'A3 set of 3', 1, 1),
 
-(2, 4, 'Drawing Commission',
- 'Custom sketch commission. Send a reference photo and get a hand-drawn portrait.',
- 350.00, 5, 'Graphite', 'A4 size', 1, 1);
+(2, 4, 'Graphite Portrait Commission',
+ 'Personalized graphite portrait from your reference photo.',
+ 2199.00, 5, 'Graphite', 'A4 size', 1, 1),
+
+(2, 6, 'Mixed Media Collage Pack',
+ 'Textured mixed-media collage artworks for home decor.',
+ 999.00, 12, 'Mixed Media', '12x12 in', 0, 1),
+
+(2, 5, 'Fine Art Photo Print: Rain Alley',
+ 'Museum-quality matte photo print shot in old Manila.',
+ 1299.00, 7, 'Photography', '16x20 in', 1, 1);
 GO
 
 -- ------------------------------------------------------------
@@ -431,7 +466,7 @@ GO
 INSERT INTO dbo.Carts (UserId) VALUES (3);
 GO
 
--- Cart item: Buyer added "Chubb" (ProductId = 1) to cart
+-- Cart item: Buyer added first product to cart
 INSERT INTO dbo.CartItems (CartId, ProductId, Quantity)
 VALUES (1, 1, 1);
 GO
@@ -458,13 +493,13 @@ INSERT INTO dbo.Notifications (UserId, Title, Body, Type, IsRead) VALUES
 (3, 'New Message', 'KwekKweksaStix has replied to your message', 'Message', 0),
 
 -- Buyer notification: purchase success
-(3, 'Order Confirmed', 'Chubb has been purchased successfully!', 'Purchase', 0),
+(3, 'Order Confirmed', 'Neon City Skyline Poster has been purchased successfully!', 'Purchase', 0),
 
 -- Seller notification: low stock warning
-(2, 'Low Stock Warning', 'Warning: Only 3 pieces of Chubb remaining!', 'LowStock', 0),
+(2, 'Low Stock Warning', 'Warning: Only 3 pieces of Fine Art Photo Print: Rain Alley remaining!', 'LowStock', 0),
 
 -- Seller notification: item sold
-(2, 'Item Sold', 'Chubb has been sold successfully!', 'Sale', 0);
+(2, 'Item Sold', 'Graphite Portrait Commission has been sold successfully!', 'Sale', 0);
 GO
 
 
