@@ -311,6 +311,20 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <Target Name="CopyRoslynToBin" AfterTargets="Build">
+    <PropertyGroup>
+      <RoslynSourceDir>$(MSBuildProjectDirectory)\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest</RoslynSourceDir>
+      <RoslynTargetDir>$(OutDir)roslyn\</RoslynTargetDir>
+    </PropertyGroup>
+    <ItemGroup Condition="Exists('$(RoslynSourceDir)')">
+      <RoslynCompilerFiles Include="$(RoslynSourceDir)\**\*.*" />
+    </ItemGroup>
+    <MakeDir Directories="$(RoslynTargetDir)" Condition="Exists('$(RoslynSourceDir)')" />
+    <Copy SourceFiles="@(RoslynCompilerFiles)"
+          DestinationFiles="@(RoslynCompilerFiles->'$(RoslynTargetDir)%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(RoslynSourceDir)')" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
