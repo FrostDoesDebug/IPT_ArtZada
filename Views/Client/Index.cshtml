@@ -161,7 +161,11 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
                 body: form.toString()
             }).then(function (r) { return r.json(); }).then(function (data) {
-                if (!data.ok) { return; }
+                if (!data.ok) {
+                    if (window.themeToast) window.themeToast(data.message || 'Failed to add to cart.', 'warn');
+                    return;
+                }
+                if (window.themeToast) window.themeToast(data.message || 'Added to cart.', 'success');
                 loadCartCount();
                 if (goCart) { window.location.href = '@Url.Action("Cart","Client")'; }
             });

@@ -437,27 +437,27 @@ GO
 -- ------------------------------------------------------------
 INSERT INTO dbo.Products (
     SellerId, CategoryId, Name, Description,
-    Price, Stock, Medium, Dimensions, IsFlashSale, IsAvailable
+    Price, Stock, ImagePath, Medium, Dimensions, IsFlashSale, IsAvailable
 ) VALUES
 (2, 1, 'Chubb ang Matabang Aso',
  'Limited edition digital poster featuring a neon city skyline at night.',
- 799.00, 10, 'Digital Art', '18x24 in', 0, 1),
+ 799.00, 10, '/Content/images/KwekKweksaStix (1).png', 'Digital Art', '18x24 in', 0, 1),
 
 (2, 10, 'Soft Pastel Landscape Set',
  'Handmade pastel landscape prints, signed by the artist.',
- 1499.00, 8, 'Pastel', 'A3 set of 3', 1, 1),
+ 1499.00, 8, '/Content/images/goods.png', 'Pastel', 'A3 set of 3', 1, 1),
 
 (2, 4, 'Graphite Portrait Commission',
  'Personalized graphite portrait from your reference photo.',
- 2199.00, 5, 'Graphite', 'A4 size', 1, 1),
+ 2199.00, 5, '/Content/images/ADMIN.png', 'Graphite', 'A4 size', 1, 1),
 
 (2, 6, 'Mixed Media Collage Pack',
  'Textured mixed-media collage artworks for home decor.',
- 999.00, 12, 'Mixed Media', '12x12 in', 0, 1),
+ 999.00, 12, '/Content/images/send_message.png', 'Mixed Media', '12x12 in', 0, 1),
 
 (2, 5, 'Fine Art Photo Print: Rain Alley',
  'Museum-quality matte photo print shot in old Manila.',
- 1299.00, 7, 'Photography', '16x20 in', 1, 1);
+ 1299.00, 7, '/Content/images/message.png', 'Photography', '16x20 in', 1, 1);
 GO
 
 -- ------------------------------------------------------------
@@ -533,7 +533,7 @@ GO
 -- Expected row counts after running this script:
 --   Users         = 3  (admin, seller, buyer)
 --   Categories    = 12
---   Products      = 3
+--   Products      = 5
 --   Carts         = 1
 --   CartItems     = 1
 --   Orders        = 0  (no orders yet)

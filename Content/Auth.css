@@ -248,6 +248,7 @@
     font-size: clamp(15px, 2.8vh, 22px);
     padding: clamp(8px, 1.8vh, 10px) 12px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .auth-btn-primary {
@@ -258,6 +259,13 @@
 .auth-btn-secondary {
     background: #d94b4b;
     color: #000;
+}
+
+.auth-actions .auth-btn-secondary,
+.auth-actions .auth-btn-secondary:hover,
+.auth-actions .auth-btn-secondary:focus,
+.auth-actions .auth-btn-secondary:visited {
+    text-decoration: none !important;
 }
 
 .auth-actions {

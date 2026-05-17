@@ -456,6 +456,107 @@ WHERE c.UserId = @UserId AND ci.ProductId = @ProductId;";
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult UpdateCartQuantity(int productId, int delta)
+        {
+            var userId = CurrentUserId();
+            if (userId <= 0)
+            {
+                Response.StatusCode = 401;
+                return Json(new { ok = false, message = "Unauthorized." });
+            }
+
+            if (delta != 1 && delta != -1)
+            {
+                Response.StatusCode = 400;
+                return Json(new { ok = false, message = "Invalid quantity update." });
+            }
+
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+
+                int currentQty;
+                int stock;
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+SELECT TOP 1 ci.Quantity, p.Stock
+FROM dbo.CartItems ci
+JOIN dbo.Carts c ON c.CartId = ci.CartId
+JOIN dbo.Products p ON p.ProductId = ci.ProductId
+WHERE c.UserId = @UserId AND ci.ProductId = @ProductId;";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            Response.StatusCode = 404;
+                            return Json(new { ok = false, message = "Cart item not found." });
+                        }
+                        currentQty = (int)reader["Quantity"];
+                        stock = (int)reader["Stock"];
+                    }
+                }
+
+                var nextQty = currentQty + delta;
+                if (nextQty < 1)
+                {
+                    nextQty = 1;
+                }
+
+                if (nextQty > stock)
+                {
+                    Response.StatusCode = 400;
+                    return Json(new { ok = false, message = "Not enough stock." });
+                }
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+UPDATE ci
+SET Quantity = @Quantity
+FROM dbo.CartItems ci
+JOIN dbo.Carts c ON c.CartId = ci.CartId
+WHERE c.UserId = @UserId AND ci.ProductId = @ProductId;";
+                    cmd.Parameters.AddWithValue("@Quantity", nextQty);
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            return Json(new { ok = true });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult ClearCart()
+        {
+            var userId = CurrentUserId();
+            if (userId <= 0)
+            {
+                Response.StatusCode = 401;
+                return Json(new { ok = false, message = "Unauthorized." });
+            }
+
+            using (var conn = new SqlConnection(ConnectionString))
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+DELETE ci
+FROM dbo.CartItems ci
+JOIN dbo.Carts c ON c.CartId = ci.CartId
+WHERE c.UserId = @UserId;";
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                conn.Open();
+                var affected = cmd.ExecuteNonQuery();
+                return Json(new { ok = true, removed = affected });
+            }
+        }
+
         [HttpGet]
         public JsonResult GetCart()
         {
@@ -643,7 +744,7 @@ VALUES (@UserId, 'Order Confirmed', @Message, 'Purchase', 0);";
                         }
 
                         tx.Commit();
-                        return Json(new { ok = true, message = "Order placed.", orderId });
+                        return Json(new { ok = true, message = "Payment successful.", orderId });
                     }
                     catch
                     {

@@ -122,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ArtZadaDb.mdf" />
+    <Content Include="App_Data\ArtZadaDb_log.ldf">
+      <DependentUpon>ArtZadaDb.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\ArtZada_Setup.sql" />
     <Content Include="ArtZada_Setup.sql" />
     <Content Include="Content\bootstrap-grid.css" />

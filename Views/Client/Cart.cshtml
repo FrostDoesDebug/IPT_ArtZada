@@ -12,6 +12,62 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
     <link href="@Url.Content("~/Content/CSS/Cart.css")" rel="stylesheet" />
+    <style>
+        .cart-wrapper .cart-head {
+            position: relative;
+            display: block;
+            min-height: 64px;
+            width: 100%;
+        }
+
+        .cart-wrapper .cart-title {
+            margin-right: 110px;
+        }
+
+        .cart-wrapper .cart-top-actions {
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin: 0;
+        }
+
+        .cart-wrapper .clear-cart-btn {
+            background: #c94c4c !important;
+            color: #fff !important;
+            border: 3px solid #111 !important;
+            border-radius: 12px !important;
+            width: 72px !important;
+            height: 56px !important;
+            font-size: 34px !important;
+            font-weight: 800 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+        }
+
+        .cart-wrapper .clear-cart-btn:hover {
+            background: #a63b3b !important;
+        }
+
+        .cart-wrapper .qty-btn {
+            background: #c94c4c !important;
+            border: 3px solid #111 !important;
+            width: 25px !important;
+            height: 25px !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            margin: 5px;
+        }
+
+        .cart-wrapper .qty-value {
+            min-width: 32px !important;
+            text-align: center !important;
+            font-size: 20px !important;
+            font-weight: 800 !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,7 +90,13 @@
 
     <!-- CART -->
     <div class="cart-wrapper" id="cartWrapper">
-        <h1 class="cart-title" id="cartArtistTitle" style="display:none;"></h1>
+        <div class="cart-head">
+            <h1 class="cart-title" id="cartArtistTitle" style="display:none;"></h1>
+            <div class="cart-top-actions">
+                <button type="button" id="clearCartBtn" class="clear-cart-btn" title="Remove all items" aria-label="Remove all items">🗑</button>
+            </div>
+        </div>
+        <p id="emptyCartMessage" class="empty-cart-message" style="display:none;">Your cart is empty.</p>
     </div>
 
     <!-- OVERLAY -->
@@ -87,11 +149,17 @@
         function renderCart(items, total) {
             var wrapper = document.getElementById('cartWrapper');
             var title = document.getElementById('cartArtistTitle');
+            var emptyMsg = document.getElementById('emptyCartMessage');
             wrapper.querySelectorAll('.cart-item').forEach(function (n) { n.remove(); });
             title.style.display = 'none';
             title.textContent = '';
+            emptyMsg.style.display = 'none';
 
             var artists = [];
+
+            if (!items || items.length === 0) {
+                emptyMsg.style.display = '';
+            }
 
             items.forEach(function (item) {
                 if (item.artistName && artists.indexOf(item.artistName) === -1) {
@@ -101,9 +169,16 @@
                 row.className = 'cart-item';
                 var imageSrc = item.image ? item.image : '/Content/images/artzada_logo.png';
                 row.innerHTML =
-                    '<input type=\"checkbox\" class=\"cart-checkbox\" checked />' +
+                    '<input type=\"checkbox\" class=\"cart-checkbox\" />' +
                     '<img src=\"' + imageSrc + '\" class=\"cart-img\" />' +
-                    '<div class=\"cart-info\"><div class=\"cart-name\">' + item.name + '</div><div class=\"cart-type\">Qty: ' + item.quantity + '</div></div>' +
+                    '<div class=\"cart-info\"><div class=\"cart-name\">' + item.name + '</div>' +
+                    '<div class=\"cart-type\">Qty:' +
+                    '<span class=\"qty-controls\">' +
+                    '<button type=\"button\" class=\"qty-btn\" data-qty-id=\"' + item.productId + '\" data-delta=\"-1\">-</button>' +
+                    '<span class=\"qty-value\">' + item.quantity + '</span>' +
+                    '<button type=\"button\" class=\"qty-btn\" data-qty-id=\"' + item.productId + '\" data-delta=\"1\">+</button>' +
+                    '</span>' +
+                    '</div></div>' +
                     '<div class=\"cart-price\">' + money(item.lineTotal) + '</div>' +
                     '<button type=\"button\" class=\"checkout-btn\" style=\"margin-left:8px\" data-remove-id=\"' + item.productId + '\">Remove</button>';
                 wrapper.appendChild(row);
@@ -124,6 +199,26 @@
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
                         body: form.toString()
                     }).then(function () { loadCart(); });
+                });
+            });
+
+            wrapper.querySelectorAll('[data-qty-id]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var form = new URLSearchParams();
+                    form.append('__RequestVerificationToken', token);
+                    form.append('productId', btn.getAttribute('data-qty-id'));
+                    form.append('delta', btn.getAttribute('data-delta'));
+                    fetch('@Url.Action("UpdateCartQuantity","Client")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                        body: form.toString()
+                    }).then(function (r) { return r.json(); })
+                      .then(function (data) {
+                          if (!data.ok && window.themeToast) {
+                              window.themeToast(data.message || 'Failed to update quantity.', 'warn');
+                          }
+                          loadCart();
+                      });
                 });
             });
 
@@ -166,6 +261,23 @@
 
         document.getElementById("overlay").addEventListener("click", closeCheckout);
 
+        document.getElementById('clearCartBtn').addEventListener('click', function () {
+            var form = new URLSearchParams();
+            form.append('__RequestVerificationToken', token);
+            fetch('@Url.Action("ClearCart","Client")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: form.toString()
+            }).then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (!data.ok) {
+                    if (window.themeToast) window.themeToast(data.message || 'Failed to clear cart.', 'warn');
+                    return;
+                }
+                loadCart();
+            });
+        });
+
         document.getElementById('placeOrderBtn').addEventListener('click', function () {
             var fullName = document.getElementById('fullNameInput').value.trim();
             var address = document.getElementById('addressInput').value.trim();
@@ -184,10 +296,18 @@
             }).then(function (r) { return r.json(); })
             .then(function (data) {
                 if (!data.ok) {
-                    if (window.themeToast) window.themeToast(data.message || 'Failed to place order.', 'warn');
+                    if (window.themeToast) {
+                        window.themeToast(data.message || 'Failed to place order.', 'warn');
+                    } else {
+                        alert(data.message || 'Failed to place order.');
+                    }
                     return;
                 }
-                if (window.themeToast) window.themeToast('Order placed successfully.', 'success');
+                if (window.themeToast) {
+                    window.themeToast(data.message || 'Payment successful.', 'success');
+                } else {
+                    alert(data.message || 'Payment successful.');
+                }
                 closeCheckout();
                 loadCart();
             });
